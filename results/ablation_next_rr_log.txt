@@ -1,0 +1,10 @@
+# One-beat decision delay (non-causal next-RR features) ablation. DS1 grouped CV only, dV = 0.1 mV, gradient boosting.
+== DS1 grouped-CV causal (13 scalars)
+  accuracy  93.70%   macro-F1 0.508
+  S: Se 0.255  +P 0.260  F1 0.257  (n=944)
+  V: Se 0.897  +P 0.732  F1 0.806  (n=3788)
+== DS1 grouped-CV one-beat delay (+next RR)
+  accuracy  93.75%   macro-F1 0.515
+  S: Se 0.284  +P 0.268  F1 0.276  (n=944)
+  V: Se 0.907  +P 0.741  F1 0.815  (n=3788)
+# Conclusion: negligible gain; breaks the strictly causal design. Not adopted (columns kept behind --delayed).

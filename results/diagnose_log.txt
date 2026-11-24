@@ -1,0 +1,55 @@
+DS1 beats 50979  idle sparsity 0.891
+== DS1 grouped-CV: sqrt-balanced
+  accuracy  89.02%   macro-F1 0.423
+  N: Se 0.920  +P 0.970  F1 0.944  (n=45833)
+  S: Se 0.125  +P 0.200  F1 0.154  (n=944)
+  V: Se 0.814  +P 0.466  F1 0.593  (n=3788)
+  F: Se 0.000  +P 0.000  F1 0.000  (n=414)
+== DS1 grouped-CV: unweighted
+  accuracy  90.20%   macro-F1 0.426
+  N: Se 0.934  +P 0.969  F1 0.951  (n=45833)
+  S: Se 0.090  +P 0.201  F1 0.124  (n=944)
+  V: Se 0.819  +P 0.510  F1 0.628  (n=3788)
+  F: Se 0.000  +P 0.000  F1 0.000  (n=414)
+== DS1 grouped-CV: balanced
+  accuracy  84.59%   macro-F1 0.400
+  N: Se 0.867  +P 0.974  F1 0.918  (n=45833)
+  S: Se 0.169  +P 0.158  F1 0.163  (n=944)
+  V: Se 0.852  +P 0.372  F1 0.518  (n=3788)
+  F: Se 0.002  +P 0.002  F1 0.002  (n=414)
+== DS1 grouped-CV: sqrt-balanced + ratio feats
+  accuracy  91.18%   macro-F1 0.465
+  N: Se 0.940  +P 0.972  F1 0.956  (n=45833)
+  S: Se 0.183  +P 0.310  F1 0.230  (n=944)
+  V: Se 0.854  +P 0.553  F1 0.671  (n=3788)
+  F: Se 0.002  +P 0.004  F1 0.003  (n=414)
+== DS1 grouped-CV: unweighted + ratio feats
+  accuracy  91.42%   macro-F1 0.452
+  N: Se 0.944  +P 0.970  F1 0.957  (n=45833)
+  S: Se 0.129  +P 0.247  F1 0.170  (n=944)
+  V: Se 0.853  +P 0.564  F1 0.679  (n=3788)
+  F: Se 0.002  +P 0.005  F1 0.003  (n=414)
+
+per-record (sqrt-balanced): rec  n  acc  N->nonN  S_se  V_se
+  101  1862 0.999  N->other    0  S 0.67 (n=3)  V nan (n=0)
+  106  2026 0.973  N->other    1  S nan (n=0)  V 0.90 (n=520)
+  108  1762 0.762  N->other  404  S 0.50 (n=4)  V 0.29 (n=17)
+  109  2530 0.860  N->other  329  S nan (n=0)  V 0.39 (n=38)
+  112  2537 1.000  N->other    0  S 0.50 (n=2)  V nan (n=0)
+  114  1878 0.992  N->other    0  S 0.08 (n=12)  V 1.00 (n=43)
+  115  1951 1.000  N->other    0  S nan (n=0)  V nan (n=0)
+  116  2410 0.999  N->other    1  S 1.00 (n=1)  V 0.98 (n=109)
+  118  2277 0.926  N->other   61  S 0.00 (n=96)  V 0.31 (n=16)
+  119  1986 0.999  N->other    1  S nan (n=0)  V 1.00 (n=444)
+  122  2474 1.000  N->other    0  S nan (n=0)  V nan (n=0)
+  124  1617 0.968  N->other    0  S 0.00 (n=31)  V 0.68 (n=47)
+  201  1962 0.739  N->other  280  S 0.11 (n=128)  V 0.41 (n=198)
+  203  2975 0.516  N->other 1424  S 0.50 (n=2)  V 0.97 (n=444)
+  205  2654 0.994  N->other    2  S 1.00 (n=3)  V 0.97 (n=71)
+  207  1859 0.317  N->other 1036  S 0.00 (n=107)  V 0.40 (n=210)
+  208  2951 0.841  N->other   79  S 0.50 (n=2)  V 0.98 (n=992)
+  209  3003 0.877  N->other    0  S 0.03 (n=383)  V 1.00 (n=1)
+  215  3361 0.945  N->other   33  S 0.67 (n=3)  V 0.09 (n=164)
+  220  2046 0.991  N->other    0  S 0.81 (n=94)  V nan (n=0)
+  223  2603 0.906  N->other    2  S 0.01 (n=73)  V 0.67 (n=473)
+  230  2255 1.000  N->other    1  S nan (n=0)  V 1.00 (n=1)

@@ -1,0 +1,15 @@
+# scripts/exp_svdb.py  (DS1 grouped CV only; SVDB added to training folds, never tested; DS2 not loaded)
+# gradient boosting on spike hist + template residual + 13 causal scalars, dV = 0.1 mV
+DS1 beats 50979  SVDB beats 184384  SVDB class counts [162225, 12195, 9941, 23]  SVDB idle sparsity 0.866
+== DS1 grouped-CV: DS1 only
+  accuracy  93.70%   macro-F1 0.508
+  N: Se 0.963  +P 0.974  F1 0.968  (n=45833)
+  S: Se 0.255  +P 0.260  F1 0.257  (n=944)
+  V: Se 0.897  +P 0.732  F1 0.806  (n=3788)
+  F: Se 0.000  +P 0.000  F1 0.000  (n=414)
+== DS1 grouped-CV: DS1 + SVDB (train only)
+  accuracy  94.09%   macro-F1 0.532
+  N: Se 0.962  +P 0.980  F1 0.971  (n=45833)
+  S: Se 0.396  +P 0.273  F1 0.323  (n=944)
+  V: Se 0.919  +P 0.761  F1 0.832  (n=3788)
+  F: Se 0.000  +P 0.000  F1 0.000  (n=414)

@@ -1,0 +1,81 @@
+train 18 rec | val ['108', '116', '201', '209'] | DS2 used: False
+--- seed 0  class weights {'N': np.float64(0.724), 'S': np.float64(1.258), 'V': np.float64(0.725), 'F': np.float64(1.293)}
+[s0 teacher] ep 1/6 loss 0.0524 val acc 0.9336 macroF1 0.5492 (41s)
+[s0 teacher] ep 2/6 loss 0.0200 val acc 0.9491 macroF1 0.5622 (36s)
+[s0 teacher] ep 3/6 loss 0.0150 val acc 0.9425 macroF1 0.5308 (38s)
+[s0 teacher] ep 4/6 loss 0.0121 val acc 0.9398 macroF1 0.5471 (37s)
+[s0 teacher] ep 5/6 loss 0.0101 val acc 0.9481 macroF1 0.5597 (38s)
+[s0 teacher] ep 6/6 loss 0.0087 val acc 0.9460 macroF1 0.5711 (40s)
+[s0 student] ep 1/30 loss 0.0939 val acc 0.9396 macroF1 0.4569 (16s)
+[s0 student] ep 2/30 loss 0.0365 val acc 0.9393 macroF1 0.4620 (17s)
+[s0 student] ep 3/30 loss 0.0304 val acc 0.9425 macroF1 0.4839 (16s)
+[s0 student] ep 4/30 loss 0.0271 val acc 0.9432 macroF1 0.4893 (17s)
+[s0 student] ep 5/30 loss 0.0254 val acc 0.9463 macroF1 0.5039 (16s)
+[s0 student] ep 6/30 loss 0.0240 val acc 0.9447 macroF1 0.5018 (16s)
+[s0 student] ep 7/30 loss 0.0229 val acc 0.9487 macroF1 0.5216 (15s)
+[s0 student] ep 8/30 loss 0.0221 val acc 0.9476 macroF1 0.5173 (16s)
+[s0 student] ep 9/30 loss 0.0212 val acc 0.9439 macroF1 0.4916 (15s)
+[s0 student] ep 10/30 loss 0.0206 val acc 0.9441 macroF1 0.5051 (15s)
+[s0 student] ep 11/30 loss 0.0202 val acc 0.9475 macroF1 0.5185 (15s)
+[s0 student] ep 12/30 loss 0.0197 val acc 0.9489 macroF1 0.5282 (16s)
+[s0 student] ep 13/30 loss 0.0190 val acc 0.9452 macroF1 0.5086 (17s)
+[s0 student] ep 14/30 loss 0.0188 val acc 0.9483 macroF1 0.5283 (15s)
+[s0 student] ep 15/30 loss 0.0185 val acc 0.9470 macroF1 0.5156 (15s)
+[s0 student] ep 16/30 loss 0.0178 val acc 0.9462 macroF1 0.5174 (16s)
+[s0 student] ep 17/30 loss 0.0177 val acc 0.9476 macroF1 0.5245 (15s)
+[s0 student] ep 18/30 loss 0.0174 val acc 0.9479 macroF1 0.5257 (14s)
+[s0 student] ep 19/30 loss 0.0170 val acc 0.9485 macroF1 0.5333 (15s)
+[s0 student] ep 20/30 loss 0.0168 val acc 0.9476 macroF1 0.5275 (18s)
+[s0 student] ep 21/30 loss 0.0166 val acc 0.9474 macroF1 0.5168 (14s)
+[s0 student] ep 22/30 loss 0.0162 val acc 0.9485 macroF1 0.5332 (17s)
+[s0 student] ep 23/30 loss 0.0159 val acc 0.9472 macroF1 0.5199 (15s)
+[s0 student] ep 24/30 loss 0.0158 val acc 0.9486 macroF1 0.5315 (16s)
+[s0 student] ep 25/30 loss 0.0156 val acc 0.9476 macroF1 0.5247 (15s)
+[s0 student] ep 26/30 loss 0.0155 val acc 0.9489 macroF1 0.5318 (15s)
+[s0 student] ep 27/30 loss 0.0154 val acc 0.9478 macroF1 0.5270 (16s)
+[s0 student] ep 28/30 loss 0.0153 val acc 0.9487 macroF1 0.5315 (17s)
+[s0 student] ep 29/30 loss 0.0152 val acc 0.9479 macroF1 0.5268 (13s)
+[s0 student] ep 30/30 loss 0.0152 val acc 0.9485 macroF1 0.5301 (16s)
+[s0 qat] ep 1/6 loss 0.0191 val acc 0.9458 macroF1 0.5047 (17s)
+[s0 qat] ep 2/6 loss 0.0187 val acc 0.9467 macroF1 0.5128 (16s)
+[s0 qat] ep 3/6 loss 0.0185 val acc 0.9481 macroF1 0.5184 (16s)
+[s0 qat] ep 4/6 loss 0.0183 val acc 0.9480 macroF1 0.5252 (18s)
+[s0 qat] ep 5/6 loss 0.0180 val acc 0.9483 macroF1 0.5241 (15s)
+[s0 qat] ep 6/6 loss 0.0178 val acc 0.9475 macroF1 0.5178 (16s)
+
+== teacher [val] over seeds [0]
+  accuracy  0.9491 +/- 0.0000
+  macro_f1  0.5622 +/- 0.0000
+  f1_N      0.9748 +/- 0.0000
+  f1_S      0.3510 +/- 0.0000
+  f1_V      0.9231 +/- 0.0000
+  f1_F      0.0000 +/- 0.0000
+  se_S      0.2306 +/- 0.0000
+  se_V      0.9600 +/- 0.0000
+
+== student_float [val] over seeds [0]
+  accuracy  0.9489 +/- 0.0000
+  macro_f1  0.5282 +/- 0.0000
+  f1_N      0.9781 +/- 0.0000
+  f1_S      0.2875 +/- 0.0000
+  f1_V      0.8471 +/- 0.0000
+  f1_F      0.0000 +/- 0.0000
+  se_S      0.1744 +/- 0.0000
+  se_V      0.9631 +/- 0.0000
+
+== student_int8 [val] over seeds [0]
+  accuracy  0.9483 +/- 0.0000
+  macro_f1  0.5241 +/- 0.0000
+  f1_N      0.9777 +/- 0.0000
+  f1_S      0.2617 +/- 0.0000
+  f1_V      0.8571 +/- 0.0000
+  f1_F      0.0000 +/- 0.0000
+  se_S      0.1570 +/- 0.0000
+  se_V      0.9692 +/- 0.0000
+== int8 student seed 0 [val]
+  accuracy  94.83%   macro-F1 0.524
+  N: Se 0.997  +P 0.959  F1 0.978  (n=8292)
+  S: Se 0.157  +P 0.786  F1 0.262  (n=516)
+  V: Se 0.969  +P 0.768  F1 0.857  (n=325)
+  F: Se 0.000  +P 0.000  F1 0.000  (n=4)
+saved /tmp/dev/train_dev_a.json
