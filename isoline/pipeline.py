@@ -12,7 +12,7 @@ import numpy as np
 from . import afe, data, features
 from .config import AAMI_MAP, CLASS_IDX, AFEConfig
 
-VERSION = 8  # bump when feature definitions change (invalidates caches)
+VERSION = 9  # bump when feature definitions change (invalidates caches)
 
 
 def _label(sym: str) -> int:

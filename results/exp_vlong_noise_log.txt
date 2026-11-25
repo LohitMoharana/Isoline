@@ -1,0 +1,4 @@
+scalar columns [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31]
+incart: 62184 beats [40000, 1959, 20006, 219]
+none           base+long+vlong+noise it150 lf31 lr0.1 acc 94.14  macroF1 0.513  S F1 0.255 (Se 0.23 +P 0.28)  V F1 0.820  F F1 0.007
+incart         base+long+vlong+noise it150 lf31 lr0.1 acc 94.64  macroF1 0.576  S F1 0.469 (Se 0.40 +P 0.57)  V F1 0.792  F F1 0.070

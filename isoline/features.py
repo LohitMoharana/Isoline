@@ -37,9 +37,12 @@ SCAL_NAMES = ["pre_rr", "rr_ewma", "delta_rr", "beat_spikes", "spike_ewma",
               # --- extra CAUSAL context (columns 16..20) ---
               "irr_ewma", "prev_rr_ratio2", "d_prev_beat", "prev_d_tot", "prev_rr_ratio",
               # --- long-memory rhythm context (columns 21..25, causal) ---
-              "rr_long", "pre_over_long", "ewma_over_long", "irr_long_ratio", "prem_count8"]
+              "rr_long", "pre_over_long", "ewma_over_long", "irr_long_ratio", "prem_count8",
+              # --- very-long RR memory + baseline noise level (columns 26..31, causal) ---
+              "rr_vlong", "pre_over_vlong", "long_over_vlong", "quiet_spikes", "noise_ewma", "noise_ratio"]
 EXTRA_CAUSAL = [16, 17, 18, 19, 20]
 LONG_CAUSAL = [21, 22, 23, 24, 25]
+NOISE_CAUSAL = [26, 27, 28, 29, 30, 31]
 N_CAUSAL = 13                                       # first 13 columns are strictly causal
 N_DELAYED = 16                                      # columns 13..15 are the next-RR columns
 
@@ -115,6 +118,8 @@ def extract_record(up, dn, acc, r, symbols, raw=None, filt=None,
     prev_rrr = 32                                  # previous beat's RR ratio
     rrl_state = None                               # 64x EWMA of RR (~1 min memory)
     irl_state = 0                                  # 64x EWMA of |dRR|
+    rrv_state = None                               # 256x EWMA of RR (~4 min memory)
+    nz_state = 0                                   # 16x EWMA of off-QRS spike count (noise level)
     prem_bits = 0                                  # 8-beat shift register: premature (ratio < 28/32)
     sp_state = 0
     sp_primed = False
@@ -124,10 +129,12 @@ def extract_record(up, dn, acc, r, symbols, raw=None, filt=None,
         if rr_state is None:
             rr_state = 8 * pre
             rrl_state = 64 * pre
+            rrv_state = 256 * pre
             prev_pre = pre
             prev_pre2 = pre
         rr_ewma_prev = rr_state >> 3
         rrl = rrl_state >> 6
+        rrv = rrv_state >> 8
         delta = pre - prev_pre
         rr_ratio = min((pre * RR_Q) // max(rr_ewma_prev, 1), 255)
         rr_ratio_prev = min((pre * RR_Q) // max(prev_pre, 1), 255)
@@ -153,6 +160,9 @@ def extract_record(up, dn, acc, r, symbols, raw=None, filt=None,
             k = min(max(int(sp_prev).bit_length() - (GAIN_T_LOG2 + 1), 0), 6)
             h3 = _sm_shift(np.stack([hu, hd, ha]).astype(np.int32), k)
             sp_ratio = min((beat_spikes * 32) // max(sp_prev, 1), 255)
+            quiet = int(hu[:4].sum() + hd[:4].sum() + hu[-6:].sum() + hd[-6:].sum())   # far from the R peak
+            nz_prev = nz_state >> 4
+            nz_state = nz_state - (nz_state >> 4) + quiet
 
             if tmpl8 is None:
                 tmpl = h3.copy()
@@ -176,7 +186,9 @@ def extract_record(up, dn, acc, r, symbols, raw=None, filt=None,
                          rrl, min((pre * RR_Q) // max(rrl, 1), 255),
                          min((rr_ewma_prev * RR_Q) // max(rrl, 1), 255),
                          min(((irl_state >> 6) * RR_Q) // max(rrl, 1), 255),
-                         bin(prem_bits).count("1")])
+                         bin(prem_bits).count("1"),
+                         rrv, min((pre * RR_Q) // max(rrv, 1), 255), min((rrl * RR_Q) // max(rrv, 1), 255),
+                         min(quiet, 255), min(nz_prev, 255), min((nz_prev * 32) // max(sp_prev, 1), 255)])
             prev_h3 = h3
             prev_dtot = int(d.sum())
             sym.append(symbols[i])
@@ -189,6 +201,7 @@ def extract_record(up, dn, acc, r, symbols, raw=None, filt=None,
         irr_state = irr_state - (irr_state >> 3) + abs(pre - prev_pre)
         rrl_state = rrl_state - (rrl_state >> 6) + pre
         irl_state = irl_state - (irl_state >> 6) + abs(pre - prev_pre)
+        rrv_state = rrv_state - (rrv_state >> 8) + pre
         prem_bits = ((prem_bits << 1) | int(rr_ratio < 28)) & 0xFF
         prev_rrr = rr_ratio
         prev_pre2 = prev_pre
