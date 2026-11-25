@@ -19,10 +19,13 @@ from isoline.metrics import report  # noqa: E402
 from isoline.pipeline import build_dataset  # noqa: E402
 
 
-def X_of(ds, ncol=13):
+COLS = list(range(13))
+
+
+def X_of(ds, ncol=None):
     n = len(ds["y"])
     return np.concatenate([ds["hist"].reshape(n, -1), ds["res"].reshape(n, -1),
-                           ds["scal"][:, :ncol]], 1).astype(np.float32)
+                           ds["scal"][:, COLS]], 1).astype(np.float32)
 
 
 def load(path, lead, cfg, cache, n_keep, seed=0):
@@ -51,9 +54,13 @@ def main():
     ap.add_argument("--iters", type=int, default=150)
     ap.add_argument("--leaves", type=int, default=31)
     ap.add_argument("--lr", type=float, default=0.1)
+    ap.add_argument("--cols", default="base", help="base | base+extra | base+long | base+extra+long")
     ap.add_argument("--combos", default="none,incart,incart+svdb,incart+edb,incart+svdb+edb")
     a = ap.parse_args()
     cfg = replace(AFEConfig(), delta_mv=a.delta)
+    if "extra" in a.cols: COLS.extend([16, 17, 18, 19, 20])
+    if "long" in a.cols: COLS.extend([21, 22, 23, 24, 25])
+    print("scalar columns", COLS, flush=True)
     ds1, _ = data.get_splits(a.mit_dir)
     d = build_dataset(ds1, a.mit_dir, cfg, cache_dir=a.cache, verbose=False)
     X, y, g = X_of(d), d["y"].astype(int), d["rec"]
@@ -73,7 +80,7 @@ def main():
                                                  l2_regularization=1.0, random_state=0).fit(Xtr, ytr, sample_weight=w)
             pred[te] = clf.predict(X[te])
         r = report(y, pred)
-        print(f"{combo:14s} it{a.iters} lf{a.leaves} lr{a.lr} acc {100 * r['accuracy']:.2f}  macroF1 {r['macro_f1']:.3f}  S F1 {r['S']['f1']:.3f} "
+        print(f"{combo:14s} {a.cols:16s} it{a.iters} lf{a.leaves} lr{a.lr} acc {100 * r['accuracy']:.2f}  macroF1 {r['macro_f1']:.3f}  S F1 {r['S']['f1']:.3f} "
               f"(Se {r['S']['se']:.2f} +P {r['S']['ppv']:.2f})  V F1 {r['V']['f1']:.3f}  F F1 {r['F']['f1']:.3f}", flush=True)
 
 

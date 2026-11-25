@@ -1,0 +1,17 @@
+# DS1 grouped-CV OOF, gradient boosting, base + long-RR columns + INCART (N subsampled 40k). DS2 not used.
+acc 0.9485
+confusion (rows true N,S,V,F; cols pred):
+[[44381   301  1094    57]
+ [  339   378   227     0]
+ [  201    16  3569     2]
+ [  203     0   183    28]]
+records with >= 40 errors (true>pred counts):
+108 61  N>V 42, N>F 10
+124 40  S>N 28
+201 372 N>S 199, S>V 96, V>N 53, N>V 22
+203 992 N>V 872, N>S 77, N>F 39
+207 319 N>V 141, S>V 106, V>N 68
+208 350 F>V 175, F>N 170
+209 245 S>N 237
+223 113 V>N 57, S>N 39, F>N 12
+# Record 203 alone (N>V false alarms in a very noisy record) costs ~1.9 points of accuracy.

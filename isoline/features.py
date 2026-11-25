@@ -35,8 +35,11 @@ SCAL_NAMES = ["pre_rr", "rr_ewma", "delta_rr", "beat_spikes", "spike_ewma",
               # --- NON-causal (one-beat decision delay); excluded unless requested ---
               "post_rr", "post_ratio", "post_pre_ratio",
               # --- extra CAUSAL context (columns 16..20) ---
-              "irr_ewma", "prev_rr_ratio2", "d_prev_beat", "prev_d_tot", "prev_rr_ratio"]
+              "irr_ewma", "prev_rr_ratio2", "d_prev_beat", "prev_d_tot", "prev_rr_ratio",
+              # --- long-memory rhythm context (columns 21..25, causal) ---
+              "rr_long", "pre_over_long", "ewma_over_long", "irr_long_ratio", "prem_count8"]
 EXTRA_CAUSAL = [16, 17, 18, 19, 20]
+LONG_CAUSAL = [21, 22, 23, 24, 25]
 N_CAUSAL = 13                                       # first 13 columns are strictly causal
 N_DELAYED = 16                                      # columns 13..15 are the next-RR columns
 
@@ -110,6 +113,9 @@ def extract_record(up, dn, acc, r, symbols, raw=None, filt=None,
     prev_h3 = None                                 # previous beat's normalised histogram
     prev_dtot = 0                                  # previous beat's distance to the template
     prev_rrr = 32                                  # previous beat's RR ratio
+    rrl_state = None                               # 64x EWMA of RR (~1 min memory)
+    irl_state = 0                                  # 64x EWMA of |dRR|
+    prem_bits = 0                                  # 8-beat shift register: premature (ratio < 28/32)
     sp_state = 0
     sp_primed = False
     tmpl8 = None                                   # 8x-scaled template accumulator
@@ -117,9 +123,11 @@ def extract_record(up, dn, acc, r, symbols, raw=None, filt=None,
         pre = min(int(round((r[i] - r[i - 1]) * RR_Q / FS)), 65535)
         if rr_state is None:
             rr_state = 8 * pre
+            rrl_state = 64 * pre
             prev_pre = pre
             prev_pre2 = pre
         rr_ewma_prev = rr_state >> 3
+        rrl = rrl_state >> 6
         delta = pre - prev_pre
         rr_ratio = min((pre * RR_Q) // max(rr_ewma_prev, 1), 255)
         rr_ratio_prev = min((pre * RR_Q) // max(prev_pre, 1), 255)
@@ -164,7 +172,11 @@ def extract_record(up, dn, acc, r, symbols, raw=None, filt=None,
                          sp_ratio, prev_pre, rr_ratio_prev,
                          int(d[0]), int(d[1]), int(d[2]), int(d.sum()),
                          post, post_ratio, post_pre,
-                         irr, pre_pre2, dprev, prev_dtot, prev_rrr])
+                         irr, pre_pre2, dprev, prev_dtot, prev_rrr,
+                         rrl, min((pre * RR_Q) // max(rrl, 1), 255),
+                         min((rr_ewma_prev * RR_Q) // max(rrl, 1), 255),
+                         min(((irl_state >> 6) * RR_Q) // max(rrl, 1), 255),
+                         bin(prem_bits).count("1")])
             prev_h3 = h3
             prev_dtot = int(d.sum())
             sym.append(symbols[i])
@@ -175,6 +187,9 @@ def extract_record(up, dn, acc, r, symbols, raw=None, filt=None,
                 filtW.append(filt[s:e].astype(np.float32))
         rr_state = rr_state - (rr_state >> 3) + pre
         irr_state = irr_state - (irr_state >> 3) + abs(pre - prev_pre)
+        rrl_state = rrl_state - (rrl_state >> 6) + pre
+        irl_state = irl_state - (irl_state >> 6) + abs(pre - prev_pre)
+        prem_bits = ((prem_bits << 1) | int(rr_ratio < 28)) & 0xFF
         prev_rrr = rr_ratio
         prev_pre2 = prev_pre
         prev_pre = pre
