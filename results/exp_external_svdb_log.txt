@@ -1,0 +1,6 @@
+== external SVDB (train DS1+INCART), fine-delta 0.0
+  accuracy  90.16%   macro-F1 0.428
+  N: Se 0.961  +P 0.964  F1 0.963  (n=162225)
+  S: Se 0.078  +P 0.687  F1 0.139  (n=12195)
+  V: Se 0.949  +P 0.448  F1 0.609  (n=9941)
+  F: Se 0.000  +P 0.000  F1 0.000  (n=23)
