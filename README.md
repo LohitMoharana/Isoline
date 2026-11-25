@@ -142,6 +142,26 @@ in a handful of records (e.g. 209) and the false alarms in noisy ones (e.g. 203)
 same signal is unlikely to close the gap; likely levers are more diverse training patients and per-beat morphology
 detail that the sparse encoding discards.
 
+### Round 4: per-patient clustering + boosted trees — **94.8 % on unseen patients**
+
+Two causal, hardware-cheap additions moved the DS1 estimate above 95 %: a long-memory RR average (~1 min) and an
+**online per-patient morphology clustering** (4 leader-clustered templates; each beat carries how common its shape is for
+*this* patient and what RR timing that shape usually comes with). With INCART as extra training patients and a
+gradient-boosted-tree classifier, the configuration was frozen on DS1 CV (95.03 %) and evaluated once on DS2
+([`scripts/final_gbt.py`](scripts/final_gbt.py), [`results/final_gbt.json`](results/final_gbt.json)):
+
+| DS2, 5 INCART-subsample seeds | Accuracy | Macro-F1 | N F1 | S F1 | V F1 | F F1 | Model size |
+|---|---|---|---|---|---|---|---|
+| **Boosted trees (round 4)** | **94.76 ± 0.08 %** | **0.605** | 0.973 | 0.330 | **0.956** | 0.162 | ~46–64 KB est. |
+| int8 student (round 1) | 93.7 ± 0.4 % | 0.507 | 0.967 | 0.167 | 0.891 | 0.002 | 9 KB |
+
+V detection (Se 0.978, +P 0.935) is now at or above the best inter-patient V results we found in the literature.
+**S remains the gap** (Se 0.28), and the model is larger than the original 12 KB budget (fine for MCU flash,
+not for the original FPGA plan). Still about 1.2–1.4 points below the ~96 % literature ceiling.
+
+*Disclosure:* this is the third time DS2 has been evaluated in this project (round 1, round 2, round 4), each on a
+configuration frozen beforehand on DS1 only. Nothing was tuned after seeing a DS2 number.
+
 ### Round 3: data mixes, model size, finer bins (DS1 grouped CV only; DS2 untouched)
 
 | Probe (gradient boosting) | DS1 CV accuracy | S F1 | V F1 | F F1 |

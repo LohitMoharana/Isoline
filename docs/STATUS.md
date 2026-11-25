@@ -36,6 +36,11 @@ taken.** The 96 % target was *not* reached. Suggested next diagnostic: a dense-w
 template/gain features (does the encoder, or the features, cap accuracy?), then a front-end change that preserves
 P-wave/morphology detail, evaluated first on DS1 CV.
 
+### Round 4 (2026-11-25 night)
+Frozen GBT candidate (long RR + online clusters + INCART) -> **DS2 94.76 ± 0.08 %**, macro-F1 0.605, S F1 0.33,
+V F1 0.956. Third DS2 look; nothing tuned on it. Next: S detection (DS1 CV only), and porting the new features to the
+int8 student / a size-capped tree model.
+
 ## Rules we agreed to follow (do not break these)
 
 1. **DS2 is the test set. Never tune on it.** All choices (dV, features, loss, early stopping,
