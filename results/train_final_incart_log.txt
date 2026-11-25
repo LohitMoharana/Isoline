@@ -1,0 +1,130 @@
+device: cpu 
+train 18 rec | val ['108', '116', '201', '209'] | DS2 used: True
+extra training data: incart 175767 beats, classes [153583, 1959, 20006, 219]
+  rebalanced to 62184 beats, classes [40000, 1959, 20006, 219]
+--- seed 0  class weights {'N': np.float64(0.868), 'S': np.float64(0.923), 'V': np.float64(0.868), 'F': np.float64(1.342)}
+[s0 student] ep 1/16 loss 0.0457 val acc 0.9437 macroF1 0.5109 (30s)
+[s0 student] ep 2/16 loss 0.0193 val acc 0.9119 macroF1 0.4451 (33s)
+[s0 student] ep 3/16 loss 0.0138 val acc 0.9346 macroF1 0.4843 (32s)
+[s0 student] ep 4/16 loss 0.0116 val acc 0.9364 macroF1 0.5462 (32s)
+[s0 student] ep 5/16 loss 0.0096 val acc 0.9333 macroF1 0.5148 (32s)
+[s0 student] ep 6/16 loss 0.0090 val acc 0.9335 macroF1 0.4900 (32s)
+[s0 student] ep 7/16 loss 0.0075 val acc 0.9318 macroF1 0.6115 (31s)
+[s0 student] ep 8/16 loss 0.0065 val acc 0.9361 macroF1 0.5878 (30s)
+[s0 student] ep 9/16 loss 0.0055 val acc 0.9379 macroF1 0.5812 (32s)
+[s0 student] ep 10/16 loss 0.0047 val acc 0.9340 macroF1 0.5913 (31s)
+[s0 student] ep 11/16 loss 0.0038 val acc 0.9374 macroF1 0.5999 (31s)
+[s0 student] ep 12/16 loss 0.0031 val acc 0.9413 macroF1 0.6073 (30s)
+[s0 student] ep 13/16 loss 0.0026 val acc 0.9367 macroF1 0.6327 (30s)
+[s0 student] ep 14/16 loss 0.0022 val acc 0.9379 macroF1 0.6249 (31s)
+[s0 student] ep 15/16 loss 0.0019 val acc 0.9394 macroF1 0.6365 (30s)
+[s0 student] ep 16/16 loss 0.0018 val acc 0.9390 macroF1 0.6488 (30s)
+[s0 qat] ep 1/4 loss 0.0038 val acc 0.9317 macroF1 0.6165 (31s)
+[s0 qat] ep 2/4 loss 0.0036 val acc 0.9362 macroF1 0.6430 (32s)
+[s0 qat] ep 3/4 loss 0.0036 val acc 0.9262 macroF1 0.5970 (33s)
+[s0 qat] ep 4/4 loss 0.0030 val acc 0.9313 macroF1 0.6086 (31s)
+--- seed 1  class weights {'N': np.float64(0.868), 'S': np.float64(0.923), 'V': np.float64(0.868), 'F': np.float64(1.342)}
+[s1 student] ep 1/16 loss 0.0424 val acc 0.9475 macroF1 0.5457 (31s)
+[s1 student] ep 2/16 loss 0.0182 val acc 0.9466 macroF1 0.5899 (30s)
+[s1 student] ep 3/16 loss 0.0132 val acc 0.9440 macroF1 0.5573 (30s)
+[s1 student] ep 4/16 loss 0.0110 val acc 0.9378 macroF1 0.5931 (30s)
+[s1 student] ep 5/16 loss 0.0096 val acc 0.9455 macroF1 0.5709 (30s)
+[s1 student] ep 6/16 loss 0.0082 val acc 0.9437 macroF1 0.5719 (32s)
+[s1 student] ep 7/16 loss 0.0073 val acc 0.9370 macroF1 0.5547 (31s)
+[s1 student] ep 8/16 loss 0.0062 val acc 0.9408 macroF1 0.5491 (31s)
+[s1 student] ep 9/16 loss 0.0053 val acc 0.9431 macroF1 0.5582 (30s)
+[s1 student] ep 10/16 loss 0.0043 val acc 0.9427 macroF1 0.5592 (32s)
+[s1 student] ep 11/16 loss 0.0035 val acc 0.9402 macroF1 0.5573 (34s)
+[s1 student] ep 12/16 loss 0.0028 val acc 0.9354 macroF1 0.5299 (32s)
+[s1 student] ep 13/16 loss 0.0024 val acc 0.9344 macroF1 0.5268 (32s)
+[s1 student] ep 14/16 loss 0.0019 val acc 0.9371 macroF1 0.5355 (29s)
+[s1 student] ep 15/16 loss 0.0018 val acc 0.9370 macroF1 0.5398 (31s)
+[s1 student] ep 16/16 loss 0.0017 val acc 0.9355 macroF1 0.5347 (31s)
+[s1 qat] ep 1/4 loss 0.0086 val acc 0.9457 macroF1 0.5594 (32s)
+[s1 qat] ep 2/4 loss 0.0079 val acc 0.9482 macroF1 0.6375 (30s)
+[s1 qat] ep 3/4 loss 0.0070 val acc 0.9463 macroF1 0.6092 (32s)
+[s1 qat] ep 4/4 loss 0.0065 val acc 0.9469 macroF1 0.6006 (32s)
+--- seed 2  class weights {'N': np.float64(0.868), 'S': np.float64(0.923), 'V': np.float64(0.868), 'F': np.float64(1.342)}
+[s2 student] ep 1/16 loss 0.0494 val acc 0.9398 macroF1 0.4986 (32s)
+[s2 student] ep 2/16 loss 0.0191 val acc 0.9376 macroF1 0.5414 (31s)
+[s2 student] ep 3/16 loss 0.0143 val acc 0.9371 macroF1 0.4948 (29s)
+[s2 student] ep 4/16 loss 0.0117 val acc 0.9474 macroF1 0.6502 (28s)
+[s2 student] ep 5/16 loss 0.0100 val acc 0.9445 macroF1 0.5479 (28s)
+[s2 student] ep 6/16 loss 0.0087 val acc 0.9444 macroF1 0.5675 (30s)
+[s2 student] ep 7/16 loss 0.0076 val acc 0.9421 macroF1 0.6523 (30s)
+[s2 student] ep 8/16 loss 0.0066 val acc 0.9429 macroF1 0.5450 (28s)
+[s2 student] ep 9/16 loss 0.0055 val acc 0.9432 macroF1 0.6168 (29s)
+[s2 student] ep 10/16 loss 0.0045 val acc 0.9424 macroF1 0.5739 (29s)
+[s2 student] ep 11/16 loss 0.0039 val acc 0.9458 macroF1 0.6608 (29s)
+[s2 student] ep 12/16 loss 0.0029 val acc 0.9409 macroF1 0.6165 (29s)
+[s2 student] ep 13/16 loss 0.0025 val acc 0.9460 macroF1 0.6355 (29s)
+[s2 student] ep 14/16 loss 0.0021 val acc 0.9455 macroF1 0.6408 (28s)
+[s2 student] ep 15/16 loss 0.0018 val acc 0.9439 macroF1 0.6289 (30s)
+[s2 student] ep 16/16 loss 0.0017 val acc 0.9448 macroF1 0.6347 (28s)
+[s2 qat] ep 1/4 loss 0.0050 val acc 0.9433 macroF1 0.6341 (30s)
+[s2 qat] ep 2/4 loss 0.0047 val acc 0.9447 macroF1 0.6500 (28s)
+[s2 qat] ep 3/4 loss 0.0040 val acc 0.9422 macroF1 0.6096 (30s)
+[s2 qat] ep 4/4 loss 0.0036 val acc 0.9423 macroF1 0.6252 (31s)
+--- seed 3  class weights {'N': np.float64(0.868), 'S': np.float64(0.923), 'V': np.float64(0.868), 'F': np.float64(1.342)}
+[s3 student] ep 1/16 loss 0.0441 val acc 0.9485 macroF1 0.5318 (29s)
+[s3 student] ep 2/16 loss 0.0188 val acc 0.9477 macroF1 0.5734 (29s)
+[s3 student] ep 3/16 loss 0.0141 val acc 0.9408 macroF1 0.5226 (30s)
+[s3 student] ep 4/16 loss 0.0117 val acc 0.9409 macroF1 0.5050 (31s)
+[s3 student] ep 5/16 loss 0.0099 val acc 0.9424 macroF1 0.5762 (30s)
+[s3 student] ep 6/16 loss 0.0088 val acc 0.9382 macroF1 0.5304 (31s)
+[s3 student] ep 7/16 loss 0.0079 val acc 0.9427 macroF1 0.5948 (28s)
+[s3 student] ep 8/16 loss 0.0069 val acc 0.9390 macroF1 0.6220 (28s)
+[s3 student] ep 9/16 loss 0.0057 val acc 0.9329 macroF1 0.5373 (29s)
+[s3 student] ep 10/16 loss 0.0049 val acc 0.9391 macroF1 0.5643 (29s)
+[s3 student] ep 11/16 loss 0.0040 val acc 0.9365 macroF1 0.5671 (28s)
+[s3 student] ep 12/16 loss 0.0034 val acc 0.9432 macroF1 0.5960 (28s)
+[s3 student] ep 13/16 loss 0.0028 val acc 0.9382 macroF1 0.5734 (29s)
+[s3 student] ep 14/16 loss 0.0024 val acc 0.9399 macroF1 0.5812 (31s)
+[s3 student] ep 15/16 loss 0.0020 val acc 0.9391 macroF1 0.5909 (30s)
+[s3 student] ep 16/16 loss 0.0020 val acc 0.9391 macroF1 0.5847 (30s)
+[s3 qat] ep 1/4 loss 0.0059 val acc 0.9325 macroF1 0.6070 (32s)
+[s3 qat] ep 2/4 loss 0.0053 val acc 0.9384 macroF1 0.5941 (31s)
+[s3 qat] ep 3/4 loss 0.0049 val acc 0.9402 macroF1 0.5798 (32s)
+[s3 qat] ep 4/4 loss 0.0044 val acc 0.9374 macroF1 0.6092 (32s)
+--- seed 4  class weights {'N': np.float64(0.868), 'S': np.float64(0.923), 'V': np.float64(0.868), 'F': np.float64(1.342)}
+[s4 student] ep 1/16 loss 0.0452 val acc 0.9383 macroF1 0.5377 (30s)
+[s4 student] ep 2/16 loss 0.0183 val acc 0.9449 macroF1 0.5410 (30s)
+[s4 student] ep 3/16 loss 0.0137 val acc 0.9338 macroF1 0.5015 (30s)
+[s4 student] ep 4/16 loss 0.0114 val acc 0.9303 macroF1 0.5512 (31s)
+[s4 student] ep 5/16 loss 0.0098 val acc 0.9442 macroF1 0.5415 (32s)
+[s4 student] ep 6/16 loss 0.0088 val acc 0.9509 macroF1 0.6550 (31s)
+[s4 student] ep 7/16 loss 0.0078 val acc 0.9443 macroF1 0.6307 (30s)
+[s4 student] ep 8/16 loss 0.0065 val acc 0.9476 macroF1 0.6137 (29s)
+[s4 student] ep 9/16 loss 0.0055 val acc 0.9457 macroF1 0.5830 (28s)
+[s4 student] ep 10/16 loss 0.0046 val acc 0.9474 macroF1 0.5896 (29s)
+[s4 student] ep 11/16 loss 0.0036 val acc 0.9509 macroF1 0.5798 (28s)
+[s4 student] ep 12/16 loss 0.0030 val acc 0.9433 macroF1 0.5853 (28s)
+[s4 student] ep 13/16 loss 0.0025 val acc 0.9433 macroF1 0.5673 (29s)
+[s4 student] ep 14/16 loss 0.0022 val acc 0.9436 macroF1 0.5435 (31s)
+[s4 student] ep 15/16 loss 0.0019 val acc 0.9442 macroF1 0.5691 (29s)
+[s4 student] ep 16/16 loss 0.0018 val acc 0.9451 macroF1 0.5746 (28s)
+[s4 qat] ep 1/4 loss 0.0073 val acc 0.9437 macroF1 0.5623 (31s)
+[s4 qat] ep 2/4 loss 0.0063 val acc 0.9468 macroF1 0.5548 (30s)
+[s4 qat] ep 3/4 loss 0.0058 val acc 0.9446 macroF1 0.5678 (30s)
+[s4 qat] ep 4/4 loss 0.0054 val acc 0.9469 macroF1 0.5913 (29s)
+
+== student_float [test] over seeds [0, 1, 2, 3, 4]
+  accuracy  0.9232 +/- 0.0076
+  macro_f1  0.5260 +/- 0.0134
+  f1_N      0.9596 +/- 0.0048
+  f1_S      0.2680 +/- 0.0359
+  f1_V      0.8620 +/- 0.0247
+  f1_F      0.0142 +/- 0.0087
+  se_S      0.2563 +/- 0.0450
+  se_V      0.9596 +/- 0.0064
+
+== student_int8 [test] over seeds [0, 1, 2, 3, 4]
+  accuracy  0.9234 +/- 0.0131
+  macro_f1  0.5303 +/- 0.0106
+  f1_N      0.9594 +/- 0.0077
+  f1_S      0.2697 +/- 0.0255
+  f1_V      0.8681 +/- 0.0438
+  f1_F      0.0239 +/- 0.0169
+  se_S      0.2537 +/- 0.0375
+  se_V      0.9523 +/- 0.0114
+saved /tmp/final3/train_final_incart.json

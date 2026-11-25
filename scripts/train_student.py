@@ -105,10 +105,12 @@ def run_seed(a, seed, T, te):
     cls_w = class_balanced_weights(y_tr.cpu().numpy(), a.cb_beta).to(DEV)
     print(f"--- seed {seed}  class weights {dict(zip(CLASSES, np.round(cls_w.tolist(), 3)))}")
 
-    teacher = TeacherSEResNet1D(nscal=a.ncol, dropout=a.teacher_dropout).to(DEV)
-    teacher = fit(teacher, xd_tr, ss_tr, y_tr, (xd_va, ss_va, y_va), a.teacher_epochs, 2e-3,
-                  cls_w, a, wd=a.teacher_wd, smooth=a.smooth, noise=a.noise, tag=f"s{seed} teacher")
-    t_logits = predict(teacher, xd_tr, ss_tr)
+    teacher, t_logits = None, None
+    if not a.no_teacher:
+        teacher = TeacherSEResNet1D(nscal=a.ncol, dropout=a.teacher_dropout).to(DEV)
+        teacher = fit(teacher, xd_tr, ss_tr, y_tr, (xd_va, ss_va, y_va), a.teacher_epochs, 2e-3,
+                      cls_w, a, wd=a.teacher_wd, smooth=a.smooth, noise=a.noise, tag=f"s{seed} teacher")
+        t_logits = predict(teacher, xd_tr, ss_tr)
 
     student = StudentSiliconTCN(width=a.width, nscal=a.ncol).to(DEV)
     student = fit(student, xs_tr, ss_tr, y_tr, (xs_va, ss_va, y_va), a.student_epochs, 3e-3,
@@ -129,14 +131,16 @@ def run_seed(a, seed, T, te):
                  cls_w, a, teacher_logits=t_logits, wd=a.student_wd, tag=f"s{seed} qat")
 
     out = dict(seed=seed, footprint_bytes=folded.footprint_bytes(),
-               val=dict(teacher=evaluate(teacher, xd_va, ss_va, y_va),
-                        student_float=evaluate(student, xs_va, ss_va, y_va),
+               val=dict(student_float=evaluate(student, xs_va, ss_va, y_va),
                         student_int8=evaluate(folded, xs_va, ss_va, y_va)))
+    if teacher is not None:
+        out["val"]["teacher"] = evaluate(teacher, xd_va, ss_va, y_va)
     if te is not None:                      # --final only
         xs_te, ss_te, xd_te, y_te = te
-        out["test"] = dict(teacher=evaluate(teacher, xd_te, ss_te, y_te),
-                           student_float=evaluate(student, xs_te, ss_te, y_te),
+        out["test"] = dict(student_float=evaluate(student, xs_te, ss_te, y_te),
                            student_int8=evaluate(folded, xs_te, ss_te, y_te))
+        if teacher is not None:
+            out["test"]["teacher"] = evaluate(teacher, xd_te, ss_te, y_te)
     torch.save(dict(student=student.state_dict(), folded=folded.state_dict(), width=a.width,
                     delta_mv=a.delta, seed=seed), Path(a.out) / f"student_{a.tag}_seed{seed}.pt")
     return out
@@ -146,6 +150,8 @@ def summarize(runs, split):
     keys = ["accuracy", "macro_f1"]
     rows = {}
     for model in ("teacher", "student_float", "student_int8"):
+        if model not in runs[0][split]:
+            continue
         vals = {k: [r[split][model][k] for r in runs] for k in keys}
         for c in CLASSES:
             vals[f"f1_{c}"] = [r[split][model][c]["f1"] for r in runs]
@@ -183,6 +189,11 @@ def main() -> None:
     ap.add_argument("--tag", default="dev")
     ap.add_argument("--threads", type=int, default=0)
     ap.add_argument("--svdb-dir", default="", help="extra TRAINING data (never evaluated); e.g. data/svdb")
+    ap.add_argument("--extra", action="append", default=[], metavar="DIR:LEAD",
+                    help="extra TRAINING database, e.g. data/incart:II (repeatable; never evaluated)")
+    ap.add_argument("--extra-n-keep", type=int, default=0,
+                    help="keep at most this many normal beats from each extra database (rebalancing)")
+    ap.add_argument("--no-teacher", action="store_true", help="train the student without distillation")
     ap.add_argument("--delayed", action="store_true", help="use non-causal next-RR columns (off by default)")
     ap.add_argument("--device", default="auto", choices=["auto", "cpu", "cuda"])
     ap.add_argument("--subsample", type=int, default=0, help="debug: random subset of train beats")
@@ -216,6 +227,21 @@ def main() -> None:
         print(f"extra training data: SVDB {len(sv['y'])} beats, classes "
               f"{np.bincount(sv['y'].astype(int), minlength=4).tolist()}")
         tr = {k: np.concatenate([tr[k], sv[k]]) for k in tr if k != "stats"}
+    for spec in a.extra:
+        edir, elead = spec.rsplit(":", 1)
+        erecs = sorted(p.stem for p in Path(edir).glob("*.hea"))
+        ex = build_dataset(erecs, edir, cfg, jitter=a.jitter, copies=1, want_dense=True,
+                           cache_dir=a.cache, seed=2, verbose=False, lead=elead)
+        print(f"extra training data: {Path(edir).name} {len(ex['y'])} beats, classes "
+              f"{np.bincount(ex['y'].astype(int), minlength=4).tolist()}")
+        if a.extra_n_keep:
+            rs = np.random.default_rng(7)
+            n_idx = np.flatnonzero(ex["y"] == 0)
+            drop = rs.permutation(n_idx)[a.extra_n_keep:]
+            keep = np.ones(len(ex["y"]), bool); keep[drop] = False
+            ex = {k: (v[keep] if k != "stats" else v) for k, v in ex.items()}
+            print(f"  rebalanced to {len(ex['y'])} beats, classes {np.bincount(ex['y'].astype(int), minlength=4).tolist()}")
+        tr = {k: np.concatenate([tr[k], ex[k]]) for k in tr if k != "stats"}
     va = build_dataset(val_recs, a.data_dir, cfg, want_dense=True, cache_dir=a.cache, verbose=False)
     T = dict(tr=tens(tr), va=tens(va))
     if a.subsample and a.subsample < len(T["tr"][3]):

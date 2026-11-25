@@ -1,0 +1,52 @@
+device: cpu 
+train 18 rec | val ['108', '116', '201', '209'] | DS2 used: False
+extra training data: incart 175767 beats, classes [153583, 1959, 20006, 219]
+  rebalanced to 62184 beats, classes [40000, 1959, 20006, 219]
+--- seed 0  class weights {'N': np.float64(0.868), 'S': np.float64(0.923), 'V': np.float64(0.868), 'F': np.float64(1.342)}
+[s0 student] ep 1/16 loss 0.0457 val acc 0.9437 macroF1 0.5109 (32s)
+[s0 student] ep 2/16 loss 0.0193 val acc 0.9119 macroF1 0.4451 (31s)
+[s0 student] ep 3/16 loss 0.0138 val acc 0.9346 macroF1 0.4843 (32s)
+[s0 student] ep 4/16 loss 0.0116 val acc 0.9364 macroF1 0.5462 (31s)
+[s0 student] ep 5/16 loss 0.0096 val acc 0.9333 macroF1 0.5148 (30s)
+[s0 student] ep 6/16 loss 0.0090 val acc 0.9335 macroF1 0.4900 (30s)
+[s0 student] ep 7/16 loss 0.0075 val acc 0.9318 macroF1 0.6115 (29s)
+[s0 student] ep 8/16 loss 0.0065 val acc 0.9361 macroF1 0.5878 (30s)
+[s0 student] ep 9/16 loss 0.0055 val acc 0.9379 macroF1 0.5812 (30s)
+[s0 student] ep 10/16 loss 0.0047 val acc 0.9340 macroF1 0.5913 (32s)
+[s0 student] ep 11/16 loss 0.0038 val acc 0.9374 macroF1 0.5999 (30s)
+[s0 student] ep 12/16 loss 0.0031 val acc 0.9413 macroF1 0.6073 (32s)
+[s0 student] ep 13/16 loss 0.0026 val acc 0.9367 macroF1 0.6327 (31s)
+[s0 student] ep 14/16 loss 0.0022 val acc 0.9379 macroF1 0.6249 (32s)
+[s0 student] ep 15/16 loss 0.0019 val acc 0.9394 macroF1 0.6365 (32s)
+[s0 student] ep 16/16 loss 0.0018 val acc 0.9390 macroF1 0.6488 (32s)
+[s0 qat] ep 1/4 loss 0.0038 val acc 0.9317 macroF1 0.6165 (32s)
+[s0 qat] ep 2/4 loss 0.0036 val acc 0.9362 macroF1 0.6430 (33s)
+[s0 qat] ep 3/4 loss 0.0036 val acc 0.9262 macroF1 0.5970 (33s)
+[s0 qat] ep 4/4 loss 0.0030 val acc 0.9313 macroF1 0.6086 (34s)
+
+== student_float [val] over seeds [0]
+  accuracy  0.9390 +/- 0.0000
+  macro_f1  0.6488 +/- 0.0000
+  f1_N      0.9719 +/- 0.0000
+  f1_S      0.4281 +/- 0.0000
+  f1_V      0.7951 +/- 0.0000
+  f1_F      0.4000 +/- 0.0000
+  se_S      0.3547 +/- 0.0000
+  se_V      0.9015 +/- 0.0000
+
+== student_int8 [val] over seeds [0]
+  accuracy  0.9362 +/- 0.0000
+  macro_f1  0.6430 +/- 0.0000
+  f1_N      0.9698 +/- 0.0000
+  f1_S      0.4371 +/- 0.0000
+  f1_V      0.7650 +/- 0.0000
+  f1_F      0.4000 +/- 0.0000
+  se_S      0.3740 +/- 0.0000
+  se_V      0.8062 +/- 0.0000
+== int8 student seed 0 [val]
+  accuracy  93.62%   macro-F1 0.643
+  N: Se 0.977  +P 0.963  F1 0.970  (n=8292)
+  S: Se 0.374  +P 0.526  F1 0.437  (n=516)
+  V: Se 0.806  +P 0.728  F1 0.765  (n=325)
+  F: Se 0.250  +P 1.000  F1 0.400  (n=4)
+saved /tmp/dev5/train_dev_incart3.json

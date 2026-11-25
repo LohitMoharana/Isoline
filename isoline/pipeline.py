@@ -5,6 +5,8 @@ import hashlib
 import json
 from pathlib import Path
 
+import zlib
+
 import numpy as np
 
 from . import afe, data, features
@@ -16,6 +18,14 @@ VERSION = 7  # bump when feature definitions change (invalidates caches)
 def _label(sym: str) -> int:
     c = AAMI_MAP.get(sym, "Q")
     return CLASS_IDX.get(c, -1)
+
+
+def _rec_id(rec) -> int:
+    """Numeric record id (MIT-BIH style) or a stable hash for names like 'I01'."""
+    try:
+        return int(rec)
+    except ValueError:
+        return int(zlib.crc32(str(rec).encode()) % 100000) + 1000
 
 
 def build_dataset(records, data_dir, afe_cfg: AFEConfig, jitter: int = 0,
@@ -47,7 +57,7 @@ def build_dataset(records, data_dir, afe_cfg: AFEConfig, jitter: int = 0,
     stats = dict(samples=0, zero_slots=0, up=0, dn=0, seconds=0.0)
     for rec in records:
         x, r, sym = data.load_mitdb_record(data_dir, rec, lead=lead)
-        rng = np.random.default_rng(seed * 100003 + int(rec))
+        rng = np.random.default_rng(seed * 100003 + _rec_id(rec))
         up, dn, filt = afe.run_afe(x, afe_cfg, rng)
         acc = features.leaky_integrator(up, dn)
         stats["samples"] += len(x)
@@ -60,7 +70,7 @@ def build_dataset(records, data_dir, afe_cfg: AFEConfig, jitter: int = 0,
                 up, dn, acc, r, sym,
                 raw=x if want_dense else None, filt=filt if want_dense else None,
                 jitter=jitter, rng=rng)
-            f["rec"] = np.full(len(f["sym"]), int(rec), np.int32)
+            f["rec"] = np.full(len(f["sym"]), _rec_id(rec), np.int32)
             parts.append(f)
         if verbose:
             print(f"  rec {rec}: {len(r)} beats, "

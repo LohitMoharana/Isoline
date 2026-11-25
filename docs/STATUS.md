@@ -19,6 +19,17 @@ until the PoC is finished.
 Context for the accuracy number: always predicting "normal" scores 89.0 % on DS2, so 93.7 % is only
 4.7 points above trivial. Per-class F1 is the honest metric.
 
+## Update 2026-11-25
+
+* Round 2 (see README): INCART extra data, student without teacher, selection by macro-F1 -> DS2 accuracy 92.3 ± 1.3 %,
+  macro-F1 0.530, S F1 0.270, V F1 0.868. S improves, accuracy and V drop slightly. DS2 has now been used for two
+  frozen final runs; any further DS2 number must be reported as a new, additional look.
+* Negative DS1 results are in `results/exp_ideas_log.txt` (second lead, class scaling, dense waveform, multi-scale dV).
+* Runs happen on a 2-core cloud CPU; the RTX laptop is not reachable from the cloud session, so GPU runs must be started by hand
+  on Windows (`pip install torch --index-url https://download.pytorch.org/whl/cu128`).
+* Next: tune the INCART mix (N subsampling, weight), try the SVDB+INCART combination on the student, stronger
+  regularisation (loss is ~0.002), and decide how to pick checkpoints on a larger validation set than 4 records.
+
 ## Rules we agreed to follow (do not break these)
 
 1. **DS2 is the test set. Never tune on it.** All choices (dV, features, loss, early stopping,

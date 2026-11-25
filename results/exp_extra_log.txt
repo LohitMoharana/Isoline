@@ -1,0 +1,14 @@
+svdb: 184384 beats, classes [162225, 12195, 9941, 23], idle sparsity 0.866
+incart: 175767 beats, classes [153583, 1959, 20006, 219], idle sparsity 0.889
+== DS1 grouped-CV: DS1 only (extra weight 1.0)
+  accuracy  93.70%   macro-F1 0.508
+  N: Se 0.963  +P 0.974  F1 0.968  (n=45833)
+  S: Se 0.255  +P 0.260  F1 0.257  (n=944)
+  V: Se 0.897  +P 0.732  F1 0.806  (n=3788)
+  F: Se 0.000  +P 0.000  F1 0.000  (n=414)
+== DS1 grouped-CV: DS1 + INCART (extra weight 1.0)
+  accuracy  94.70%   macro-F1 0.559
+  N: Se 0.969  +P 0.981  F1 0.975  (n=45833)
+  S: Se 0.358  +P 0.511  F1 0.421  (n=944)
+  V: Se 0.923  +P 0.713  F1 0.804  (n=3788)
+  F: Se 0.024  +P 0.078  F1 0.037  (n=414)

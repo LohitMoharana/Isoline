@@ -71,6 +71,19 @@ MIT-BIH, AAMI classes, paced records excluded).
 
 **89.7 % idle sparsity** (≈ 55 spikes/s on average) at ΔV = 0.1 mV.
 
+### Round 2: INCART as extra training patients (5 seeds, DS2 once, frozen config)
+
+Adding the INCART database (75 records, training only, never tested) helped the gradient-boosting probe on DS1 CV
+(accuracy 93.70 → 94.70 %, S F1 0.26 → 0.42) and was frozen as a design choice from that evidence plus a DS1-only dev run.
+
+| int8 student, DS2, 5 seeds | Accuracy | Macro-F1 | S F1 | V F1 | F F1 |
+|---|---|---|---|---|---|
+| Round 1 (MIT-BIH DS1 only, distilled) | **93.7 ± 0.4 %** | 0.507 | 0.167 ± 0.022 | 0.891 ± 0.014 | 0.002 |
+| Round 2 (+ INCART, no teacher, macro-F1 selection) | 92.3 ± 1.3 % | **0.530 ± 0.011** | **0.270 ± 0.026** | 0.868 ± 0.044 | 0.024 |
+
+It is a trade, not a win: S F1 rises by about 0.10 and macro-F1 by 0.02, but accuracy falls 1.4 points and V gets slightly
+worse. Neither run reaches the 95.5 % gate or the ~96 % literature ceiling.
+
 ### What moved the needle
 
 <img src="docs/img/fig_progression.png" alt="Feature progression" width="900">
