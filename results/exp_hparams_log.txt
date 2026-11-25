@@ -1,0 +1,3 @@
+incart         base+long+clu    nk40000 rs0 it300 lf31 lr0.05 acc 95.03  macroF1 0.598  S F1 0.457 (Se 0.40 +P 0.53)  V F1 0.815  F F1 0.141
+incart         base+long+clu    nk40000 rs0 it600 lf31 lr0.03 acc 95.01  macroF1 0.595  S F1 0.449 (Se 0.40 +P 0.52)  V F1 0.815  F F1 0.140
+incart         base+long+clu    nk40000 rs0 it400 lf63 lr0.05 acc 95.14  macroF1 0.588  S F1 0.459 (Se 0.40 +P 0.54)  V F1 0.819  F F1 0.098
