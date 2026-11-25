@@ -1,0 +1,17 @@
+fold 0 done
+fold 1 done
+fold 2 done
+fold 3 done
+fold 4 done
+== stage 1 (DS1 grouped CV)
+  accuracy  95.03%   macro-F1 0.599
+  N: Se 0.969  +P 0.985  F1 0.977  (n=45833)
+  S: Se 0.411  +P 0.509  F1 0.455  (n=944)
+  V: Se 0.948  +P 0.719  F1 0.818  (n=3788)
+  F: Se 0.094  +P 0.322  F1 0.146  (n=414)
+== stage 2 with causal prediction memory (DS1 grouped CV)
+  accuracy  95.02%   macro-F1 0.635
+  N: Se 0.966  +P 0.988  F1 0.977  (n=45833)
+  S: Se 0.558  +P 0.564  F1 0.561  (n=944)
+  V: Se 0.951  +P 0.699  F1 0.806  (n=3788)
+  F: Se 0.116  +P 0.632  F1 0.196  (n=414)

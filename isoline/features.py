@@ -41,7 +41,7 @@ SCAL_NAMES = ["pre_rr", "rr_ewma", "delta_rr", "beat_spikes", "spike_ewma",
               # --- very-long RR memory + baseline noise level (columns 26..31, causal) ---
               "rr_vlong", "pre_over_vlong", "long_over_vlong", "quiet_spikes", "noise_ewma", "noise_ratio",
               # --- online per-patient morphology clusters (columns 32..37, causal) ---
-              "clu_dist", "clu_pop", "clu_rank", "clu_rr", "clu_active", "clu_dist_ratio"]
+              "clu_dist", "clu_pop", "clu_rank", "clu_rr", "clu_active", "clu_dist_ratio", "clu_id"]
 EXTRA_CAUSAL = [16, 17, 18, 19, 20]
 LONG_CAUSAL = [21, 22, 23, 24, 25]
 NOISE_CAUSAL = [26, 27, 28, 29, 30, 31]
@@ -203,6 +203,7 @@ def extract_record(up, dn, acc, r, symbols, raw=None, filt=None,
                 crr[jn] = crr[jn] - (crr[jn] >> 3) + rr_ratio
             cnt = cnt - (cnt >> 4)
             cnt[jn] += 16
+            clus_feats.append(jn)                  # assigned cluster slot (used by the 2nd stage)
             dmin_state = dmin_state - (dmin_state >> 3) + min(dn_, 4095)
             d = np.minimum(np.abs(r3).sum(axis=1), 65535)
             dprev = int(min(np.abs(h3 - prev_h3).sum(), 65535)) if prev_h3 is not None else 0
