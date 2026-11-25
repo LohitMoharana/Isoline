@@ -85,21 +85,48 @@ def main():
     Xe, ye, ge, cide = X_of(e)[keep], ye_all[keep], e["rec"][keep], e["scal"][keep, 38]
     # memory features need the full time order; for INCART the subsample drops some N beats - recompute on kept beats
 
-    p1 = np.zeros_like(y); p2 = np.zeros_like(y)
+    p1 = np.zeros_like(y); p2 = np.zeros_like(y); P1o = np.zeros((len(y), 4)); P2o = np.zeros((len(y), 4))
     for k, (tr, te) in enumerate(GroupKFold(5).split(X, y, g)):
         Xtr = np.concatenate([X[tr], Xe]); ytr = np.concatenate([y[tr], ye]); gtr = np.concatenate([g[tr], ge])
         Ptr = oof(Xtr, ytr, gtr)                                   # inner OOF stage-1 probs
         m1 = fitp(Xtr, ytr)
         Pte = m1.predict_proba(X[te]).astype(np.float32)
-        p1[te] = Pte.argmax(1)
+        p1[te] = Pte.argmax(1); P1o[te] = Pte
         Mtr = memory_feats(Ptr, gtr, np.concatenate([cid[tr], cide]))
         Mte = memory_feats(Pte, g[te], cid[te])
         m2 = fitp(np.concatenate([Xtr, Mtr], 1), ytr, WPOW)
-        p2[te] = m2.predict(np.concatenate([X[te], Mte], 1))
+        P2o[te] = m2.predict_proba(np.concatenate([X[te], Mte], 1)); p2[te] = P2o[te].argmax(1)
         print(f"fold {k} done", flush=True)
     print(format_report(report(y, p1), "== stage 1 (DS1 grouped CV)"))
+    np.savez("/tmp/stage2_oof.npz", P1=P1o, P2=P2o, y=y)
     print(format_report(report(y, p2), f"== stage 2 with causal prediction memory, stage-2 weight power {WPOW} (DS1 grouped CV)"))
 
 
+def external(D, INC, SV, cache):
+    """Train both stages on all of DS1 + INCART, evaluate on SVDB (external dev set)."""
+    cfg = replace(AFEConfig(), delta_mv=0.1)
+    ds1, _ = data.get_splits(D)
+    d = build_dataset(ds1, D, cfg, cache_dir=cache, verbose=False)
+    e = build_dataset(sorted(p.stem for p in Path(INC).glob("*.hea")), INC, cfg, cache_dir=cache, verbose=False, lead="II")
+    v = build_dataset(sorted(p.stem for p in Path(SV).glob("*.hea")), SV, cfg, cache_dir=cache, verbose=False, lead="ECG1")
+    rs = np.random.default_rng(0)
+    ye = e["y"].astype(int); keep = np.ones(len(ye), bool)
+    keep[rs.permutation(np.flatnonzero(ye == 0))[40000:]] = False
+    Xtr = np.concatenate([X_of(d), X_of(e)[keep]]); ytr = np.concatenate([d["y"].astype(int), ye[keep]])
+    gtr = np.concatenate([d["rec"], e["rec"][keep]]); ctr = np.concatenate([d["scal"][:, 38], e["scal"][keep, 38]])
+    Ptr = oof(Xtr, ytr, gtr)
+    m1 = fitp(Xtr, ytr)
+    m2 = fitp(np.concatenate([Xtr, memory_feats(Ptr, gtr, ctr)], 1), ytr, WPOW)
+    Xv, yv = X_of(v), v["y"].astype(int)
+    Pv1 = m1.predict_proba(Xv).astype(np.float32)
+    Pv2 = m2.predict_proba(np.concatenate([Xv, memory_feats(Pv1, v["rec"], v["scal"][:, 38])], 1))
+    np.savez("/tmp/stage2_svdb.npz", P1=Pv1, P2=Pv2, y=yv, g=v["rec"])
+    print(format_report(report(yv, Pv1.argmax(1)), "== SVDB external, stage 1"))
+    print(format_report(report(yv, Pv2.argmax(1)), "== SVDB external, stage 2"))
+
+
 if __name__ == "__main__":
+    if len(sys.argv) > 4 and sys.argv[4] == "external":
+        external(sys.argv[1], sys.argv[2], "/home/claude/data/svdb", sys.argv[3])
+        sys.exit()
     main()
