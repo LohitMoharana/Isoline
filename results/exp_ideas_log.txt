@@ -1,0 +1,16 @@
+# DS1-only grouped 5-fold CV, gradient boosting, dV = 0.1 mV (DS2 never loaded). 2026-11-25
+# scripts/exp_ideas.py plus ad-hoc probes. Baseline = 13 causal scalars + spike hist + template residual.
+baseline (argmax)                         acc 93.70  macroF1 0.508  S F1 0.257  V F1 0.806  F F1 0.000
+per-class score scaling (nested CV)       acc 92.72  macroF1 0.498  S F1 0.237  V F1 0.785   -> worse
++ second lead (non-MLII channel)          acc 93.74  macroF1 0.508  S F1 0.256  V F1 0.807   -> no gain
++ second lead + nested class scaling      acc 93.04  macroF1 0.495  S F1 0.215               -> worse
+dense filtered waveform (/4) + scalars    acc 92.94  macroF1 0.484  S F1 0.207  V F1 0.764   -> spikes+template better
+spike feats + dense waveform              acc 93.70  macroF1 0.504  S F1 0.258  V F1 0.789   -> no gain
++ irregularity, RR(t-1)/RR(t-2)           acc 93.75  macroF1 0.513  S F1 0.281  V F1 0.800   -> within noise
++ prev-beat distance, prev template dist  acc 93.72  macroF1 0.509  S F1 0.265  V F1 0.803   -> no gain
++ all 5 extra causal columns              acc 93.71  macroF1 0.510  S F1 0.276  V F1 0.796   -> no gain
+multi-scale dV (0.05 + 0.1 + 0.2 hist)    acc 93.59  macroF1 0.503  S F1 0.245  V F1 0.797   -> no gain
+# Neural student with full SVDB (dev, DS1_VAL hold-out, 1 seed, run died at epoch 28/30):
+#   val acc ~93.0-93.2 %, macro-F1 ~0.50 vs 94.8 % / 0.52 for the no-SVDB run -> not adopted.
+# Error analysis (baseline OOF): S misses concentrate in a few records (209: 310/383 missed; 207: 107/107;
+#   201: 102/128; 223: 70/73) and false alarms in noisy records (203: 282 S + 858 V false positives).

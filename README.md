@@ -103,6 +103,32 @@ This is a working baseline, **not a state-of-the-art result**.
 **unproven** — on an FPGA, static idle power dwarfs compute energy. The compute platform is intentionally undecided
 until this PoC is finished. See [`docs/STATUS.md`](docs/STATUS.md).
 
+## Where the ceiling is (and what did not move it)
+
+Credible published inter-patient results on the same De Chazal split top out around **96.1–96.2 % accuracy**
+(S F1 ≈ 0.69, V F1 ≈ 0.94; e.g. a weighted kernel ELM and a 6-feature random forest). Much higher numbers in the
+literature (98–99 %) come from intra-patient / random-beat splits, one-vs-rest "accuracy", or are unverified, and are
+**not comparable**. Those methods use full-rate waveforms and large models; Isoline sees only sparse level-crossing
+events and fits in 9 KB, so we are about 2.4 points below that ceiling on accuracy and far below it on S.
+
+Round 2 of experiments (DS1 grouped CV only, DS2 untouched; full table in
+[`results/exp_ideas_log.txt`](results/exp_ideas_log.txt)):
+
+| Idea | DS1 CV accuracy | Verdict |
+|---|---|---|
+| baseline | 93.70 % | — |
+| per-class score scaling (nested CV) | 92.72 % | worse |
+| second ECG lead | 93.74 % | no gain |
+| dense raw waveform instead of spikes | 92.94 % | worse: spikes + template carry the signal |
+| rhythm-irregularity / previous-beat features | 93.71–93.75 % | within noise |
+| multi-scale ΔV (0.05 + 0.1 + 0.2 mV) | 93.59 % | no gain |
+| full SVDB for the neural student | ≈93.1 % (1 seed, dev hold-out) vs 94.8 % without | worse, not adopted |
+
+Takeaway: with these hardware-feasible features the DS1 estimate saturates near 93.7–94 %. The S misses are concentrated
+in a handful of records (e.g. 209) and the false alarms in noisy ones (e.g. 203), so more feature engineering on the
+same signal is unlikely to close the gap; likely levers are more diverse training patients and per-beat morphology
+detail that the sparse encoding discards.
+
 ## Research integrity
 
 * **DS2 is the test set — never used for tuning.** ΔV, features, loss and early stopping are all chosen on DS1

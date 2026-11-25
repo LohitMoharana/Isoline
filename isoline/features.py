@@ -33,9 +33,12 @@ SCAL_NAMES = ["pre_rr", "rr_ewma", "delta_rr", "beat_spikes", "spike_ewma",
               "prev_rr", "rr_ratio_prev",           # previous interval, cur/prev
               "d_up", "d_dn", "d_acc", "d_tot",     # L1 distance to patient template
               # --- NON-causal (one-beat decision delay); excluded unless requested ---
-              "post_rr", "post_ratio", "post_pre_ratio"]
+              "post_rr", "post_ratio", "post_pre_ratio",
+              # --- extra CAUSAL context (columns 16..20) ---
+              "irr_ewma", "prev_rr_ratio2", "d_prev_beat", "prev_d_tot", "prev_rr_ratio"]
+EXTRA_CAUSAL = [16, 17, 18, 19, 20]
 N_CAUSAL = 13                                       # first 13 columns are strictly causal
-N_DELAYED = len(SCAL_NAMES)                         # + next-RR columns (16)
+N_DELAYED = 16                                      # columns 13..15 are the next-RR columns
 
 GAIN_T_LOG2 = 5   # histograms are shifted right so the spike-energy EWMA sits below 2**6
 
@@ -102,6 +105,11 @@ def extract_record(up, dn, acc, r, symbols, raw=None, filt=None,
     hist, res, scal, sym, rr_idx, rawW, filtW = [], [], [], [], [], [], []
     rr_state = None
     prev_pre = 0
+    prev_pre2 = 0                                  # RR two beats back
+    irr_state = 0                                  # 8x EWMA of |dRR| (rhythm irregularity)
+    prev_h3 = None                                 # previous beat's normalised histogram
+    prev_dtot = 0                                  # previous beat's distance to the template
+    prev_rrr = 32                                  # previous beat's RR ratio
     sp_state = 0
     sp_primed = False
     tmpl8 = None                                   # 8x-scaled template accumulator
@@ -110,6 +118,7 @@ def extract_record(up, dn, acc, r, symbols, raw=None, filt=None,
         if rr_state is None:
             rr_state = 8 * pre
             prev_pre = pre
+            prev_pre2 = pre
         rr_ewma_prev = rr_state >> 3
         delta = pre - prev_pre
         rr_ratio = min((pre * RR_Q) // max(rr_ewma_prev, 1), 255)
@@ -146,12 +155,18 @@ def extract_record(up, dn, acc, r, symbols, raw=None, filt=None,
                     tmpl8 = tmpl8 - tmpl + h3
             r3 = h3 - tmpl
             d = np.minimum(np.abs(r3).sum(axis=1), 65535)
+            dprev = int(min(np.abs(h3 - prev_h3).sum(), 65535)) if prev_h3 is not None else 0
+            irr = irr_state >> 3
+            pre_pre2 = min((prev_pre * RR_Q) // max(prev_pre2, 1), 255)
             hist.append(h3.astype(np.int16))
             res.append(r3.astype(np.int16))
             scal.append([pre, rr_ewma_prev, delta, beat_spikes, sp_prev, rr_ratio,
                          sp_ratio, prev_pre, rr_ratio_prev,
                          int(d[0]), int(d[1]), int(d[2]), int(d.sum()),
-                         post, post_ratio, post_pre])
+                         post, post_ratio, post_pre,
+                         irr, pre_pre2, dprev, prev_dtot, prev_rrr])
+            prev_h3 = h3
+            prev_dtot = int(d.sum())
             sym.append(symbols[i])
             rr_idx.append(int(r[i]))
             if raw is not None:
@@ -159,6 +174,9 @@ def extract_record(up, dn, acc, r, symbols, raw=None, filt=None,
             if filt is not None:
                 filtW.append(filt[s:e].astype(np.float32))
         rr_state = rr_state - (rr_state >> 3) + pre
+        irr_state = irr_state - (irr_state >> 3) + abs(pre - prev_pre)
+        prev_rrr = rr_ratio
+        prev_pre2 = prev_pre
         prev_pre = pre
 
     out = dict(

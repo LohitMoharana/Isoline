@@ -29,9 +29,15 @@ def load_mitdb_record(data_dir: str | Path, rec: str, lead: str = "MLII"):
 
     path = str(Path(data_dir) / str(rec))
     r = wfdb.rdrecord(path, physical=True)
-    if lead not in r.sig_name:
+    if lead == "SECOND":                 # the channel that is not MLII (V1/V2/V4/V5)
+        others = [i for i, n in enumerate(r.sig_name) if n != "MLII"]
+        if "MLII" not in r.sig_name or len(others) != 1:
+            raise ValueError(f"record {rec}: cannot pick a second lead from {r.sig_name}")
+        k = others[0]
+    elif lead not in r.sig_name:
         raise ValueError(f"record {rec}: lead {lead} not in {r.sig_name}")
-    k = r.sig_name.index(lead)          # record 114 has the leads swapped
+    else:
+        k = r.sig_name.index(lead)      # record 114 has the leads swapped
     if str(r.units[k]).lower() != "mv":
         raise ValueError(f"record {rec}: expected mV, got {r.units[k]}")
     x = np.asarray(r.p_signal[:, k], dtype=np.float64)
