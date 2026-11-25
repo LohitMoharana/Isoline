@@ -6,3 +6,5 @@ cross-half: tune A->eval B scale 48 acc 0.9188 S F1 0.526 ; tune B->eval A scale
 # DS1 grouped-CV OOF: scale -> accuracy / S F1
 1 .9503/.455  2 .9501/.477  4 .9498/.493  8 .9482/.494  16 .9458/.476  24 .9437/.464  32 .9414/.444  48 .9373/.412
 # Rule (fixed before any DS2 use): maximise mean accuracy over the two dev sets -> scale ~16 (mean 93.06 % vs 92.60 % unscaled)
+# Stage-2 model, scale -> DS1 CV acc / SVDB acc / mean: 1 .9502/.9048/.9275  4 .9495/.9117/.9306  6 .9487/.9133/.9310
+#   8 .9480/.9140/.9310  12 .9469/.9147/.9308  16 .9453/.9152/.9302  -> frozen: stage 2 + S scale 6 (tie -> smaller)
