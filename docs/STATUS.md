@@ -41,6 +41,11 @@ Frozen GBT candidate (long RR + online clusters + INCART) -> **DS2 94.76 ± 0.08
 V F1 0.956. Third DS2 look; nothing tuned on it. Next: S detection (DS1 CV only), and porting the new features to the
 int8 student / a size-capped tree model.
 
+### Round 5 (2026-11-26, ~00:30)
+Two-stage prediction memory + S scale 6, frozen on DS1 CV + external SVDB -> **DS2 93.00 ± 0.34 %** (worse). Fourth DS2
+look. **Best honest result remains round 4: 94.76 ± 0.08 %.** Do not take another DS2 look without a genuinely new
+idea and a dev set shown to track DS2; consider reporting DS2 with a correction for the number of looks.
+
 ## Rules we agreed to follow (do not break these)
 
 1. **DS2 is the test set. Never tune on it.** All choices (dV, features, loss, early stopping,

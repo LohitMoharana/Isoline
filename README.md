@@ -162,6 +162,15 @@ not for the original FPGA plan). Still about 1.2–1.4 points below the ~96 % li
 *Disclosure:* this is the third time DS2 has been evaluated in this project (round 1, round 2, round 4), each on a
 configuration frozen beforehand on DS1 only. Nothing was tuned after seeing a DS2 number.
 
+### Round 5: two-stage + S boost — a negative result on DS2
+
+A second stage that remembers the first stage's predictions per patient cluster, plus a 6× boost on the S score, was
+chosen to maximise mean accuracy over **two** development sets (DS1 grouped CV and external SVDB patients; DS2 sealed)
+and then frozen ([`scripts/final_stage2.py`](scripts/final_stage2.py)). On DS2 it **lowered** accuracy to
+**93.00 ± 0.34 %** (S sensitivity 0.28 → 0.41 but S precision fell to 0.28). The development sets did not predict DS2's
+S behaviour. Round 4 (94.76 %) remains the best result. This was the fourth DS2 evaluation in the project; further
+DS2 looks would increasingly amount to test-set selection, so none were taken after it.
+
 ### Round 3: data mixes, model size, finer bins (DS1 grouped CV only; DS2 untouched)
 
 | Probe (gradient boosting) | DS1 CV accuracy | S F1 | V F1 | F F1 |
