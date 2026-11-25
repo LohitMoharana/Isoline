@@ -36,8 +36,11 @@ def clf():
                                           l2_regularization=1.0, random_state=0)
 
 
-def fitp(X, y):
-    return clf().fit(X, y, sample_weight=np.sqrt(compute_sample_weight("balanced", y)))
+WPOW = float(__import__("os").environ.get("WPOW", "0.5"))   # class-weight power: 0 none, 0.5 sqrt, 1 balanced
+
+
+def fitp(X, y, wpow=0.5):
+    return clf().fit(X, y, sample_weight=compute_sample_weight("balanced", y) ** wpow)
 
 
 def memory_feats(P, rec, cid):
@@ -91,11 +94,11 @@ def main():
         p1[te] = Pte.argmax(1)
         Mtr = memory_feats(Ptr, gtr, np.concatenate([cid[tr], cide]))
         Mte = memory_feats(Pte, g[te], cid[te])
-        m2 = fitp(np.concatenate([Xtr, Mtr], 1), ytr)
+        m2 = fitp(np.concatenate([Xtr, Mtr], 1), ytr, WPOW)
         p2[te] = m2.predict(np.concatenate([X[te], Mte], 1))
         print(f"fold {k} done", flush=True)
     print(format_report(report(y, p1), "== stage 1 (DS1 grouped CV)"))
-    print(format_report(report(y, p2), "== stage 2 with causal prediction memory (DS1 grouped CV)"))
+    print(format_report(report(y, p2), f"== stage 2 with causal prediction memory, stage-2 weight power {WPOW} (DS1 grouped CV)"))
 
 
 if __name__ == "__main__":
