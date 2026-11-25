@@ -29,7 +29,9 @@ def load_mitdb_record(data_dir: str | Path, rec: str, lead: str = "MLII"):
 
     path = str(Path(data_dir) / str(rec))
     r = wfdb.rdrecord(path, physical=True)
-    if lead == "SECOND":                 # the channel that is not MLII (V1/V2/V4/V5)
+    if lead == "FIRST":                  # first channel, whatever it is called (EDB, mixed lead names)
+        k = 0
+    elif lead == "SECOND":                 # the channel that is not MLII (V1/V2/V4/V5)
         others = [i for i, n in enumerate(r.sig_name) if n != "MLII"]
         if "MLII" not in r.sig_name or len(others) != 1:
             raise ValueError(f"record {rec}: cannot pick a second lead from {r.sig_name}")

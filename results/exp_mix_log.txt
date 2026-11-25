@@ -1,0 +1,8 @@
+incart: 62184 beats [40000, 1959, 20006, 219]
+svdb: 62159 beats [40000, 12195, 9941, 23]
+edb: 45916 beats [40000, 1095, 4467, 354]
+none                   acc 93.70  macroF1 0.508  S F1 0.257 (Se 0.26 +P 0.26)  V F1 0.806  F F1 0.000
+incart                 acc 94.78  macroF1 0.579  S F1 0.448 (Se 0.40 +P 0.50)  V F1 0.810  F F1 0.083
+incart+svdb            acc 94.67  macroF1 0.561  S F1 0.402 (Se 0.43 +P 0.38)  V F1 0.831  F F1 0.039
+incart+edb             acc 94.60  macroF1 0.590  S F1 0.416 (Se 0.41 +P 0.43)  V F1 0.815  F F1 0.153
+incart+svdb+edb        acc 94.83  macroF1 0.583  S F1 0.407 (Se 0.42 +P 0.39)  V F1 0.836  F F1 0.115

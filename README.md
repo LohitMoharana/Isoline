@@ -142,6 +142,23 @@ in a handful of records (e.g. 209) and the false alarms in noisy ones (e.g. 203)
 same signal is unlikely to close the gap; likely levers are more diverse training patients and per-beat morphology
 detail that the sparse encoding discards.
 
+### Round 3: data mixes, model size, finer bins (DS1 grouped CV only; DS2 untouched)
+
+| Probe (gradient boosting) | DS1 CV accuracy | S F1 | V F1 | F F1 |
+|---|---|---|---|---|
+| MIT-BIH DS1 only | 93.70 % | 0.26 | 0.81 | 0.00 |
+| + INCART (N subsampled to 40k) | 94.78 % | 0.45 | 0.81 | 0.08 |
+| + INCART + SVDB | 94.67 % | 0.40 | 0.83 | 0.04 |
+| + INCART + EDB | 94.60 % | 0.42 | 0.82 | 0.15 |
+| + INCART + SVDB + EDB | 94.83 % | 0.41 | 0.84 | 0.12 |
+| + INCART, 3× bigger model (500 trees, 63 leaves) | 94.94 % | 0.43 | 0.82 | 0.07 |
+| + INCART, 2× finer histogram bins (4 samples) | 94.82 % | 0.43 | 0.81 | 0.09 |
+
+Every variant lands at **94.6–94.9 %**. Neither more data sources, a much larger model, nor finer bins moves it, so with
+this sparse level-crossing representation the ceiling on this split looks like ~95 %, about one point under the
+best published ~96 % (which uses full waveforms). Reaching 96 % honestly will need a change in what the front end
+keeps (e.g. P-wave / morphology detail), not more tuning of this pipeline. See [`results/`](results) for the logs.
+
 ## Research integrity
 
 * **DS2 is the test set — never used for tuning.** ΔV, features, loss and early stopping are all chosen on DS1

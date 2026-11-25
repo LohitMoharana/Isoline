@@ -30,6 +30,12 @@ Context for the accuracy number: always predicting "normal" scores 89.0 % on DS2
 * Next: tune the INCART mix (N subsampling, weight), try the SVDB+INCART combination on the student, stronger
   regularisation (loss is ~0.002), and decide how to pick checkpoints on a larger validation set than 4 records.
 
+### Round 3 (same day)
+DS1-CV study of extra-data mixes, model size and finer bins: all give 94.6–94.9 %; see README. **No new DS2 look was
+taken.** The 96 % target was *not* reached. Suggested next diagnostic: a dense-waveform upper bound with the same
+template/gain features (does the encoder, or the features, cap accuracy?), then a front-end change that preserves
+P-wave/morphology detail, evaluated first on DS1 CV.
+
 ## Rules we agreed to follow (do not break these)
 
 1. **DS2 is the test set. Never tune on it.** All choices (dV, features, loss, early stopping,

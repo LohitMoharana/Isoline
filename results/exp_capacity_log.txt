@@ -1,0 +1,2 @@
+incart: 62184 beats [40000, 1959, 20006, 219]
+incart         it500 lf63 lr0.05 acc 94.94  macroF1 0.574  S F1 0.430 (Se 0.38 +P 0.49)  V F1 0.818  F F1 0.070
