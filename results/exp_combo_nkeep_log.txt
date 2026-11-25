@@ -1,0 +1,8 @@
+scalar columns [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36, 37]
+incart: 62184 beats [40000, 1959, 20006, 219]
+svdb: 62159 beats [40000, 12195, 9941, 23]
+edb: 45916 beats [40000, 1095, 4467, 354]
+incart         base+long+vlong+noise+clu it150 lf31 lr0.1 acc 94.93  macroF1 0.588  S F1 0.445 (Se 0.39 +P 0.52)  V F1 0.814  F F1 0.115
+incart+svdb+edb base+long+vlong+noise+clu it150 lf31 lr0.1 acc 94.92  macroF1 0.591  S F1 0.437 (Se 0.44 +P 0.43)  V F1 0.824  F F1 0.128
+incart         base+long+clu    nk20000 rs0 it150 lf31 lr0.1 acc 94.88  macroF1 0.593  S F1 0.468 (Se 0.42 +P 0.53)  V F1 0.808  F F1 0.121
+incart         base+long+clu    nk100000 rs0 it150 lf31 lr0.1 acc 95.04  macroF1 0.586  S F1 0.455 (Se 0.39 +P 0.55)  V F1 0.812  F F1 0.099

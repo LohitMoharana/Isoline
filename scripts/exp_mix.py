@@ -51,6 +51,7 @@ def main():
     ap.add_argument("--cache", default="/tmp/cache")
     ap.add_argument("--delta", type=float, default=0.1)
     ap.add_argument("--n-keep", type=int, default=40000)
+    ap.add_argument("--rs", type=int, default=0, help="GBT random_state (noise check)")
     ap.add_argument("--iters", type=int, default=150)
     ap.add_argument("--leaves", type=int, default=31)
     ap.add_argument("--lr", type=float, default=0.1)
@@ -80,10 +81,10 @@ def main():
             ytr = np.concatenate([y[tr]] + [ex[k][1] for k in names])
             w = np.sqrt(compute_sample_weight("balanced", ytr))
             clf = HistGradientBoostingClassifier(max_iter=a.iters, learning_rate=a.lr, max_leaf_nodes=a.leaves,
-                                                 l2_regularization=1.0, random_state=0).fit(Xtr, ytr, sample_weight=w)
+                                                 l2_regularization=1.0, random_state=a.rs).fit(Xtr, ytr, sample_weight=w)
             pred[te] = clf.predict(X[te])
         r = report(y, pred)
-        print(f"{combo:14s} {a.cols:16s} it{a.iters} lf{a.leaves} lr{a.lr} acc {100 * r['accuracy']:.2f}  macroF1 {r['macro_f1']:.3f}  S F1 {r['S']['f1']:.3f} "
+        print(f"{combo:14s} {a.cols:16s} nk{a.n_keep} rs{a.rs} it{a.iters} lf{a.leaves} lr{a.lr} acc {100 * r['accuracy']:.2f}  macroF1 {r['macro_f1']:.3f}  S F1 {r['S']['f1']:.3f} "
               f"(Se {r['S']['se']:.2f} +P {r['S']['ppv']:.2f})  V F1 {r['V']['f1']:.3f}  F F1 {r['F']['f1']:.3f}", flush=True)
 
 
