@@ -39,10 +39,13 @@ SCAL_NAMES = ["pre_rr", "rr_ewma", "delta_rr", "beat_spikes", "spike_ewma",
               # --- long-memory rhythm context (columns 21..25, causal) ---
               "rr_long", "pre_over_long", "ewma_over_long", "irr_long_ratio", "prem_count8",
               # --- very-long RR memory + baseline noise level (columns 26..31, causal) ---
-              "rr_vlong", "pre_over_vlong", "long_over_vlong", "quiet_spikes", "noise_ewma", "noise_ratio"]
+              "rr_vlong", "pre_over_vlong", "long_over_vlong", "quiet_spikes", "noise_ewma", "noise_ratio",
+              # --- online per-patient morphology clusters (columns 32..37, causal) ---
+              "clu_dist", "clu_pop", "clu_rank", "clu_rr", "clu_active", "clu_dist_ratio"]
 EXTRA_CAUSAL = [16, 17, 18, 19, 20]
 LONG_CAUSAL = [21, 22, 23, 24, 25]
 NOISE_CAUSAL = [26, 27, 28, 29, 30, 31]
+CLUSTER_CAUSAL = [32, 33, 34, 35, 36, 37]
 N_CAUSAL = 13                                       # first 13 columns are strictly causal
 N_DELAYED = 16                                      # columns 13..15 are the next-RR columns
 
@@ -120,6 +123,11 @@ def extract_record(up, dn, acc, r, symbols, raw=None, filt=None,
     irl_state = 0                                  # 64x EWMA of |dRR|
     rrv_state = None                               # 256x EWMA of RR (~4 min memory)
     nz_state = 0                                   # 16x EWMA of off-QRS spike count (noise level)
+    K = 4                                          # online morphology clusters per patient
+    cen8 = None                                    # 8x-scaled centroids, (K, 3, NBINS)
+    cnt = np.zeros(K, np.int64)                    # 16x EWMA of membership (popularity)
+    crr = np.full(K, 8 * 32, np.int64)             # 8x EWMA of RR ratio of members
+    dmin_state = 0                                 # 8x EWMA of nearest-cluster distance
     prem_bits = 0                                  # 8-beat shift register: premature (ratio < 28/32)
     sp_state = 0
     sp_primed = False
@@ -172,6 +180,30 @@ def extract_record(up, dn, acc, r, symbols, raw=None, filt=None,
                 if 24 <= rr_ratio <= 40:           # near-regular beat: update template
                     tmpl8 = tmpl8 - tmpl + h3
             r3 = h3 - tmpl
+            # --- online clustering (leader algorithm, causal; features use pre-update state) ---
+            if cen8 is None:
+                cen8 = np.zeros((K, 3, NBINS), np.int64); cen8[0] = 8 * h3; cnt[0] = 16 * 4
+            cen = cen8 >> 3
+            dk = np.abs(cen - h3).sum(axis=(1, 2))
+            dk = np.where(cnt > 0, dk, 1 << 30)
+            jn = int(np.argmin(dk)); dn_ = int(min(dk[jn], 65535))
+            tot = int(cnt.sum())
+            pop = min((int(cnt[jn]) * 32) // max(tot, 1), 32)
+            rank = int((cnt > cnt[jn]).sum())
+            c_rr = int(crr[jn] >> 3)
+            dthr = max(2 * (dmin_state >> 3), 16)
+            clus_feats = [dn_, pop, rank, min(c_rr, 255), int((cnt > 0).sum()),
+                          min((dn_ * 32) // max(dmin_state >> 3, 1), 255)]
+            if dn_ > dthr and not (cnt > 0).all():
+                jn = int(np.flatnonzero(cnt == 0)[0]); cen8[jn] = 8 * h3; crr[jn] = 8 * rr_ratio
+            elif dn_ > dthr:
+                jn = int(np.argmin(cnt)); cen8[jn] = 8 * h3; crr[jn] = 8 * rr_ratio; cnt[jn] = 0
+            else:
+                cen8[jn] = cen8[jn] - cen[jn] + h3
+                crr[jn] = crr[jn] - (crr[jn] >> 3) + rr_ratio
+            cnt = cnt - (cnt >> 4)
+            cnt[jn] += 16
+            dmin_state = dmin_state - (dmin_state >> 3) + min(dn_, 4095)
             d = np.minimum(np.abs(r3).sum(axis=1), 65535)
             dprev = int(min(np.abs(h3 - prev_h3).sum(), 65535)) if prev_h3 is not None else 0
             irr = irr_state >> 3
@@ -188,7 +220,8 @@ def extract_record(up, dn, acc, r, symbols, raw=None, filt=None,
                          min(((irl_state >> 6) * RR_Q) // max(rrl, 1), 255),
                          bin(prem_bits).count("1"),
                          rrv, min((pre * RR_Q) // max(rrv, 1), 255), min((rrl * RR_Q) // max(rrv, 1), 255),
-                         min(quiet, 255), min(nz_prev, 255), min((nz_prev * 32) // max(sp_prev, 1), 255)])
+                         min(quiet, 255), min(nz_prev, 255), min((nz_prev * 32) // max(sp_prev, 1), 255)]
+                        + clus_feats)
             prev_h3 = h3
             prev_dtot = int(d.sum())
             sym.append(symbols[i])

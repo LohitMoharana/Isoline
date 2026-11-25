@@ -62,6 +62,7 @@ def main():
     if "long" in a.cols: COLS.extend([21, 22, 23, 24, 25])
     if "vlong" in a.cols: COLS.extend([26, 27, 28])
     if "noise" in a.cols: COLS.extend([29, 30, 31])
+    if "clu" in a.cols: COLS.extend([32, 33, 34, 35, 36, 37])
     print("scalar columns", COLS, flush=True)
     ds1, _ = data.get_splits(a.mit_dir)
     d = build_dataset(ds1, a.mit_dir, cfg, cache_dir=a.cache, verbose=False)
