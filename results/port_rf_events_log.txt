@@ -1,0 +1,38 @@
+== DS1 leave-one-patient-out (event-domain port)
+  accuracy  93.93%   macro-F1 0.467
+  N: Se 0.978  +P 0.962  F1 0.970  (n=45833)
+  S: Se 0.081  +P 0.139  F1 0.102  (n=944)
+  V: Se 0.783  +P 0.808  F1 0.795  (n=3788)
+  F: Se 0.000  +P 0.000  F1 0.000  (n=414)
+== DS2 event-domain port, seed 0
+  accuracy  94.35%   macro-F1 0.570
+  N: Se 0.986  +P 0.957  F1 0.971  (n=44225)
+  S: Se 0.257  +P 0.465  F1 0.331  (n=1837)
+  V: Se 0.858  +P 0.915  F1 0.885  (n=3219)
+  F: Se 0.057  +P 0.272  F1 0.094  (n=388)
+== DS2 event-domain port, seed 1
+  accuracy  94.74%   macro-F1 0.593
+  N: Se 0.986  +P 0.961  F1 0.973  (n=44225)
+  S: Se 0.355  +P 0.562  F1 0.435  (n=1837)
+  V: Se 0.861  +P 0.916  F1 0.888  (n=3219)
+  F: Se 0.046  +P 0.231  F1 0.077  (n=388)
+== DS2 event-domain port, seed 2
+  accuracy  94.45%   macro-F1 0.587
+  N: Se 0.984  +P 0.959  F1 0.972  (n=44225)
+  S: Se 0.333  +P 0.508  F1 0.402  (n=1837)
+  V: Se 0.854  +P 0.912  F1 0.882  (n=3219)
+  F: Se 0.057  +P 0.268  F1 0.094  (n=388)
+== DS2 event-domain port, seed 3
+  accuracy  94.42%   macro-F1 0.588
+  N: Se 0.985  +P 0.959  F1 0.972  (n=44225)
+  S: Se 0.315  +P 0.495  F1 0.385  (n=1837)
+  V: Se 0.854  +P 0.914  F1 0.883  (n=3219)
+  F: Se 0.070  +P 0.287  F1 0.112  (n=388)
+== DS2 event-domain port, seed 4
+  accuracy  94.52%   macro-F1 0.578
+  N: Se 0.986  +P 0.958  F1 0.972  (n=44225)
+  S: Se 0.289  +P 0.509  F1 0.368  (n=1837)
+  V: Se 0.863  +P 0.915  F1 0.889  (n=3219)
+  F: Se 0.049  +P 0.244  F1 0.082  (n=388)
+
+DS2 event-domain port: accuracy 94.50 +/- 0.13, idle sparsity 0.897
