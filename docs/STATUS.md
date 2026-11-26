@@ -118,3 +118,20 @@ agrees; the old files are in `results/archive_first_run/` and must not be cited.
 * Spike handling must not wake the CPU per spike (~55 spikes/s): use a counting/timestamp peripheral.
 * S and F are weak for a *causal* detector; more training patients is the most promising lever
   (SVDB already shows S F1 0.257 → 0.323 in DS1 CV).
+
+## Locked configuration: model v1.0 (tag `model-v1.0`, 2026-11-26)
+| Item | Frozen choice |
+|---|---|
+| Front end | Level crossing ±0.1 mV, 360 Hz slots, high-pass 0.05 Hz (the circuit's servo) |
+| Features | Round-4 hardware-exact integer features, 216 inputs (`firmware/core`, bit-exact with Python) |
+| Beat model | Tiny GBT, 30 rounds × 8 leaves, lr 0.2, int8 leaves; trained on DS1 + INCART (normals subsampled to 40k), seed 0 |
+| AF detector | RR-only, 60 × 15 trees; reports S as N during AF |
+| Decision | Plain argmax (default). Optional S-sensitive mode: `-DISO_S_BIAS_LOGIT=2.0794415f` (p_S × 8, chosen on DS1) |
+| Code | `export/isoline_model.h`, `firmware/core/*`, `firmware/stm32/*` |
+
+| DS2 (held-out patients) | Normal mode | S-sensitive mode |
+|---|---|---|
+| Annotated beats, 5-seed mean | 94.76% acc, S Se 21.7%, S F1 0.316 | 94.18% acc, S Se 37.4%, S F1 0.396 |
+| Firmware in the loop, end-to-end (virtual HIL) | 93.49% | 92.80% |
+
+DS2 has been looked at 14 times, always with frozen configurations; no further model changes are planned before hardware results.
