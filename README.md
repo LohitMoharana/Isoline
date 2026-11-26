@@ -1,21 +1,25 @@
-<div align="center">
+<p align="center">
+  <img src="docs/img/hero.png" alt="Isoline: 264 heartbeats of MIT-BIH record 119, one per row, showing comparator events only where the heart moves" width="100%">
+</p>
 
-<br>
+<p align="center">
+  <b>A heartbeat classifier that sleeps through the flat parts of your ECG.</b><br>
+  Two comparators, a few kilobytes of trees, and no ADC streaming in between beats.
+</p>
 
-# Isoline
+<p align="center">
+  <img src="https://img.shields.io/badge/python-3.10%2B-3776AB?logo=python&logoColor=white" alt="Python 3.10+">
+  <img src="https://img.shields.io/badge/accuracy-95.6%25%20unseen%20patients-2ea44f" alt="95.6% on unseen patients">
+  <img src="https://img.shields.io/badge/model-5.2%20KB-8250df" alt="5.2 KB model">
+  <img src="https://img.shields.io/badge/MCU-STM32L432-03234B?logo=stmicroelectronics&logoColor=white" alt="STM32L432">
+  <img src="https://img.shields.io/badge/PCB-KiCad-314CB0?logo=kicad&logoColor=white" alt="KiCad PCB">
+  <img src="https://img.shields.io/badge/C%20export-bit--exact-555555?logo=c&logoColor=white" alt="Bit-exact C export">
+  <img src="https://img.shields.io/badge/license-MIT-blue" alt="MIT license">
+</p>
 
-**Event-driven ECG arrhythmia detection.**<br>
-It computes only when the heart moves.
+---
 
-<sub>sub-milliwatt analog front end &nbsp;·&nbsp; 5.2 KB classifier &nbsp;·&nbsp; MIT-BIH inter-patient evaluation &nbsp;·&nbsp; open hardware</sub>
-
-<br>
-
-[Results](#results) &nbsp;·&nbsp; [How it works](#how-it-works) &nbsp;·&nbsp; [Hardware](#from-simulation-to-silicon) &nbsp;·&nbsp; [Method](#method) &nbsp;·&nbsp; [Reproduce](#reproduce)
-
-<br>
-
-</div>
+## 🫀 The idea
 
 An ECG spends most of its time on the flat **isoelectric line**. Isoline does not sample it. Two comparators emit an
 *up* or *down* event whenever the signal moves by 0.1 mV, so a quiet baseline produces nothing and the processor sleeps.
@@ -31,7 +35,7 @@ Each heartbeat becomes a short burst of events, which a few-kilobyte tree model 
 
 <br>
 
-## How it works
+## ⚙️ How it works
 
 ```mermaid
 flowchart LR
@@ -52,7 +56,7 @@ flowchart LR
 | Rhythm | RR ratios over short and long memory, plus an RR-only AF/flutter detector | one timer and a few divides per beat |
 | Classifier | gradient-boosted trees whose every split is an integer comparison | about 840 compares per beat |
 
-## Results
+## 📊 Results
 
 All numbers are on **DS2**: 22 patients never seen in training, under the standard de Chazal inter-patient protocol.
 
@@ -83,7 +87,7 @@ All numbers are on **DS2**: 22 patients never seen in training, under the standa
 > An optional **S-sensitive mode** raises S sensitivity from 22 % to 37 % for 0.6 points of accuracy.
 > [Details](docs/EXPERIMENTS.md)
 
-## From simulation to silicon
+## 🔌 From simulation to silicon
 
 The same model is carried through every stage of the hardware chain. Each stage is measured on DS2 with nothing re-tuned.
 
@@ -105,7 +109,7 @@ The analog front end draws about **110–170 µW** ([power budget](hardware/POWE
 flash and 25 KB of RAM on the STM32L432KC, and its features are **bit-exact** with the Python reference.
 See [`hardware/`](hardware) for the circuit, simulation and PCB, and [`firmware/`](firmware) for the code.
 
-## Robustness
+## 🛡️ Robustness
 
 <table>
 <tr>
@@ -133,7 +137,7 @@ Baseline wander is harmless; electrode motion below about 6 dB is the hard case.
 </tr>
 </table>
 
-## Method
+## 🔬 Method
 
 <picture>
   <source media="(prefers-color-scheme: dark)" srcset="docs/img/journey_dark.png">
@@ -158,7 +162,7 @@ described in [`docs/STATUS.md`](docs/STATUS.md).
 - Published baselines are re-run under the same protocol before any comparison.
 </details>
 
-## Reproduce
+## 🚀 Reproduce
 
 ```bash
 pip install -r requirements.txt
@@ -170,9 +174,10 @@ python scripts/export/export_c.py data/mitdb data/incart data/afdb data/cache   
 python firmware/stm32/sim/hil_run.py data/mitdb DS2 hil.json                               # firmware in the loop
 python hardware/kicad/gen/build.py                                                         # board, from netlist to Gerbers
 python scripts/figures/make_readme_figures.py                                              # charts
+python scripts/figures/make_hero.py --data-dir data/mitdb                                  # banner
 ```
 
-## Repository
+## 🗂️ Repository
 
 ```
 isoline/            Python package: front-end model, level crossing, integer features, pipeline
@@ -201,9 +206,12 @@ results/
 docs/               experiment log, project status, archive
 ```
 
+## 📄 License
+
+MIT. A research prototype, not a medical device.
+
 <br>
 
 <p align="center"><sub>
-The isoelectric line is the flat baseline of an ECG, the part Isoline refuses to spend energy on.<br>
-MIT License · a research prototype, not a medical device.
+Why “Isoline”? The isoelectric line is the flat baseline of an ECG, the part Isoline refuses to spend energy on.
 </sub></p>
