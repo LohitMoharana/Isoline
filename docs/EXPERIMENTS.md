@@ -126,7 +126,7 @@ literature (98–99 %) come from intra-patient / random-beat splits, one-vs-rest
 events and fits in 9 KB, so we are about 2.4 points below that ceiling on accuracy and far below it on S.
 
 Round 2 of experiments (DS1 grouped CV only, DS2 untouched; full table in
-[`results/exp_ideas_log.txt`](../results/exp_ideas_log.txt)):
+[`results/dev/exp_ideas_log.txt`](../results/dev/exp_ideas_log.txt)):
 
 | Idea | DS1 CV accuracy | Verdict |
 |---|---|---|
@@ -149,7 +149,7 @@ Two causal, hardware-cheap additions moved the DS1 estimate above 95 %: a long-m
 **online per-patient morphology clustering** (4 leader-clustered templates; each beat carries how common its shape is for
 *this* patient and what RR timing that shape usually comes with). With INCART as extra training patients and a
 gradient-boosted-tree classifier, the configuration was frozen on DS1 CV (95.03 %) and evaluated once on DS2
-([`scripts/final_gbt.py`](../scripts/final_gbt.py), [`results/final_gbt.json`](../results/final_gbt.json)):
+([`scripts/final/final_gbt.py`](../scripts/final/final_gbt.py), [`results/final/final_gbt.json`](../results/final/final_gbt.json)):
 
 | DS2, 5 INCART-subsample seeds | Accuracy | Macro-F1 | N F1 | S F1 | V F1 | F F1 | Model size |
 |---|---|---|---|---|---|---|---|
@@ -166,7 +166,7 @@ configuration frozen beforehand on DS1 only. Nothing was tuned after seeing a DS
 ### Reliability of the frozen 5.2 KB model
 
 **Noise stress test** (MIT-BIH Noise Stress Test DB added to the DS2 records, EC57-style SNR, noise applied for the whole
-record; [`results/noise_stress.json`](../results/noise_stress.json)):
+record; [`results/final/noise_stress.json`](../results/final/noise_stress.json)):
 
 | Noise | 24 dB | 12 dB | 6 dB | 0 dB |
 |---|---|---|---|---|
@@ -179,7 +179,7 @@ it). Muscle noise mostly costs sparsity. Electrode motion is the worst case: bel
 looks like ectopic beats. Overall accuracy is a poor metric here: it is dominated by N beats and can even rise as the
 model calls fewer beats abnormal.
 
-**Cross-database test** (trained on DS1 + INCART, nothing tuned; [`results/cross_db.json`](../results/cross_db.json)):
+**Cross-database test** (trained on DS1 + INCART, nothing tuned; [`results/final/cross_db.json`](../results/final/cross_db.json)):
 
 | Database | Beats | Accuracy | V Se / +P | S Se / +P | False alarms on normal beats |
 |---|---|---|---|---|---|
@@ -195,7 +195,7 @@ need per-patient calibration or alarm smoothing (e.g. only report bursts). SVDB 
 
 ### C export (round-10 tiny system)
 
-[`scripts/export_c.py`](../scripts/export_c.py) writes [`export/isoline_model.h`](../export/isoline_model.h): the 5.2 KB beat
+[`scripts/export/export_c.py`](../scripts/export/export_c.py) writes [`export/isoline_model.h`](../export/isoline_model.h): the 5.2 KB beat
 classifier (integer thresholds, since every input is an integer) and the RR-only AF detector (float32), plus
 `isoline_classify()`. Compiled with gcc, it was checked against scikit-learn on 226,746 DS1 + INCART beats (no DS2):
 
@@ -208,22 +208,22 @@ classifier (integer thresholds, since every input is an integer) and the RR-only
 ### Non-premature S beats: the documented blind spot
 
 We searched the development databases for S beats whose RR interval is ≥ 0.9 × the dominant RR, i.e. not premature
-([`scripts/find_nonpremature_s.py`](../scripts/find_nonpremature_s.py)): DS1 268, SVDB 2,064 (1,761 from one patient), LTDB 191,
+([`scripts/dev/find_nonpremature_s.py`](../scripts/dev/find_nonpremature_s.py)): DS1 268, SVDB 2,064 (1,761 from one patient), LTDB 191,
 INCART 21. On held-out patients, the model detects **0–1.5 %** of them. Adding SVDB to training raises this only on
 other SVDB patients (to 15 %), while DS1 and LTDB get worse, so the change was rejected without a DS2 run
-([`results/exp_nonprem_log.txt`](../results/exp_nonprem_log.txt)). Isoline finds S beats almost entirely by their timing.
+([`results/dev/exp_nonprem_log.txt`](../results/dev/exp_nonprem_log.txt)). Isoline finds S beats almost entirely by their timing.
 Detecting non-premature S beats would need P-wave morphology that the 0.1 mV comparator discards (and a finer band
 did not recover it). This blind spot accounts for most of the remaining gap to the best reported results.
 
 ### Round 11: robust RR + 95-byte AF detector (negative on DS2)
 
 Three dev-only studies ([`results/`](../results)): (1) the AF detector shrinks to **95 bytes** (5 trees) with the same DS1 benefit
-([`af_shrink_log.txt`](../results/af_shrink_log.txt)); (2) a finer P-wave comparator band (0.05 / 0.025 mV) does **not** help
-S on SVDB and costs sparsity ([`exp_pwave_log.txt`](../results/exp_pwave_log.txt)); (3) RR features relative to the dominant
+([`af_shrink_log.txt`](../results/dev/af_shrink_log.txt)); (2) a finer P-wave comparator band (0.05 / 0.025 mV) does **not** help
+S on SVDB and costs sparsity ([`exp_pwave_log.txt`](../results/dev/exp_pwave_log.txt)); (3) RR features relative to the dominant
 RR help on **both** dev sets (DS1 95.03 → 95.35 %, SVDB 90.16 → 91.55 %, SVDB S F1 0.14 → 0.25;
-[`exp_robust_rr_log.txt`](../results/exp_robust_rr_log.txt)). Combined and frozen, they scored **95.25 %** on DS2
+[`exp_robust_rr_log.txt`](../results/dev/exp_robust_rr_log.txt)). Combined and frozen, they scored **95.25 %** on DS2
 (round-4 size, primary one-beat-delay variant; causal 95.20 %; tiny 94.57 / 94.45 %), below round 10
-([`results/final_round11.json`](../results/final_round11.json)). The no-flag accuracy is unchanged (94.78 %); the
+([`results/final/final_round11.json`](../results/final/final_round11.json)). The no-flag accuracy is unchanged (94.78 %); the
 smaller AF detector gives a smaller flag gain on DS2. This was the 12th DS2 evaluation. **Round 10 remains the best result.**
 DS2's remaining S errors sit mostly in one patient whose S beats are not premature, and no development set we have
 reproduces that pattern.
@@ -233,9 +233,9 @@ reproduces that pattern.
 The round-9 flag silenced S calls whenever the rhythm was irregular, which also hid real S beats in frequent-ectopy
 rhythms. A small RR-only AF/AFL detector (previous 16 beats: irregularity, dominance of the usual RR, short/long
 fractions, compensatory pairs; 60 trees, 5.1 KB) was trained on the MIT-BIH AF Database and DS1 rhythm labels, with
-the two databases weighted equally ([`scripts/af_detector.py`](../scripts/af_detector.py)). It was chosen over the threshold flag by
-dev-set accuracy ([`results/af_flag_dev_log.txt`](../results/af_flag_dev_log.txt)) and then evaluated once on DS2
-([`results/final_af_detector.json`](../results/final_af_detector.json)):
+the two databases weighted equally ([`scripts/final/af_detector.py`](../scripts/final/af_detector.py)). It was chosen over the threshold flag by
+dev-set accuracy ([`results/dev/af_flag_dev_log.txt`](../results/dev/af_flag_dev_log.txt)) and then evaluated once on DS2
+([`results/final/final_af_detector.json`](../results/final/final_af_detector.json)):
 
 | DS2, 5 seeds | Accuracy | Macro-F1 | S Se / +P / F1 |
 |---|---|---|---|
@@ -247,7 +247,7 @@ dev-set accuracy ([`results/af_flag_dev_log.txt`](../results/af_flag_dev_log.txt
 ### Round 9: irregular-rhythm flag on the round-4 model — **95.49 % on unseen patients**
 
 The same causal flag (threshold re-chosen on DS1 leave-one-patient-out by beat accuracy: T = 0.08, DS1 95.33 → 95.61 %)
-applied to the round-4 model ([`scripts/af_round4.py`](../scripts/af_round4.py), [`results/af_round4.json`](../results/af_round4.json)):
+applied to the round-4 model ([`scripts/dev/af_round4.py`](../scripts/dev/af_round4.py), [`results/dev/af_round4.json`](../results/dev/af_round4.json)):
 
 | DS2, 5 seeds | Accuracy | Macro-F1 | S Se / +P / F1 | V Se / +P / F1 | Input |
 |---|---|---|---|---|---|
@@ -265,7 +265,7 @@ It is still about 0.65 points below the published 96.15 %. **The gain is a trade
 
 A causal irregular-rhythm flag (median |ΔRR| / median RR over the previous 16 beats > T) re-labels S predictions as
 normal during AF-like rhythm. T = 0.08 and the episode thresholds were chosen on DS1 leave-one-patient-out only
-([`scripts/alarms.py`](../scripts/alarms.py), [`results/alarms.json`](../results/alarms.json)).
+([`scripts/final/alarms.py`](../scripts/final/alarms.py), [`results/final/alarms.json`](../results/final/alarms.json)).
 
 | | Beat accuracy before → after flag | S episode alarms: Se / +P / false alarms per hour | V episode alarms: Se / +P / FA per hour |
 |---|---|---|---|
@@ -281,17 +281,17 @@ main weakness on other databases.
 ### Round 8: dev sets that disagree with DS2 (negative)
 
 A variant chosen by a pre-stated rule (best mean of DS1 leave-one-patient-out and external SVDB accuracy;
-[`results/exp_tiny_variants_log.txt`](../results/exp_tiny_variants_log.txt)) used MIT-only training, HPF 0.05 Hz, the
+[`results/dev/exp_tiny_variants_log.txt`](../results/dev/exp_tiny_variants_log.txt)) used MIT-only training, HPF 0.05 Hz, the
 ported RR/QRS-width features and next-RR. It scored **92.65 %** on DS2, below round 7's 93.27 %
-([`results/final_tiny2.json`](../results/final_tiny2.json)). Across rounds 4–8, neither DS1 CV nor SVDB ranked candidates
+([`results/final/final_tiny2.json`](../results/final/final_tiny2.json)). Across rounds 4–8, neither DS1 CV nor SVDB ranked candidates
 the way DS2 did. This was the ninth DS2 evaluation in the project. Further DS2-driven iteration would amount to
 fitting the test set, so we stopped here. Real progress needs a development set that tracks DS2, or a fresh test set.
 
 ### Round 7: a 5.2 KB tree model
 
 Size-capped boosted trees (30 rounds, 8 leaves, 5,160 B) on the round-4 features + INCART were chosen as the best
-model of 9 KB or less by DS1 leave-one-patient-out (95.24 %; [`results/exp_tiny_gbt_log.txt`](../results/exp_tiny_gbt_log.txt))
-and evaluated once on DS2 ([`results/final_tiny_gbt.json`](../results/final_tiny_gbt.json)):
+model of 9 KB or less by DS1 leave-one-patient-out (95.24 %; [`results/dev/exp_tiny_gbt_log.txt`](../results/dev/exp_tiny_gbt_log.txt))
+and evaluated once on DS2 ([`results/final/final_tiny_gbt.json`](../results/final/final_tiny_gbt.json)):
 
 | DS2, 5 seeds | Size | Accuracy | Macro-F1 | S F1 | V F1 |
 |---|---|---|---|---|---|
@@ -306,7 +306,7 @@ is another example of DS1 overestimating DS2. The 9 KB CNN student with round-4 
 We re-implemented the random-forest method reported at 96.14 % on this split (Saenz-Cogollo & Agelli, *Algorithms*
 2020): MLII at 150 Hz, RR ratios against a 32-beat average, next-RR, QRS widths at fractions of the peak, Hermite
 coefficients, MI ranking, 40-tree forest. That paper chose its feature count by looking at DS2; we chose it by
-leave-one-patient-out on DS1 ([`scripts/replicate_rf.py`](../scripts/replicate_rf.py)). Some feature details are not
+leave-one-patient-out on DS1 ([`scripts/final/replicate_rf.py`](../scripts/final/replicate_rf.py)). Some feature details are not
 given in the paper and were approximated.
 
 | DS2, 5 seeds | Accuracy | S F1 | V F1 | Signal |
@@ -323,7 +323,7 @@ Findings:
   one accumulator in hardware) and the AFE's **0.5 Hz high-pass**, which distorts the QRS shape the widths are measured on.
   0.1 mV level-crossing quantisation itself costs nothing, and neither does the 1/32 s RR resolution. With a
   diagnostic-grade 0.05 Hz high-pass and a true 32-beat RR average, the event port matches the dense replica on DS1
-  (95.02 % vs 95.23 % LOPO) at 89.1 % idle sparsity ([`results/diag_port_gap_log.txt`](../results/diag_port_gap_log.txt)).
+  (95.02 % vs 95.23 % LOPO) at 89.1 % idle sparsity ([`results/dev/diag_port_gap_log.txt`](../results/dev/diag_port_gap_log.txt)).
 * A rule fixed in advance chose among the event-domain candidates by DS1 LOPO accuracy. Round 4 won (95.33 % LOPO), and
   it already has a DS2 result, so no new DS2 run was made.
 * 5-fold and leave-one-patient-out differ by about 1.3 points on DS1 for the same model, so comparisons only make sense
@@ -333,7 +333,7 @@ Findings:
 
 A second stage that remembers the first stage's predictions per patient cluster, plus a 6× boost on the S score, was
 chosen to maximise mean accuracy over **two** development sets (DS1 grouped CV and external SVDB patients; DS2 sealed)
-and then frozen ([`scripts/final_stage2.py`](../scripts/final_stage2.py)). On DS2 it **lowered** accuracy to
+and then frozen ([`scripts/final/final_stage2.py`](../scripts/final/final_stage2.py)). On DS2 it **lowered** accuracy to
 **93.00 ± 0.34 %** (S sensitivity 0.28 → 0.41 but S precision fell to 0.28). The development sets did not predict DS2's
 S behaviour. Round 4 (94.76 %) remains the best result. This was the fourth DS2 evaluation in the project; further
 DS2 looks would increasingly amount to test-set selection, so none were taken after it.
@@ -364,25 +364,25 @@ keeps (e.g. P-wave / morphology detail), not more tuning of this pipeline. See [
 * **Causal features only** (pre-RR; no look-ahead beyond the beat window).
 * **Seeds and error bars**, not best-of-N.
 * **Disclosure:** the very first sweep looked at DS2 when picking ΔV = 0.1 mV. It was re-derived on DS1 only and agrees;
-  the old files live in [`results/archive_first_run/`](../results/archive_first_run) and should not be cited.
+  the old files live in [`results/archive/archive_first_run/`](../results/archive/archive_first_run) and should not be cited.
 
 ## Quick start
 
 ```bash
 pip install -r requirements.txt
 python -m pytest -q tests                      # 9 tests on the integer feature logic
-python scripts/download_data.py --only mitdb svdb
+python scripts/data/download_data.py --only mitdb svdb
 
 # 1) pick the level-crossing step on DS1 only
-python scripts/select_delta.py --data-dir data/mitdb
+python scripts/dev/select_delta.py --data-dir data/mitdb
 
 # 2) develop on DS1 validation (DS2 is not even loaded)
-python scripts/train_student.py --delta 0.1 --svdb-dir data/svdb --seeds 0
+python scripts/dev/train_student.py --delta 0.1 --svdb-dir data/svdb --seeds 0
 
 # 3) final, frozen-config evaluation on DS2
-python scripts/train_student.py --delta 0.1 --svdb-dir data/svdb --seeds 0 1 2 3 4 --final
+python scripts/dev/train_student.py --delta 0.1 --svdb-dir data/svdb --seeds 0 1 2 3 4 --final
 
-python scripts/make_figures.py                 # regenerate the plots above
+python scripts/figures/make_figures.py                 # regenerate the plots above
 ```
 
 **GPU (e.g. RTX 50-series, Blackwell):** install a CUDA 12.8+ build — `pip install torch --index-url
@@ -398,7 +398,7 @@ feature loops ~50× faster.
 | [`tests/`](../tests) | unit tests for the hardware-exact parts |
 | [`results/`](../results) | final JSON/logs, DS1 experiments, per-seed checkpoints, archived first run |
 | [`docs/STATUS.md`](STATUS.md) | **where we left off and what to do next** |
-| [`docs/HANDOFF_original.md`](HANDOFF_original.md) | the original project brief |
+| [`docs/archive/HANDOFF_original.md`](archive/HANDOFF_original.md) | the original project brief |
 
 ## Roadmap
 
@@ -420,13 +420,13 @@ MIT — see [`LICENSE`](../LICENSE).
 ## Round 12: S beats (option 1: S-biased operating point; option 2: P-wave features, round 2)
 **Why S is stuck:** DS2's S beats are dominated by record 232, where most S beats are not premature. DS1 holds only 268 non-premature S beats (records 209 and 207 mostly) and INCART 21, so there is almost nothing to learn P-wave-based S from.
 
-**Option 2 (rejected):** `scripts/exp_pwave2.py`, results in `results/exp_pwave2_log.txt`.
+**Option 2 (rejected):** `scripts/dev/exp_pwave2.py`, results in `results/dev/exp_pwave2_log.txt`.
 - **Features:** ten hand-made, patient-normalised P features from R−278 to R−61 ms (peaks, timing, correlation and distance to the patient's running P template).
 - **P sources:** the STM32 ADC waveform (upper bound; A0 already carries the AFE output), and fine level-crossing bands at 0.05 and 0.025 mV.
 - **Rule** (fixed beforehand): non-premature S Se must improve on ≥2 of DS1 CV / SVDB / LTDB, with no accuracy loss on any.
 - **Result:** non-premature S Se stayed at 0–1.2% everywhere, and DS1 accuracy fell 1–2 points. The P features did cut false S on LTDB (S +P 0.13 → 0.42), but they do not find the missing beats. With this training data, P-wave information does not unlock non-premature S.
 
-**Option 1 (kept as an optional mode):** `scripts/exp_sbias.py` chooses b, `scripts/final_sbias.py` runs the DS2 check.
+**Option 1 (kept as an optional mode):** `scripts/dev/exp_sbias.py` chooses b, `scripts/final/final_sbias.py` runs the DS2 check.
 - **Rule** (fixed beforehand): class = argmax(p · [1, b, 1, 1]), b maximising DS1 grouped 5-fold OOF macro-F1, with the AF detector retrained per fold.
 - **Chosen:** full b = 20 (the grid was extended on DS1 after the first grid peaked at its edge), tiny b = 8.
 - **DS2 look #14**, frozen, 5 seeds, deployed 0.05 Hz config:

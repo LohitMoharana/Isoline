@@ -1,5 +1,5 @@
 """Single source of truth for the Isoline analog front end (Architecture A).
-Both hardware/sim/make_afe_sim.py (ngspice) and hardware/kicad/make_netlist.py (KiCad) read these values.
+Both hardware/sim/make_afe_sim.py (ngspice) and hardware/kicad/gen/make_netlist.py (KiCad) read these values.
 """
 
 VSUPPLY = 3.0            # 2 x AAA, nominal (range ~2.0-3.2 V; all parts run from 1.8 V)

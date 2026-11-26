@@ -1,6 +1,6 @@
 """Virtual HIL scoring: MIT-BIH record -> ngspice-derived circuit response -> comparator/DAC/firmware simulator
 (hil_sim, running the unmodified STM32 application) -> UART beat list -> scored against the reference annotations
-with the same EC57 +/-150 ms matching and AAMI mapping as scripts/eval_end_to_end.py.
+with the same EC57 +/-150 ms matching and AAMI mapping as scripts/final/eval_end_to_end.py.
 
 usage: python3 hil_run.py <mitdb dir> <DS1|DS2|rec,rec,...> <out.json> [H_mV] [off_up_mV] [off_dn_mV] [VDDA]
 The model inside the firmware is export/isoline_model.h (tiny GBT, one seed, trained on DS1 + INCART only).

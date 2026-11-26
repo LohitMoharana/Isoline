@@ -24,7 +24,7 @@ Context for the accuracy number: always predicting "normal" scores 89.0 % on DS2
 * Round 2 (see README): INCART extra data, student without teacher, selection by macro-F1 -> DS2 accuracy 92.3 ± 1.3 %,
   macro-F1 0.530, S F1 0.270, V F1 0.868. S improves, accuracy and V drop slightly. DS2 has now been used for two
   frozen final runs; any further DS2 number must be reported as a new, additional look.
-* Negative DS1 results are in `results/exp_ideas_log.txt` (second lead, class scaling, dense waveform, multi-scale dV).
+* Negative DS1 results are in `results/dev/exp_ideas_log.txt` (second lead, class scaling, dense waveform, multi-scale dV).
 * Runs happen on a 2-core cloud CPU; the RTX laptop is not reachable from the cloud session, so GPU runs must be started by hand
   on Windows (`pip install torch --index-url https://download.pytorch.org/whl/cu128`).
 * Next: tune the INCART mix (N subsampling, weight), try the SVDB+INCART combination on the student, stronger
@@ -73,7 +73,7 @@ set with non-premature S beats first.
 
 1. **DS2 is the test set. Never tune on it.** All choices (dV, features, loss, early stopping,
    hyper-parameters) use DS1 only (record-grouped CV or the `DS1_VAL` hold-out).
-   `scripts/train_student.py` only loads DS2 with `--final`, once per seed, on a frozen config.
+   `scripts/dev/train_student.py` only loads DS2 with `--final`, once per seed, on a frozen config.
 2. **No data leakage:** record-wise splits, extra databases are **training data only**.
 3. **Physical millivolts only,** no per-window normalisation. Input scaling uses fixed power-of-two
    divisors so it maps to shifts in hardware.
@@ -81,12 +81,12 @@ set with non-premature S beats first.
 5. **Report mean ± std over seeds,** and keep negative results.
 
 Disclosure: an early sweep looked at DS2 when choosing dV = 0.1 mV. It was re-derived on DS1 only and
-agrees; the old files are in `results/archive_first_run/` and must not be cited.
+agrees; the old files are in `results/archive/archive_first_run/` and must not be cited.
 
 ## Next steps (suggested order)
 
 1. **Run on the GPU laptop** (RTX 5060 → needs a CUDA 12.8+ PyTorch build). Dev run with SVDB as
-   extra training data: `python scripts/train_student.py --delta 0.1 --svdb-dir data/svdb --seeds 0`
+   extra training data: `python scripts/dev/train_student.py --delta 0.1 --svdb-dir data/svdb --seeds 0`
    (DS1 validation only). Expect a big speed-up over the 2-core cloud box.
 2. **Fix the teacher.** It scores *below* the student (87.9 % vs 93.7 %) and overfits (train loss
    ≈ 0.001), so distillation is not helping. Try stronger regularisation / augmentation / richer inputs.

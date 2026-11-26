@@ -19,8 +19,8 @@ from isoline import afe, data, pipeline  # noqa: E402
 from isoline.config import AFEConfig  # noqa: E402
 from isoline.metrics import format_report, report  # noqa: E402
 from isoline.pipeline import build_dataset  # noqa: E402
-import scripts.final_gbt as F  # noqa: E402
-from scripts.af_detector import afdb_records, mit_records, p_af, rr_features, train  # noqa: E402
+import scripts.final.final_gbt as F  # noqa: E402
+from scripts.final.af_detector import afdb_records, mit_records, p_af, rr_features, train  # noqa: E402
 from spice_frontend import spice_afe_fast  # noqa: E402
 
 D, INC, AF, C, OUT = sys.argv[1:6]

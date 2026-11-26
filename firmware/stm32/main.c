@@ -1,5 +1,5 @@
 /* Isoline application for the NUCLEO-L432KC on the Isoline AFE carrier board (hardware/kicad).
- * Register-level (CMSIS only, no HAL). Pin map (hardware/kicad/make_netlist.py):
+ * Register-level (CMSIS only, no HAL). Pin map (hardware/kicad/gen/make_netlist.py):
  *   PA4  DAC1_OUT1 -> TH_UP  (upper comparator threshold)      PA12 <- EV_UP  (TLV3691 #1 output, EXTI12)
  *   PA5  DAC1_OUT2 -> TH_DN  (lower comparator threshold)      PB0  <- EV_DN  (TLV3691 #2 output, EXTI0)
  *   PB1  -> FAST_RESTORE (servo fast-restore switch)            PA2  -> USART2_TX (ST-LINK virtual COM port)

@@ -1,5 +1,5 @@
 /* Isoline core, see isoline_core.h. Each block cites the Python line it mirrors (isoline/features.py, isoline/qrs.py,
- * scripts/af_detector.py). */
+ * scripts/final/af_detector.py). */
 #include "isoline_core.h"
 #include <math.h>
 #include <stdlib.h>

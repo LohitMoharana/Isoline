@@ -123,7 +123,7 @@ def main():
              f"level-crossing events (dV = 0.1 mV input = {0.1 * GAIN:.0f} mV at comparators): ngspice {n_s}, Python model {n_p} "
              f"({100 * (n_s - n_p) / max(n_p, 1):+.1f} %)"]
     print("\n".join(lines))
-    (HERE / "afe_vs_python.txt").write_text("\n".join(lines) + "\n")
+    (ROOT / "results" / "hardware" / "afe_vs_python.txt").write_text("\n".join(lines) + "\n")
     np.savez(HERE / "afe_traces.npz", t=t, spice_mv=y_spice_mv, python_mv=y_py)
 
 

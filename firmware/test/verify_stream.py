@@ -13,7 +13,7 @@ sys.path.insert(0, str(ROOT))
 from isoline import data, features, qrs  # noqa: E402
 from isoline.afe import run_afe  # noqa: E402
 from isoline.config import AFEConfig  # noqa: E402
-from scripts.af_detector import rr_features  # noqa: E402
+from scripts.final.af_detector import rr_features  # noqa: E402
 
 COLS = list(range(13)) + [21, 22, 23, 24, 25] + [32, 33, 34, 35, 36, 37]
 D = sys.argv[1]

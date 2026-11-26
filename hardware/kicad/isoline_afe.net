@@ -2,7 +2,7 @@
   (version "D")
   (design
     (source "make_schematic.py")
-    (date "11/26/2026 04:12 PM")
+    (date "11/26/2026 04:49 PM")
     (tool "SKiDL (3.0.0)")
     (sheet
       (number 1)
@@ -13,7 +13,7 @@
         (company)
         (rev)
         (date)
-        (source "make_schematic.py")
+        (source "../../../make_schematic.py")
         (comment
           (number "1")
           (value ""))
@@ -55,16 +55,16 @@
         (field
           (name "Datasheet"))
         (field
-          (name "SKiDL Tag") "LBRFJ2753R")
+          (name "SKiDL Tag") "BDOoo9orJk")
         (field
-          (name "SKiDL Line") "make_netlist.py:30"))
+          (name "SKiDL Line") "make_netlist.py:31"))
       (libsource
         (lib "NO_LIB")
         (part "Battery_2xAAA"))
       (sheetpath
         (names "/")
         (tstamps "/"))
-      (tstamps "d1821f1e-a5df-560c-b4e3-c5c07e6a4f4c"))
+      (tstamps "1758700e-f506-50ea-995e-9a0f7c0ee502"))
     (comp
       (ref "C1")
       (value "10u")
@@ -78,16 +78,16 @@
         (field
           (name "Datasheet"))
         (field
-          (name "SKiDL Tag") "Vl0YK9PiIT")
+          (name "SKiDL Tag") "y7hYkn1xwf")
         (field
-          (name "SKiDL Line") "make_netlist.py:30"))
+          (name "SKiDL Line") "make_netlist.py:31"))
       (libsource
         (lib "NO_LIB")
         (part "C"))
       (sheetpath
         (names "/")
         (tstamps "/"))
-      (tstamps "9c27a76c-5ee1-504d-b46f-ac5a90bd5427"))
+      (tstamps "349c1cbf-559a-5e3c-9a84-7acfc07ccf81"))
     (comp
       (ref "C10")
       (value "100n")
@@ -101,16 +101,16 @@
         (field
           (name "Datasheet"))
         (field
-          (name "SKiDL Tag") "zsQPtgjal1")
+          (name "SKiDL Tag") "HBW5V4FjKC")
         (field
-          (name "SKiDL Line") "make_netlist.py:30"))
+          (name "SKiDL Line") "make_netlist.py:31"))
       (libsource
         (lib "NO_LIB")
         (part "C"))
       (sheetpath
         (names "/")
         (tstamps "/"))
-      (tstamps "cea813ae-e941-59f5-8ce3-73035ae2ebe4"))
+      (tstamps "6e452e2e-da49-5006-b8f1-5dc5a849282b"))
     (comp
       (ref "C11")
       (value "56n")
@@ -124,16 +124,16 @@
         (field
           (name "Datasheet"))
         (field
-          (name "SKiDL Tag") "XHrNOwv6bW")
+          (name "SKiDL Tag") "691rXsofU7")
         (field
-          (name "SKiDL Line") "make_netlist.py:30"))
+          (name "SKiDL Line") "make_netlist.py:31"))
       (libsource
         (lib "NO_LIB")
         (part "C"))
       (sheetpath
         (names "/")
         (tstamps "/"))
-      (tstamps "85ae5ee0-eff3-5e69-9900-31eef4f497b4"))
+      (tstamps "cac327a8-4c94-53ae-b331-57d094767f73"))
     (comp
       (ref "C12")
       (value "27n")
@@ -147,16 +147,16 @@
         (field
           (name "Datasheet"))
         (field
-          (name "SKiDL Tag") "eApYmjbhWU")
+          (name "SKiDL Tag") "3sQGcU_hH6")
         (field
-          (name "SKiDL Line") "make_netlist.py:30"))
+          (name "SKiDL Line") "make_netlist.py:31"))
       (libsource
         (lib "NO_LIB")
         (part "C"))
       (sheetpath
         (names "/")
         (tstamps "/"))
-      (tstamps "d1a6ff0c-5a40-55c7-bef0-020b33bde8bc"))
+      (tstamps "18f2b3cf-f6aa-5f8f-99cd-2a80a8b2ab8d"))
     (comp
       (ref "C13")
       (value "100n")
@@ -170,16 +170,16 @@
         (field
           (name "Datasheet"))
         (field
-          (name "SKiDL Tag") "qa4Qdr_pEo")
+          (name "SKiDL Tag") "dfgN5yO8TP")
         (field
-          (name "SKiDL Line") "make_netlist.py:30"))
+          (name "SKiDL Line") "make_netlist.py:31"))
       (libsource
         (lib "NO_LIB")
         (part "C"))
       (sheetpath
         (names "/")
         (tstamps "/"))
-      (tstamps "b4d645c5-134c-51e3-90db-3ba8d1dd26f7"))
+      (tstamps "8d643dee-ce8f-5877-b5a9-9c57473f19f5"))
     (comp
       (ref "C14")
       (value "100n")
@@ -193,16 +193,16 @@
         (field
           (name "Datasheet"))
         (field
-          (name "SKiDL Tag") "fobj8jwrPS")
+          (name "SKiDL Tag") "Hly3tpJCJK")
         (field
-          (name "SKiDL Line") "make_netlist.py:30"))
+          (name "SKiDL Line") "make_netlist.py:31"))
       (libsource
         (lib "NO_LIB")
         (part "C"))
       (sheetpath
         (names "/")
         (tstamps "/"))
-      (tstamps "fb6d7c4c-0f16-51f4-b245-3fb8f3637fe3"))
+      (tstamps "76d81959-4729-55e9-aee6-0cf089515b8d"))
     (comp
       (ref "C15")
       (value "10n")
@@ -216,16 +216,16 @@
         (field
           (name "Datasheet"))
         (field
-          (name "SKiDL Tag") "rKOmLmyTfH")
+          (name "SKiDL Tag") "Gt0qkSUuy5")
         (field
-          (name "SKiDL Line") "make_netlist.py:30"))
+          (name "SKiDL Line") "make_netlist.py:31"))
       (libsource
         (lib "NO_LIB")
         (part "C"))
       (sheetpath
         (names "/")
         (tstamps "/"))
-      (tstamps "37293fe4-5814-5f90-bd9b-650457648450"))
+      (tstamps "d53c45f2-0375-562c-8e79-31822e823833"))
     (comp
       (ref "C16")
       (value "10n")
@@ -239,16 +239,16 @@
         (field
           (name "Datasheet"))
         (field
-          (name "SKiDL Tag") "_lHk3sFbax")
+          (name "SKiDL Tag") "ZMPxu4_ZjD")
         (field
-          (name "SKiDL Line") "make_netlist.py:30"))
+          (name "SKiDL Line") "make_netlist.py:31"))
       (libsource
         (lib "NO_LIB")
         (part "C"))
       (sheetpath
         (names "/")
         (tstamps "/"))
-      (tstamps "1ff390a2-8a83-5267-98f9-c33bd546f9fd"))
+      (tstamps "d9c9eaa8-f30c-567a-8aa7-7ab76e5aff86"))
     (comp
       (ref "C2")
       (value "100n")
@@ -262,16 +262,16 @@
         (field
           (name "Datasheet"))
         (field
-          (name "SKiDL Tag") "YMcUV186Nt")
+          (name "SKiDL Tag") "J3UEpG8fmG")
         (field
-          (name "SKiDL Line") "make_netlist.py:30"))
+          (name "SKiDL Line") "make_netlist.py:31"))
       (libsource
         (lib "NO_LIB")
         (part "C"))
       (sheetpath
         (names "/")
         (tstamps "/"))
-      (tstamps "f4bc0f81-d080-5001-a942-735d8d3a136f"))
+      (tstamps "ba0dddf0-184c-5ad4-a41f-2e7b334a9d23"))
     (comp
       (ref "C3")
       (value "1u")
@@ -285,16 +285,16 @@
         (field
           (name "Datasheet"))
         (field
-          (name "SKiDL Tag") "ZqnoKRw1Tl")
+          (name "SKiDL Tag") "1SYL9buFHX")
         (field
-          (name "SKiDL Line") "make_netlist.py:30"))
+          (name "SKiDL Line") "make_netlist.py:31"))
       (libsource
         (lib "NO_LIB")
         (part "C"))
       (sheetpath
         (names "/")
         (tstamps "/"))
-      (tstamps "b4033caf-7431-5a95-aa45-11745f36aaf0"))
+      (tstamps "3662b9a8-a16a-56bf-86f8-6703cfc7ab6c"))
     (comp
       (ref "C4")
       (value "1u")
@@ -308,16 +308,16 @@
         (field
           (name "Datasheet"))
         (field
-          (name "SKiDL Tag") "tJ_MwvwBQW")
+          (name "SKiDL Tag") "SkIwND1tPq")
         (field
-          (name "SKiDL Line") "make_netlist.py:30"))
+          (name "SKiDL Line") "make_netlist.py:31"))
       (libsource
         (lib "NO_LIB")
         (part "C"))
       (sheetpath
         (names "/")
         (tstamps "/"))
-      (tstamps "6d4a70c6-7c2e-59bc-8e24-af568860f8a0"))
+      (tstamps "12561d82-9e12-5397-8603-8f06c0e44136"))
     (comp
       (ref "C5")
       (value "1u")
@@ -331,16 +331,16 @@
         (field
           (name "Datasheet"))
         (field
-          (name "SKiDL Tag") "yE0jyU1Lp8")
+          (name "SKiDL Tag") "VFQa_P7HqA")
         (field
-          (name "SKiDL Line") "make_netlist.py:30"))
+          (name "SKiDL Line") "make_netlist.py:31"))
       (libsource
         (lib "NO_LIB")
         (part "C"))
       (sheetpath
         (names "/")
         (tstamps "/"))
-      (tstamps "92410c56-c96c-56f9-ba34-043ddb165109"))
+      (tstamps "c862ba40-d461-576a-9a60-d486824002a7"))
     (comp
       (ref "C6")
       (value "100n")
@@ -354,16 +354,16 @@
         (field
           (name "Datasheet"))
         (field
-          (name "SKiDL Tag") "nWi92PN77h")
+          (name "SKiDL Tag") "KWTn0gANUV")
         (field
-          (name "SKiDL Line") "make_netlist.py:30"))
+          (name "SKiDL Line") "make_netlist.py:31"))
       (libsource
         (lib "NO_LIB")
         (part "C"))
       (sheetpath
         (names "/")
         (tstamps "/"))
-      (tstamps "9dbb0927-2134-5ec7-8934-9a56b9de4a98"))
+      (tstamps "5f6267e0-fb0a-5f8f-8935-91ec3dc30a2b"))
     (comp
       (ref "C7")
       (value "100n")
@@ -377,16 +377,16 @@
         (field
           (name "Datasheet"))
         (field
-          (name "SKiDL Tag") "phYu1TuFJu")
+          (name "SKiDL Tag") "rHZKvEceHS")
         (field
-          (name "SKiDL Line") "make_netlist.py:30"))
+          (name "SKiDL Line") "make_netlist.py:31"))
       (libsource
         (lib "NO_LIB")
         (part "C"))
       (sheetpath
         (names "/")
         (tstamps "/"))
-      (tstamps "1fc611ab-2835-5294-8dce-a962baa9d294"))
+      (tstamps "80a5c9f2-f179-5929-abef-d7a41c65143d"))
     (comp
       (ref "C8")
       (value "330n")
@@ -400,16 +400,16 @@
         (field
           (name "Datasheet"))
         (field
-          (name "SKiDL Tag") "lJhoRUjJKh")
+          (name "SKiDL Tag") "49cMj_aUx2")
         (field
-          (name "SKiDL Line") "make_netlist.py:30"))
+          (name "SKiDL Line") "make_netlist.py:31"))
       (libsource
         (lib "NO_LIB")
         (part "C"))
       (sheetpath
         (names "/")
         (tstamps "/"))
-      (tstamps "fb45859c-c38f-5d5f-9aa5-52cfc2877270"))
+      (tstamps "13ba31c1-7862-5fee-9be9-3af2af748016"))
     (comp
       (ref "C9")
       (value "100n")
@@ -423,16 +423,16 @@
         (field
           (name "Datasheet"))
         (field
-          (name "SKiDL Tag") "QfIpnZhk7J")
+          (name "SKiDL Tag") "fGOO3C68J6")
         (field
-          (name "SKiDL Line") "make_netlist.py:30"))
+          (name "SKiDL Line") "make_netlist.py:31"))
       (libsource
         (lib "NO_LIB")
         (part "C"))
       (sheetpath
         (names "/")
         (tstamps "/"))
-      (tstamps "a2b306e8-296e-5014-a483-9614470065c4"))
+      (tstamps "73006157-8392-5ec2-b04b-6ee8a543d398"))
     (comp
       (ref "J1")
       (value "ELECTRODES")
@@ -446,16 +446,16 @@
         (field
           (name "Datasheet"))
         (field
-          (name "SKiDL Tag") "kil86UGXJe")
+          (name "SKiDL Tag") "GHCQmcHF3E")
         (field
-          (name "SKiDL Line") "make_netlist.py:30"))
+          (name "SKiDL Line") "make_netlist.py:31"))
       (libsource
         (lib "NO_LIB")
         (part "Conn_Electrodes"))
       (sheetpath
         (names "/")
         (tstamps "/"))
-      (tstamps "8994dea4-ba71-5a74-9780-9cd4dfa0a5a3"))
+      (tstamps "cf08e1ff-87cb-5a9e-bfac-89027a6eef90"))
     (comp
       (ref "J2")
       (value "HIL_IN")
@@ -469,16 +469,16 @@
         (field
           (name "Datasheet"))
         (field
-          (name "SKiDL Tag") "CQJjd_j2AN")
+          (name "SKiDL Tag") "JTscWbmA_6")
         (field
-          (name "SKiDL Line") "make_netlist.py:30"))
+          (name "SKiDL Line") "make_netlist.py:31"))
       (libsource
         (lib "NO_LIB")
         (part "Conn_HIL"))
       (sheetpath
         (names "/")
         (tstamps "/"))
-      (tstamps "6de6ce7f-c353-5b22-bf13-1a0a89cf103d"))
+      (tstamps "6df55f21-80af-5aa2-a0c5-3c0cfd3122a8"))
     (comp
       (ref "J3")
       (value "NUCLEO_CN3")
@@ -492,16 +492,16 @@
         (field
           (name "Datasheet"))
         (field
-          (name "SKiDL Tag") "T0SpRjQoK1")
+          (name "SKiDL Tag") "ZeZYzomEIr")
         (field
-          (name "SKiDL Line") "make_netlist.py:30"))
+          (name "SKiDL Line") "make_netlist.py:31"))
       (libsource
         (lib "NO_LIB")
         (part "Nucleo32_CN3"))
       (sheetpath
         (names "/")
         (tstamps "/"))
-      (tstamps "29135cc9-5518-5da7-9ace-8b8d7c226564"))
+      (tstamps "0440c41f-0807-523b-a87c-d6b026fa4bae"))
     (comp
       (ref "J4")
       (value "NUCLEO_CN4")
@@ -515,16 +515,16 @@
         (field
           (name "Datasheet"))
         (field
-          (name "SKiDL Tag") "R3EwHr3Z5k")
+          (name "SKiDL Tag") "PWQx6Um4d4")
         (field
-          (name "SKiDL Line") "make_netlist.py:30"))
+          (name "SKiDL Line") "make_netlist.py:31"))
       (libsource
         (lib "NO_LIB")
         (part "Nucleo32_CN4"))
       (sheetpath
         (names "/")
         (tstamps "/"))
-      (tstamps "88a6bee1-6bcb-55a1-933e-3faf0507fe46"))
+      (tstamps "790e160b-2b05-5dd0-b92d-58baa584c2cb"))
     (comp
       (ref "JP1")
       (value "PWR_SEL")
@@ -538,16 +538,16 @@
         (field
           (name "Datasheet"))
         (field
-          (name "SKiDL Tag") "OIsLkrA5tu")
+          (name "SKiDL Tag") "M4t0E8qQky")
         (field
-          (name "SKiDL Line") "make_netlist.py:30"))
+          (name "SKiDL Line") "make_netlist.py:31"))
       (libsource
         (lib "NO_LIB")
         (part "Jumper_3"))
       (sheetpath
         (names "/")
         (tstamps "/"))
-      (tstamps "6700233d-c394-5be3-9cb9-a16984111461"))
+      (tstamps "dd609e98-609a-5d38-ad1c-102918da3d7d"))
     (comp
       (ref "JP2")
       (value "HIL_ATT_EN")
@@ -561,16 +561,16 @@
         (field
           (name "Datasheet"))
         (field
-          (name "SKiDL Tag") "bmZpqaUmGw")
+          (name "SKiDL Tag") "fDEkIxLFQ7")
         (field
-          (name "SKiDL Line") "make_netlist.py:30"))
+          (name "SKiDL Line") "make_netlist.py:31"))
       (libsource
         (lib "NO_LIB")
         (part "Jumper_2"))
       (sheetpath
         (names "/")
         (tstamps "/"))
-      (tstamps "4b6cd658-04ad-5a5d-81db-d30f83aa375b"))
+      (tstamps "e74e0482-ff8b-53e5-aeb5-a6f49568c1b6"))
     (comp
       (ref "JP3")
       (value "HIL_NEG_REF")
@@ -584,16 +584,16 @@
         (field
           (name "Datasheet"))
         (field
-          (name "SKiDL Tag") "bLQrqBQEpc")
+          (name "SKiDL Tag") "2yqn7XYzPr")
         (field
-          (name "SKiDL Line") "make_netlist.py:30"))
+          (name "SKiDL Line") "make_netlist.py:31"))
       (libsource
         (lib "NO_LIB")
         (part "Jumper_2"))
       (sheetpath
         (names "/")
         (tstamps "/"))
-      (tstamps "3ee644f1-c5aa-5aad-bcff-ef6902cdaef2"))
+      (tstamps "765032eb-0d1c-558a-bca1-0e5d656bb529"))
     (comp
       (ref "R1")
       (value "1MEG")
@@ -607,16 +607,16 @@
         (field
           (name "Datasheet"))
         (field
-          (name "SKiDL Tag") "pAtQXTXCtL")
+          (name "SKiDL Tag") "0HPFRXGQH6")
         (field
-          (name "SKiDL Line") "make_netlist.py:30"))
+          (name "SKiDL Line") "make_netlist.py:31"))
       (libsource
         (lib "NO_LIB")
         (part "R"))
       (sheetpath
         (names "/")
         (tstamps "/"))
-      (tstamps "94abad5c-f81f-5f4c-bac9-a765bcf1bc23"))
+      (tstamps "57c65eda-a7c4-5cde-91ae-61cfc99be073"))
     (comp
       (ref "R10")
       (value "11.1k")
@@ -630,16 +630,16 @@
         (field
           (name "Datasheet"))
         (field
-          (name "SKiDL Tag") "KTJt8qxxns")
+          (name "SKiDL Tag") "xdtS2udtcr")
         (field
-          (name "SKiDL Line") "make_netlist.py:30"))
+          (name "SKiDL Line") "make_netlist.py:31"))
       (libsource
         (lib "NO_LIB")
         (part "R"))
       (sheetpath
         (names "/")
         (tstamps "/"))
-      (tstamps "1fed422b-aaba-509b-9289-0218602a0db5"))
+      (tstamps "2394ff8b-9023-50c2-be0f-30df42bc9b6f"))
     (comp
       (ref "R11")
       (value "10MEG")
@@ -653,16 +653,16 @@
         (field
           (name "Datasheet"))
         (field
-          (name "SKiDL Tag") "E_swWouqnW")
+          (name "SKiDL Tag") "9to1r_LzIt")
         (field
-          (name "SKiDL Line") "make_netlist.py:30"))
+          (name "SKiDL Line") "make_netlist.py:31"))
       (libsource
         (lib "NO_LIB")
         (part "R"))
       (sheetpath
         (names "/")
         (tstamps "/"))
-      (tstamps "47e5afee-5b90-53a3-9f87-9bf98d43955d"))
+      (tstamps "d8e6c173-2f26-5345-acc6-2fcc62c8791c"))
     (comp
       (ref "R12")
       (value "100k")
@@ -676,16 +676,16 @@
         (field
           (name "Datasheet"))
         (field
-          (name "SKiDL Tag") "meXx1BVpcz")
+          (name "SKiDL Tag") "yI1VDN0XW5")
         (field
-          (name "SKiDL Line") "make_netlist.py:30"))
+          (name "SKiDL Line") "make_netlist.py:31"))
       (libsource
         (lib "NO_LIB")
         (part "R"))
       (sheetpath
         (names "/")
         (tstamps "/"))
-      (tstamps "31172105-070e-5736-b7fd-a3c720447a65"))
+      (tstamps "4be4f7e5-81e1-5313-843b-79402da2a88e"))
     (comp
       (ref "R13")
       (value "100k")
@@ -699,16 +699,16 @@
         (field
           (name "Datasheet"))
         (field
-          (name "SKiDL Tag") "cvD4hnNVlB")
+          (name "SKiDL Tag") "p56kfLYdt_")
         (field
-          (name "SKiDL Line") "make_netlist.py:30"))
+          (name "SKiDL Line") "make_netlist.py:31"))
       (libsource
         (lib "NO_LIB")
         (part "R"))
       (sheetpath
         (names "/")
         (tstamps "/"))
-      (tstamps "5e9a114c-8f6b-58cc-8806-d575c1c69277"))
+      (tstamps "35de80d4-d774-5e04-b3f0-3ce2e868daa9"))
     (comp
       (ref "R14")
       (value "10k")
@@ -722,16 +722,16 @@
         (field
           (name "Datasheet"))
         (field
-          (name "SKiDL Tag") "yErIXjuESa")
+          (name "SKiDL Tag") "0TZpDoeh2y")
         (field
-          (name "SKiDL Line") "make_netlist.py:30"))
+          (name "SKiDL Line") "make_netlist.py:31"))
       (libsource
         (lib "NO_LIB")
         (part "R"))
       (sheetpath
         (names "/")
         (tstamps "/"))
-      (tstamps "5cd55d2d-8236-5c32-a0dc-86c31728953a"))
+      (tstamps "0358628b-5e2c-5c58-b697-533a4d1a9b21"))
     (comp
       (ref "R15")
       (value "290k")
@@ -745,16 +745,16 @@
         (field
           (name "Datasheet"))
         (field
-          (name "SKiDL Tag") "LLa1Lkse1i")
+          (name "SKiDL Tag") "BN9bCVQ9cf")
         (field
-          (name "SKiDL Line") "make_netlist.py:30"))
+          (name "SKiDL Line") "make_netlist.py:31"))
       (libsource
         (lib "NO_LIB")
         (part "R"))
       (sheetpath
         (names "/")
         (tstamps "/"))
-      (tstamps "4f2b1309-a230-54e2-aded-2c23001b1276"))
+      (tstamps "7457dfd2-57e5-5fed-ac04-74560eb8edcd"))
     (comp
       (ref "R16")
       (value "100k")
@@ -768,16 +768,16 @@
         (field
           (name "Datasheet"))
         (field
-          (name "SKiDL Tag") "YVuc46XxFf")
+          (name "SKiDL Tag") "BMwJeLGfQk")
         (field
-          (name "SKiDL Line") "make_netlist.py:30"))
+          (name "SKiDL Line") "make_netlist.py:31"))
       (libsource
         (lib "NO_LIB")
         (part "R"))
       (sheetpath
         (names "/")
         (tstamps "/"))
-      (tstamps "f54c7850-5528-54f3-bd00-d6668fc98809"))
+      (tstamps "85ae5898-95b2-55fe-b8cc-70d413a2fe52"))
     (comp
       (ref "R17")
       (value "100k")
@@ -791,16 +791,16 @@
         (field
           (name "Datasheet"))
         (field
-          (name "SKiDL Tag") "yNwIoMNkXl")
+          (name "SKiDL Tag") "9iNF6VmNqK")
         (field
-          (name "SKiDL Line") "make_netlist.py:30"))
+          (name "SKiDL Line") "make_netlist.py:31"))
       (libsource
         (lib "NO_LIB")
         (part "R"))
       (sheetpath
         (names "/")
         (tstamps "/"))
-      (tstamps "10ff1de3-ed1d-5daf-8e21-ecc5497dc9a8"))
+      (tstamps "78b95bc0-6d24-5684-b609-5ec5d17b80e3"))
     (comp
       (ref "R18")
       (value "1k")
@@ -814,16 +814,16 @@
         (field
           (name "Datasheet"))
         (field
-          (name "SKiDL Tag") "mDuONQkfpU")
+          (name "SKiDL Tag") "CpodQIUgvw")
         (field
-          (name "SKiDL Line") "make_netlist.py:30"))
+          (name "SKiDL Line") "make_netlist.py:31"))
       (libsource
         (lib "NO_LIB")
         (part "R"))
       (sheetpath
         (names "/")
         (tstamps "/"))
-      (tstamps "fc00d8b3-7c5f-593f-bb67-910ce05efc7e"))
+      (tstamps "afa1d913-38e0-5c2b-94a1-ddedb057aa07"))
     (comp
       (ref "R2")
       (value "1MEG")
@@ -837,16 +837,16 @@
         (field
           (name "Datasheet"))
         (field
-          (name "SKiDL Tag") "spp3TILFAm")
+          (name "SKiDL Tag") "WFFwJqujck")
         (field
-          (name "SKiDL Line") "make_netlist.py:30"))
+          (name "SKiDL Line") "make_netlist.py:31"))
       (libsource
         (lib "NO_LIB")
         (part "R"))
       (sheetpath
         (names "/")
         (tstamps "/"))
-      (tstamps "056f9000-dc7e-512f-83a7-fdfb76b7a925"))
+      (tstamps "4da10b64-9d03-578e-aa9f-4d3abf93c6ed"))
     (comp
       (ref "R3")
       (value "10k")
@@ -860,16 +860,16 @@
         (field
           (name "Datasheet"))
         (field
-          (name "SKiDL Tag") "tWtOk1jmPD")
+          (name "SKiDL Tag") "v2ZpLETZXq")
         (field
-          (name "SKiDL Line") "make_netlist.py:30"))
+          (name "SKiDL Line") "make_netlist.py:31"))
       (libsource
         (lib "NO_LIB")
         (part "R"))
       (sheetpath
         (names "/")
         (tstamps "/"))
-      (tstamps "1a4b3a3b-01c3-5167-897a-e2eac6a7d6df"))
+      (tstamps "f19e49a6-8f0b-5ec0-be96-d0dee8f8fbeb"))
     (comp
       (ref "R4")
       (value "10k")
@@ -883,16 +883,16 @@
         (field
           (name "Datasheet"))
         (field
-          (name "SKiDL Tag") "SE3P9kF_YO")
+          (name "SKiDL Tag") "igbxBFwfS0")
         (field
-          (name "SKiDL Line") "make_netlist.py:30"))
+          (name "SKiDL Line") "make_netlist.py:31"))
       (libsource
         (lib "NO_LIB")
         (part "R"))
       (sheetpath
         (names "/")
         (tstamps "/"))
-      (tstamps "0b7016df-eaec-5fe3-87e8-c4677c2c3871"))
+      (tstamps "60fe35c3-0752-5b04-86e5-a4d47451231d"))
     (comp
       (ref "R5")
       (value "10MEG")
@@ -906,16 +906,16 @@
         (field
           (name "Datasheet"))
         (field
-          (name "SKiDL Tag") "aemSj53C4d")
+          (name "SKiDL Tag") "uUgC9UBzap")
         (field
-          (name "SKiDL Line") "make_netlist.py:30"))
+          (name "SKiDL Line") "make_netlist.py:31"))
       (libsource
         (lib "NO_LIB")
         (part "R"))
       (sheetpath
         (names "/")
         (tstamps "/"))
-      (tstamps "cbbb6bcb-1604-5ce1-aef4-94923fe9aa9e"))
+      (tstamps "6c050e19-a38d-59b0-8869-ed5491715f27"))
     (comp
       (ref "R6")
       (value "10MEG")
@@ -929,16 +929,16 @@
         (field
           (name "Datasheet"))
         (field
-          (name "SKiDL Tag") "fZpPDXOLew")
+          (name "SKiDL Tag") "Ri4C4uGLt4")
         (field
-          (name "SKiDL Line") "make_netlist.py:30"))
+          (name "SKiDL Line") "make_netlist.py:31"))
       (libsource
         (lib "NO_LIB")
         (part "R"))
       (sheetpath
         (names "/")
         (tstamps "/"))
-      (tstamps "29bfb486-dae9-561a-9137-82ed0cd13fdc"))
+      (tstamps "7dfdf91f-952f-5a0f-a666-083c7df5df83"))
     (comp
       (ref "R7")
       (value "10k")
@@ -952,16 +952,16 @@
         (field
           (name "Datasheet"))
         (field
-          (name "SKiDL Tag") "Z5VMD58j1B")
+          (name "SKiDL Tag") "66D59RHlAa")
         (field
-          (name "SKiDL Line") "make_netlist.py:30"))
+          (name "SKiDL Line") "make_netlist.py:31"))
       (libsource
         (lib "NO_LIB")
         (part "R"))
       (sheetpath
         (names "/")
         (tstamps "/"))
-      (tstamps "ac115d4e-0859-5f8e-96f4-ffa3cb7366cb"))
+      (tstamps "6fba4432-5393-5cff-a897-b76dfe0abbd5"))
     (comp
       (ref "R8")
       (value "100k")
@@ -975,16 +975,16 @@
         (field
           (name "Datasheet"))
         (field
-          (name "SKiDL Tag") "En3dtUV6Yg")
+          (name "SKiDL Tag") "gvMzXB_RGS")
         (field
-          (name "SKiDL Line") "make_netlist.py:30"))
+          (name "SKiDL Line") "make_netlist.py:31"))
       (libsource
         (lib "NO_LIB")
         (part "R"))
       (sheetpath
         (names "/")
         (tstamps "/"))
-      (tstamps "eb7005a1-beb1-5b1b-8071-7c557b40a41f"))
+      (tstamps "9deab1a7-43ca-53d0-aac8-ceb23547e369"))
     (comp
       (ref "R9")
       (value "100")
@@ -998,16 +998,16 @@
         (field
           (name "Datasheet"))
         (field
-          (name "SKiDL Tag") "bNUGUo2F8i")
+          (name "SKiDL Tag") "KBa2rcWMgq")
         (field
-          (name "SKiDL Line") "make_netlist.py:30"))
+          (name "SKiDL Line") "make_netlist.py:31"))
       (libsource
         (lib "NO_LIB")
         (part "R"))
       (sheetpath
         (names "/")
         (tstamps "/"))
-      (tstamps "3fa8c8c8-9b5b-5202-9dbb-c415bd40b558"))
+      (tstamps "3c39a1f6-951b-55d9-a731-37fa96ce9e2f"))
     (comp
       (ref "TP1")
       (value "VREF")
@@ -1021,16 +1021,16 @@
         (field
           (name "Datasheet"))
         (field
-          (name "SKiDL Tag") "zjYdK8MKIL")
+          (name "SKiDL Tag") "RASxp8EBxp")
         (field
-          (name "SKiDL Line") "make_netlist.py:30"))
+          (name "SKiDL Line") "make_netlist.py:31"))
       (libsource
         (lib "NO_LIB")
         (part "TestPoint"))
       (sheetpath
         (names "/")
         (tstamps "/"))
-      (tstamps "4a452904-214a-5bc5-840c-a4a7d42a4f94"))
+      (tstamps "fbcd577e-8709-5b45-b895-0866cd539664"))
     (comp
       (ref "TP2")
       (value "INA_OUT")
@@ -1044,16 +1044,16 @@
         (field
           (name "Datasheet"))
         (field
-          (name "SKiDL Tag") "VOHs4x2MeN")
+          (name "SKiDL Tag") "tl8lUkWrDK")
         (field
-          (name "SKiDL Line") "make_netlist.py:30"))
+          (name "SKiDL Line") "make_netlist.py:31"))
       (libsource
         (lib "NO_LIB")
         (part "TestPoint"))
       (sheetpath
         (names "/")
         (tstamps "/"))
-      (tstamps "1737c531-02ff-5e3b-a3e2-f56f82f7135e"))
+      (tstamps "0f4eb6f0-5d30-525d-8fef-d01cd8ca1e37"))
     (comp
       (ref "TP3")
       (value "SERVO_OUT")
@@ -1067,16 +1067,16 @@
         (field
           (name "Datasheet"))
         (field
-          (name "SKiDL Tag") "KGGnmxTkyg")
+          (name "SKiDL Tag") "Yv9dxUrVfd")
         (field
-          (name "SKiDL Line") "make_netlist.py:30"))
+          (name "SKiDL Line") "make_netlist.py:31"))
       (libsource
         (lib "NO_LIB")
         (part "TestPoint"))
       (sheetpath
         (names "/")
         (tstamps "/"))
-      (tstamps "53102831-e8ef-5039-a42b-5ad917fa06ad"))
+      (tstamps "1d07b46c-92f9-582f-81ba-b3f55340cd3f"))
     (comp
       (ref "TP4")
       (value "AFE_OUT")
@@ -1090,16 +1090,16 @@
         (field
           (name "Datasheet"))
         (field
-          (name "SKiDL Tag") "meJ6G6_hrv")
+          (name "SKiDL Tag") "5ZWc53bMsU")
         (field
-          (name "SKiDL Line") "make_netlist.py:30"))
+          (name "SKiDL Line") "make_netlist.py:31"))
       (libsource
         (lib "NO_LIB")
         (part "TestPoint"))
       (sheetpath
         (names "/")
         (tstamps "/"))
-      (tstamps "51ab6852-2b1e-5218-83ce-faae631a6674"))
+      (tstamps "58b2b5b0-66b0-5cb1-8652-7447dbc73423"))
     (comp
       (ref "TP5")
       (value "TH_UP")
@@ -1113,16 +1113,16 @@
         (field
           (name "Datasheet"))
         (field
-          (name "SKiDL Tag") "I_DhADxLFm")
+          (name "SKiDL Tag") "lPOzTPKH9c")
         (field
-          (name "SKiDL Line") "make_netlist.py:30"))
+          (name "SKiDL Line") "make_netlist.py:31"))
       (libsource
         (lib "NO_LIB")
         (part "TestPoint"))
       (sheetpath
         (names "/")
         (tstamps "/"))
-      (tstamps "4fc0dc4a-82db-54fc-9e1c-9b348c5204bd"))
+      (tstamps "c44ac6c7-f080-5849-96ef-edcad9eab26a"))
     (comp
       (ref "TP6")
       (value "TH_DN")
@@ -1136,16 +1136,16 @@
         (field
           (name "Datasheet"))
         (field
-          (name "SKiDL Tag") "5ZM9s1l9_l")
+          (name "SKiDL Tag") "PIntUext89")
         (field
-          (name "SKiDL Line") "make_netlist.py:30"))
+          (name "SKiDL Line") "make_netlist.py:31"))
       (libsource
         (lib "NO_LIB")
         (part "TestPoint"))
       (sheetpath
         (names "/")
         (tstamps "/"))
-      (tstamps "77ef4b08-7533-5148-999f-cb4138b446a7"))
+      (tstamps "7794428e-ddfb-55b6-bb20-3534fed526f1"))
     (comp
       (ref "TP7")
       (value "EV_UP")
@@ -1159,16 +1159,16 @@
         (field
           (name "Datasheet"))
         (field
-          (name "SKiDL Tag") "mcNdTPW8xA")
+          (name "SKiDL Tag") "AQntIVSygU")
         (field
-          (name "SKiDL Line") "make_netlist.py:30"))
+          (name "SKiDL Line") "make_netlist.py:31"))
       (libsource
         (lib "NO_LIB")
         (part "TestPoint"))
       (sheetpath
         (names "/")
         (tstamps "/"))
-      (tstamps "a8c4744d-e490-5804-ba87-b821e912d0ec"))
+      (tstamps "3f3b7db4-1505-5342-9832-1f4640ce27e3"))
     (comp
       (ref "TP8")
       (value "EV_DN")
@@ -1182,16 +1182,16 @@
         (field
           (name "Datasheet"))
         (field
-          (name "SKiDL Tag") "TG2BZlj6kG")
+          (name "SKiDL Tag") "fEXWrItc8P")
         (field
-          (name "SKiDL Line") "make_netlist.py:30"))
+          (name "SKiDL Line") "make_netlist.py:31"))
       (libsource
         (lib "NO_LIB")
         (part "TestPoint"))
       (sheetpath
         (names "/")
         (tstamps "/"))
-      (tstamps "8dacc0f4-0ea7-5103-a9f5-41d93490cc21"))
+      (tstamps "577cb9f7-34c2-5785-8ea1-cf5057409229"))
     (comp
       (ref "U1")
       (value "INA333AIDGK")
@@ -1205,16 +1205,16 @@
         (field
           (name "Datasheet"))
         (field
-          (name "SKiDL Tag") "UaeeQZ95rb")
+          (name "SKiDL Tag") "xhLgJ2i8zx")
         (field
-          (name "SKiDL Line") "make_netlist.py:30"))
+          (name "SKiDL Line") "make_netlist.py:31"))
       (libsource
         (lib "NO_LIB")
         (part "INA333"))
       (sheetpath
         (names "/")
         (tstamps "/"))
-      (tstamps "c0f711b1-7348-52e5-81bc-7562f1c91033"))
+      (tstamps "7c84e3ee-e8d8-5e04-be5a-f5f8e3c5b6e8"))
     (comp
       (ref "U2")
       (value "TLV8542ID")
@@ -1228,16 +1228,16 @@
         (field
           (name "Datasheet"))
         (field
-          (name "SKiDL Tag") "dqvCTNHIcf")
+          (name "SKiDL Tag") "cytw2ux0XJ")
         (field
-          (name "SKiDL Line") "make_netlist.py:30"))
+          (name "SKiDL Line") "make_netlist.py:31"))
       (libsource
         (lib "NO_LIB")
         (part "TLV8542"))
       (sheetpath
         (names "/")
         (tstamps "/"))
-      (tstamps "c3641fc9-336e-5fae-b534-2d1d2bafe5a7"))
+      (tstamps "2dfdcb72-1b79-53b6-bcd3-d2198e0f95e3"))
     (comp
       (ref "U3")
       (value "SN74LVC1G66DCK")
@@ -1251,16 +1251,16 @@
         (field
           (name "Datasheet"))
         (field
-          (name "SKiDL Tag") "zCZl7mLbrk")
+          (name "SKiDL Tag") "xUlCon46QF")
         (field
-          (name "SKiDL Line") "make_netlist.py:30"))
+          (name "SKiDL Line") "make_netlist.py:31"))
       (libsource
         (lib "NO_LIB")
         (part "SN74LVC1G66"))
       (sheetpath
         (names "/")
         (tstamps "/"))
-      (tstamps "64c5b732-3368-59f4-a709-dec40e721c6e"))
+      (tstamps "f220e2ff-b507-503f-8518-d97f41e59f54"))
     (comp
       (ref "U4")
       (value "TLV8542ID")
@@ -1274,16 +1274,16 @@
         (field
           (name "Datasheet"))
         (field
-          (name "SKiDL Tag") "Txbky_71Gd")
+          (name "SKiDL Tag") "hdSy3150aO")
         (field
-          (name "SKiDL Line") "make_netlist.py:30"))
+          (name "SKiDL Line") "make_netlist.py:31"))
       (libsource
         (lib "NO_LIB")
         (part "TLV8542"))
       (sheetpath
         (names "/")
         (tstamps "/"))
-      (tstamps "37e947a7-a472-5196-9133-f7c24efa4eaa"))
+      (tstamps "afd31d9e-c077-5c87-9b8c-605169c8adcc"))
     (comp
       (ref "U5")
       (value "TLV3691IDCK")
@@ -1297,16 +1297,16 @@
         (field
           (name "Datasheet"))
         (field
-          (name "SKiDL Tag") "wwWSEGVDaq")
+          (name "SKiDL Tag") "AKRbqtMvoB")
         (field
-          (name "SKiDL Line") "make_netlist.py:30"))
+          (name "SKiDL Line") "make_netlist.py:31"))
       (libsource
         (lib "NO_LIB")
         (part "TLV3691"))
       (sheetpath
         (names "/")
         (tstamps "/"))
-      (tstamps "a31bbe8f-ba84-5dc6-96f1-987d369ba0f0"))
+      (tstamps "ac59a81c-5b3f-534e-a4e2-62039486f81f"))
     (comp
       (ref "U6")
       (value "TLV3691IDCK")
@@ -1320,16 +1320,16 @@
         (field
           (name "Datasheet"))
         (field
-          (name "SKiDL Tag") "U7C7pMyKHQ")
+          (name "SKiDL Tag") "uHzJD4PjhL")
         (field
-          (name "SKiDL Line") "make_netlist.py:30"))
+          (name "SKiDL Line") "make_netlist.py:31"))
       (libsource
         (lib "NO_LIB")
         (part "TLV3691"))
       (sheetpath
         (names "/")
         (tstamps "/"))
-      (tstamps "fd11c491-3420-58a1-9909-aa78f8a06f66")))
+      (tstamps "5fcb050d-b702-5158-9a7c-d771783c225d")))
   (nets
     (net
       (code 1)

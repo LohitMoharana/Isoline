@@ -1,29 +1,26 @@
-<picture>
-  <source media="(prefers-color-scheme: dark)" srcset="docs/img/hero_dark.png">
-  <img alt="Isoline: an ECG trace; comparator events fire only on the heartbeat, and the flat stretches in between stay idle" src="docs/img/hero_light.png" width="100%">
-</picture>
-
-<p align="center">
-  <a href="#results">Results</a> &nbsp;·&nbsp;
-  <a href="#how-it-works">How it works</a> &nbsp;·&nbsp;
-  <a href="#from-simulation-to-silicon">Hardware</a> &nbsp;·&nbsp;
-  <a href="#method">Method</a> &nbsp;·&nbsp;
-  <a href="#reproduce">Reproduce</a>
-</p>
+<div align="center">
 
 <br>
+
+# Isoline
+
+**Event-driven ECG arrhythmia detection.**<br>
+It computes only when the heart moves.
+
+<sub>sub-milliwatt analog front end &nbsp;·&nbsp; 5.2 KB classifier &nbsp;·&nbsp; MIT-BIH inter-patient evaluation &nbsp;·&nbsp; open hardware</sub>
+
+<br>
+
+[Results](#results) &nbsp;·&nbsp; [How it works](#how-it-works) &nbsp;·&nbsp; [Hardware](#from-simulation-to-silicon) &nbsp;·&nbsp; [Method](#method) &nbsp;·&nbsp; [Reproduce](#reproduce)
+
+<br>
+
+</div>
 
 An ECG spends most of its time on the flat **isoelectric line**. Isoline does not sample it. Two comparators emit an
 *up* or *down* event whenever the signal moves by 0.1 mV, so a quiet baseline produces nothing and the processor sleeps.
 Each heartbeat becomes a short burst of events, which a few-kilobyte tree model turns into one of the four AAMI classes:
 **N**ormal, **S**upraventricular, **V**entricular or **F**usion.
-
-<div align="center">
-<picture>
-  <source media="(prefers-color-scheme: dark)" srcset="docs/img/isoline_live_dark.gif">
-  <img alt="Animated: events fire only on the QRS complex; between beats the processor is idle" src="docs/img/isoline_live_light.gif" width="78%">
-</picture>
-</div>
 
 <br>
 
@@ -98,7 +95,7 @@ The same model is carried through every stage of the hardware chain. Each stage 
 | Printed circuit board | rev A carrier for a Nucleo-L432KC, 84 × 52 mm, 2 layers, routed and DRC-clean | Gerbers ready; not yet built |
 
 <div align="center">
-<img src="hardware/kicad/pcb_top.png" alt="Isoline analog front-end carrier board, rev A, top side" width="78%">
+<img src="hardware/img/pcb_top.png" alt="Isoline analog front-end carrier board, rev A, top side" width="78%">
 <br><sub>Rev A, top side. The analog chain runs left to right into the comparators; the Nucleo-32 plugs into the two sockets on the right.</sub>
 </div>
 
@@ -165,29 +162,44 @@ described in [`docs/STATUS.md`](docs/STATUS.md).
 
 ```bash
 pip install -r requirements.txt
-python scripts/download_data.py --only mitdb svdb      # PhysioNet
-python -m pytest -q tests                              # hardware-exact feature logic
+python scripts/data/download_data.py --only mitdb svdb                                     # PhysioNet
+python -m pytest -q tests                                                                  # feature logic
 
-python scripts/final_af_detector.py data/mitdb data/incart data/afdb data/cache results   # headline result
-python scripts/export_c.py data/mitdb data/incart data/afdb data/cache                     # C export + bit-exact check
+python scripts/final/final_af_detector.py data/mitdb data/incart data/afdb data/cache results/final   # headline
+python scripts/export/export_c.py data/mitdb data/incart data/afdb data/cache                     # C export
 python firmware/stm32/sim/hil_run.py data/mitdb DS2 hil.json                               # firmware in the loop
-python scripts/make_readme_figures.py --data-dir data/mitdb                                # these figures
+python hardware/kicad/gen/build.py                                                         # board, from netlist to Gerbers
+python scripts/figures/make_readme_figures.py                                              # charts
 ```
 
-<details>
-<summary><b>Repository map</b></summary>
-<br>
+## Repository
 
-| Path | Contents |
-|---|---|
-| [`isoline/`](isoline) | front-end and level-crossing model, hardware-exact integer features, dataset pipeline |
-| [`scripts/`](scripts) | every experiment, the final evaluations, C export, figures |
-| [`export/`](export) | the generated C model |
-| [`firmware/`](firmware) | portable C core (bit-exact) and the STM32L432 application with its virtual HIL |
-| [`hardware/`](hardware) | design values, ngspice simulation, KiCad schematic, PCB and fabrication files |
-| [`results/`](results) | JSON results and logs behind every claim in this README |
-| [`docs/`](docs) | the experiment log and the project status |
-</details>
+```
+isoline/            Python package: front-end model, level crossing, integer features, pipeline
+scripts/
+  data/             dataset download and synthetic data
+  dev/              experiments on DS1 and other databases (never DS2)
+  final/            frozen evaluations on DS2 and the shared model code
+  export/           C export of the trained model
+  figures/          the charts in this README
+export/             generated C model (isoline_model.h)
+firmware/
+  core/             portable C feature and streaming core, bit-exact with Python
+  stm32/            STM32L432 application, linker script, Makefile; sim/ holds the virtual HIL
+  test/             bit-exactness harnesses
+hardware/
+  design.py         component values shared by simulation and schematic
+  sim/              ngspice front-end simulation
+  kicad/            KiCad project; gen/ rebuilds it from design.py
+  fab/              Gerbers, drill, BOM, pick-and-place, DRC report
+  img/              board renders and schematic
+results/
+  final/            DS2 results behind every number above
+  dev/              development logs
+  hardware/         circuit, firmware and HIL results
+  archive/          superseded runs
+docs/               experiment log, project status, archive
+```
 
 <br>
 
