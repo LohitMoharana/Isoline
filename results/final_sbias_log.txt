@@ -1,0 +1,4 @@
+DS2 full b=1  : acc 95.51+-0.13  macroF1 0.616  S Se 0.207 +P 0.679 F1 0.317  S Se excl. 232 0.421  nonprem-S Se 0.073  V Se 0.971 +P 0.932  N Se 0.992
+DS2 full b=20 : acc 94.52+-0.25  macroF1 0.614  S Se 0.268 +P 0.370 F1 0.310  S Se excl. 232 0.569  nonprem-S Se 0.095  V Se 0.943 +P 0.961  N Se 0.980
+DS2 tiny b=1  : acc 94.76+-0.11  macroF1 0.597  S Se 0.217 +P 0.583 F1 0.316  S Se excl. 232 0.483  nonprem-S Se 0.065  V Se 0.965 +P 0.926  N Se 0.984
+DS2 tiny b=8  : acc 94.18+-0.23  macroF1 0.617  S Se 0.374 +P 0.422 F1 0.396  S Se excl. 232 0.582  nonprem-S Se 0.238  V Se 0.939 +P 0.949  N Se 0.972

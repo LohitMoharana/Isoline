@@ -27,7 +27,8 @@ TSLOT = 91 / 32768
 
 def build(exe):
     src = HERE.parent
-    cmd = ["gcc", "-O2", "-DISO_HOST_SIM", f"-I{HERE}", f"-I{src.parent / 'core'}", f"-I{ROOT / 'export'}",
+    import os
+    cmd = ["gcc", "-O2", "-DISO_HOST_SIM", *os.environ.get("HIL_CFLAGS", "").split(), f"-I{HERE}", f"-I{src.parent / 'core'}", f"-I{ROOT / 'export'}",
            str(HERE / "hil_sim.c"), str(src.parent / "core" / "isoline_core.c"), str(src.parent / "core" / "isoline_stream.c"),
            "-lm", "-o", str(exe)]
     subprocess.run(cmd, check=True)

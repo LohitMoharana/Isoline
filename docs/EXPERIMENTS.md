@@ -416,3 +416,28 @@ feature loops ~50× faster.
 ## License
 
 MIT — see [`LICENSE`](../LICENSE).
+
+## Round 12: S beats (option 1: S-biased operating point; option 2: P-wave features, round 2)
+**Why S is stuck:** DS2's S beats are dominated by record 232, where most S beats are not premature. DS1 holds only 268 non-premature S beats (records 209 and 207 mostly) and INCART 21, so there is almost nothing to learn P-wave-based S from.
+
+**Option 2 (rejected):** `scripts/exp_pwave2.py`, results in `results/exp_pwave2_log.txt`.
+- **Features:** ten hand-made, patient-normalised P features from R−278 to R−61 ms (peaks, timing, correlation and distance to the patient's running P template).
+- **P sources:** the STM32 ADC waveform (upper bound; A0 already carries the AFE output), and fine level-crossing bands at 0.05 and 0.025 mV.
+- **Rule** (fixed beforehand): non-premature S Se must improve on ≥2 of DS1 CV / SVDB / LTDB, with no accuracy loss on any.
+- **Result:** non-premature S Se stayed at 0–1.2% everywhere, and DS1 accuracy fell 1–2 points. The P features did cut false S on LTDB (S +P 0.13 → 0.42), but they do not find the missing beats. With this training data, P-wave information does not unlock non-premature S.
+
+**Option 1 (kept as an optional mode):** `scripts/exp_sbias.py` chooses b, `scripts/final_sbias.py` runs the DS2 check.
+- **Rule** (fixed beforehand): class = argmax(p · [1, b, 1, 1]), b maximising DS1 grouped 5-fold OOF macro-F1, with the AF detector retrained per fold.
+- **Chosen:** full b = 20 (the grid was extended on DS1 after the first grid peaked at its edge), tiny b = 8.
+- **DS2 look #14**, frozen, 5 seeds, deployed 0.05 Hz config:
+
+| DS2 | Accuracy | Macro-F1 | S Se | S +P | S F1 | S Se excl. 232 | Non-prem. S Se | V Se / +P |
+|---|---|---|---|---|---|---|---|---|
+| Full, b = 1 | 95.51 ± 0.13 | 0.616 | 0.207 | 0.679 | 0.317 | 0.421 | 0.073 | 0.971 / 0.932 |
+| Full, b = 20 | 94.52 ± 0.25 | 0.614 | 0.268 | 0.370 | 0.310 | 0.569 | 0.095 | 0.943 / 0.961 |
+| Tiny, b = 1 | 94.76 ± 0.11 | 0.597 | 0.217 | 0.583 | 0.316 | 0.483 | 0.065 | 0.965 / 0.926 |
+| **Tiny, b = 8** | 94.18 ± 0.23 | **0.617** | **0.374** | 0.422 | **0.396** | 0.582 | **0.238** | 0.939 / 0.949 |
+
+On DS1 the bias raised accuracy as well; on DS2 it costs 0.6–1.0 points (DS2 has more normal beats with irregular RR, which pick up false S). For the tiny model the trade is worth having: S Se +16 points and S F1 +0.08 for −0.58 accuracy. For the full model it is not.
+**Firmware:** `-DISO_S_BIAS_LOGIT=2.0794415f` (ln 8; one addition per beat). Default is off.
+**Virtual HIL, DS2**, same frozen config (part of look #14): end-to-end 92.80% (vs 93.49%), S Se 38.9% (vs 23.6%), S +P 38.6% (vs 52.1%).

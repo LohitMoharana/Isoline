@@ -49,9 +49,13 @@ DEFINE_PREDICT(beat, int32_t, int32_t)
 DEFINE_PREDICT(af, float, float)
 
 /* Returns 0=N 1=S 2=V 3=F. af_feat may be NULL when fewer than 8 previous RR intervals exist. */
+#ifndef ISO_S_BIAS_LOGIT
+#define ISO_S_BIAS_LOGIT 0.0f   /* default: plain argmax. S-sensitive mode (DS1-chosen, tiny model): 2.0794415f = ln 8 */
+#endif
 int isoline_classify(const int32_t *beat_feat, const float *af_feat, int use_q) {
     float raw[BEAT_NCLS];
     beat_raw(beat_feat, use_q, raw);
+    raw[1] += ISO_S_BIAS_LOGIT;                       /* optional S-sensitive mode: p_S x b  <=>  logit + ln b */
     int best = 0;
     for (int k = 1; k < BEAT_NCLS; k++) if (raw[k] > raw[best]) best = k;
     if (best == 1 && af_feat) {                       /* AF flag: do not report S during AF/AFL */

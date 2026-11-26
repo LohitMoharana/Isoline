@@ -1,0 +1,4 @@
+base      | DS1 acc 95.03 S Se 0.411 +P 0.509 F1 0.455 nonprem-S Se 0.015 | SVDB acc 90.16 S Se 0.078 +P 0.687 F1 0.139 nonprem-S Se 0.002 | LTDB acc 91.47 S Se 0.416 +P 0.132 F1 0.200 nonprem-S Se 0.000
+adc       | DS1 acc 94.07 S Se 0.408 +P 0.565 F1 0.474 nonprem-S Se 0.000 | SVDB acc 90.46 S Se 0.076 +P 0.721 F1 0.137 nonprem-S Se 0.008 | LTDB acc 95.14 S Se 0.419 +P 0.423 F1 0.421 nonprem-S Se 0.000
+fine0.05  | DS1 acc 93.16 S Se 0.405 +P 0.559 F1 0.470 nonprem-S Se 0.007 | SVDB acc 90.56 S Se 0.082 +P 0.760 F1 0.148 nonprem-S Se 0.006 | LTDB acc 95.00 S Se 0.357 +P 0.310 F1 0.332 nonprem-S Se 0.000
+fine0.025 | DS1 acc 93.42 S Se 0.412 +P 0.560 F1 0.475 nonprem-S Se 0.004 | SVDB acc 91.39 S Se 0.117 +P 0.799 F1 0.205 nonprem-S Se 0.012 | LTDB acc 95.17 S Se 0.391 +P 0.167 F1 0.234 nonprem-S Se 0.000
