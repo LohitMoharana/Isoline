@@ -41,11 +41,14 @@ SCAL_NAMES = ["pre_rr", "rr_ewma", "delta_rr", "beat_spikes", "spike_ewma",
               # --- very-long RR memory + baseline noise level (columns 26..31, causal) ---
               "rr_vlong", "pre_over_vlong", "long_over_vlong", "quiet_spikes", "noise_ewma", "noise_ratio",
               # --- online per-patient morphology clusters (columns 32..37, causal) ---
-              "clu_dist", "clu_pop", "clu_rank", "clu_rr", "clu_active", "clu_dist_ratio", "clu_id"]
+              "clu_dist", "clu_pop", "clu_rank", "clu_rr", "clu_active", "clu_dist_ratio", "clu_id",
+              # --- QRS width/amplitude from the up/down counter staircase (columns 39..46, causal) ---
+              "w20", "w40", "w60", "amp", "w20_n", "w40_n", "w60_n", "amp_n"]
 EXTRA_CAUSAL = [16, 17, 18, 19, 20]
 LONG_CAUSAL = [21, 22, 23, 24, 25]
 NOISE_CAUSAL = [26, 27, 28, 29, 30, 31]
 CLUSTER_CAUSAL = [32, 33, 34, 35, 36, 37]
+WIDTH_CAUSAL = [39, 40, 41, 42, 43, 44, 45, 46]
 N_CAUSAL = 13                                       # first 13 columns are strictly causal
 N_DELAYED = 16                                      # columns 13..15 are the next-RR columns
 
@@ -128,6 +131,7 @@ def extract_record(up, dn, acc, r, symbols, raw=None, filt=None,
     cnt = np.zeros(K, np.int64)                    # 16x EWMA of membership (popularity)
     crr = np.full(K, 8 * 32, np.int64)             # 8x EWMA of RR ratio of members
     dmin_state = 0                                 # 8x EWMA of nearest-cluster distance
+    wst = None                                     # 32x EWMA of QRS widths (w20, w40, w60) and |amp|
     prem_bits = 0                                  # 8-beat shift register: premature (ratio < 28/32)
     sp_state = 0
     sp_primed = False
@@ -168,6 +172,23 @@ def extract_record(up, dn, acc, r, symbols, raw=None, filt=None,
             k = min(max(int(sp_prev).bit_length() - (GAIN_T_LOG2 + 1), 0), 6)
             h3 = _sm_shift(np.stack([hu, hd, ha]).astype(np.int32), k)
             sp_ratio = min((beat_spikes * 32) // max(sp_prev, 1), 255)
+            # --- QRS width from the comparator staircase (up/down counter = signal / dV) ---
+            q = cu[r[i] - 36:r[i] + 37] - cd[r[i] - 36:r[i] + 37] if r[i] >= 36 and r[i] + 37 <= n + 1 else None
+            if q is not None and len(q) == 73:
+                base = int(cu[s] - cd[s])
+                dq = q - base
+                pk = int(np.argmax(np.abs(dq))); amp = int(dq[pk])
+                sgn = 1 if amp >= 0 else -1
+                ws = [int(((dq * sgn) * 10 >= f * abs(amp)).sum()) if amp else 0 for f in (2, 4, 6)]
+            else:
+                amp, ws = 0, [0, 0, 0]
+            wv = np.array(ws + [abs(amp)], np.int64)
+            if wst is None:
+                wst = 32 * np.maximum(wv, 1)
+            wprev = wst >> 5
+            wnorm = [min((int(wv[t]) * 32) // max(int(wprev[t]), 1), 255) for t in range(4)]
+            wst = wst - (wst >> 5) + wv
+            width_feats = ws + [min(abs(amp), 255)] + wnorm
             quiet = int(hu[:4].sum() + hd[:4].sum() + hu[-6:].sum() + hd[-6:].sum())   # far from the R peak
             nz_prev = nz_state >> 4
             nz_state = nz_state - (nz_state >> 4) + quiet
@@ -204,6 +225,7 @@ def extract_record(up, dn, acc, r, symbols, raw=None, filt=None,
             cnt = cnt - (cnt >> 4)
             cnt[jn] += 16
             clus_feats.append(jn)                  # assigned cluster slot (used by the 2nd stage)
+            clus_feats += width_feats
             dmin_state = dmin_state - (dmin_state >> 3) + min(dn_, 4095)
             d = np.minimum(np.abs(r3).sum(axis=1), 65535)
             dprev = int(min(np.abs(h3 - prev_h3).sum(), 65535)) if prev_h3 is not None else 0
