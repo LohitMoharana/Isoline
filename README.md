@@ -192,6 +192,23 @@ equipment, 4–7 % of normal beats are flagged. On healthy subjects the false-al
 need per-patient calibration or alarm smoothing (e.g. only report bursts). SVDB was used as a development set for
 *other* candidates in rounds 5 and 8.
 
+### Irregular-rhythm flag and episode alarms (5.2 KB model)
+
+A causal irregular-rhythm flag (median |ΔRR| / median RR over the previous 16 beats > T) re-labels S predictions as
+normal during AF-like rhythm. T = 0.08 and the episode thresholds were chosen on DS1 leave-one-patient-out only
+([`scripts/alarms.py`](scripts/alarms.py), [`results/alarms.json`](results/alarms.json)).
+
+| | Beat accuracy before → after flag | S episode alarms: Se / +P / false alarms per hour | V episode alarms: Se / +P / FA per hour |
+|---|---|---|---|
+| DS2 | 93.27 → **94.57 %** | 0.61 / 0.61 / 5.0 (was 10.9/h per beat) | 0.98 / 0.88 / 3.3 |
+| DS2 + electrode motion 6 dB | 92.70 → 93.22 % | 0.59 / 0.65 / 4.0 | 0.99 / 0.67 / 11.7 |
+| MIT-BIH Long-Term | 92.62 → 92.83 % | 0.51 / 0.77 / 0.9 (was 7.0/h) | 0.99 / 0.84 / 8.5 |
+| SVDB | 90.34 → 90.31 % | 0.43 / 0.89 / 1.9 | 0.99 / 0.75 / 10.7 |
+| Normal Sinus Rhythm | 99.37 → 99.37 % | — / — / 2.4 | — / — / 5.3 |
+
+The DS1 rule chose to report every predicted V beat (m_V = 1), so **V false alarms are not reduced**. They remain the
+main weakness on other databases.
+
 ### Round 8: dev sets that disagree with DS2 (negative)
 
 A variant chosen by a pre-stated rule (best mean of DS1 leave-one-patient-out and external SVDB accuracy;
