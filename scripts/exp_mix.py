@@ -58,13 +58,15 @@ def main():
     ap.add_argument("--cols", default="base", help="base | base+extra | base+long | base+extra+long")
     ap.add_argument("--combos", default="none,incart,incart+svdb,incart+edb,incart+svdb+edb")
     a = ap.parse_args()
-    cfg = replace(AFEConfig(), delta_mv=a.delta)
+    import os
+    cfg = replace(AFEConfig(), delta_mv=a.delta, hp_hz=float(os.environ.get("HP_HZ", "0.5")))
     if "extra" in a.cols: COLS.extend([16, 17, 18, 19, 20])
     if "long" in a.cols: COLS.extend([21, 22, 23, 24, 25])
     if "vlong" in a.cols: COLS.extend([26, 27, 28])
     if "noise" in a.cols: COLS.extend([29, 30, 31])
     if "clu" in a.cols: COLS.extend([32, 33, 34, 35, 36, 37])
     if "width" in a.cols: COLS.extend([39, 40, 41, 42, 43, 44, 45, 46])
+    if "a32" in a.cols: COLS.extend([47, 48, 15])            # true 32-beat RR average + next-RR (one-beat delay)
     print("scalar columns", COLS, flush=True)
     ds1, _ = data.get_splits(a.mit_dir)
     d = build_dataset(ds1, a.mit_dir, cfg, cache_dir=a.cache, verbose=False)
@@ -85,7 +87,7 @@ def main():
                                                  l2_regularization=1.0, random_state=a.rs).fit(Xtr, ytr, sample_weight=w)
             pred[te] = clf.predict(X[te])
         r = report(y, pred)
-        print(f"{combo:14s} {a.cols:16s} nk{a.n_keep} rs{a.rs} it{a.iters} lf{a.leaves} lr{a.lr} acc {100 * r['accuracy']:.2f}  macroF1 {r['macro_f1']:.3f}  S F1 {r['S']['f1']:.3f} "
+        print(f"HP {cfg.hp_hz} {combo:8s} {a.cols:24s} nk{a.n_keep} rs{a.rs} it{a.iters} lf{a.leaves} lr{a.lr} acc {100 * r['accuracy']:.2f}  macroF1 {r['macro_f1']:.3f}  S F1 {r['S']['f1']:.3f} "
               f"(Se {r['S']['se']:.2f} +P {r['S']['ppv']:.2f})  V F1 {r['V']['f1']:.3f}  F F1 {r['F']['f1']:.3f}", flush=True)
 
 
