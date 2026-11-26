@@ -162,6 +162,36 @@ not for the original FPGA plan). Still about 1.2–1.4 points below the ~96 % li
 *Disclosure:* this is the third time DS2 has been evaluated in this project (round 1, round 2, round 4), each on a
 configuration frozen beforehand on DS1 only. Nothing was tuned after seeing a DS2 number.
 
+### Reliability of the frozen 5.2 KB model
+
+**Noise stress test** (MIT-BIH Noise Stress Test DB added to the DS2 records, EC57-style SNR, noise applied for the whole
+record; [`results/noise_stress.json`](results/noise_stress.json)):
+
+| Noise | 24 dB | 12 dB | 6 dB | 0 dB |
+|---|---|---|---|---|
+| Electrode motion: V F1 / sparsity | 0.946 / 89.6 % | 0.918 / 87.9 % | 0.840 / 84.7 % | 0.716 / 77.9 % |
+| Muscle artefact: V F1 / sparsity | 0.945 / 89.5 % | 0.936 / 86.4 % | 0.922 / 80.4 % | 0.883 / 70.6 % |
+| Baseline wander: V F1 / sparsity | 0.948 / 89.7 % | 0.943 / 89.7 % | 0.944 / 89.5 % | 0.939 / 89.0 % |
+
+(Clean: V F1 0.948, sparsity 89.7 %.) Baseline wander does essentially nothing (the HPF and the per-beat template absorb
+it). Muscle noise mostly costs sparsity. Electrode motion is the worst case: below ~12 dB, V precision falls because noise
+looks like ectopic beats. Overall accuracy is a poor metric here: it is dominated by N beats and can even rise as the
+model calls fewer beats abnormal.
+
+**Cross-database test** (trained on DS1 + INCART, nothing tuned; [`results/cross_db.json`](results/cross_db.json)):
+
+| Database | Beats | Accuracy | V Se / +P | S Se / +P | False alarms on normal beats |
+|---|---|---|---|---|---|
+| SVDB (supraventricular) | 184 k | 90.3 % | 0.92 / 0.51 | 0.15 / 0.66 | 4.1 % |
+| European ST-T (mixed leads) | 790 k | 94.8 % | 0.85 / 0.10 | 0.27 / 0.59 | 5.0 % |
+| MIT-BIH Long-Term | 669 k | 92.6 % | 0.90 / 0.61 | 0.55 / 0.30 | 6.6 % |
+| Normal Sinus Rhythm (healthy) | 1.73 M | 99.4 % | — | — | 0.63 % (~27 per hour) |
+
+V *sensitivity* transfers well (0.85–0.92). Precision does not: on other databases, recorded with other leads and
+equipment, 4–7 % of normal beats are flagged. On healthy subjects the false-alarm rate is 0.63 %. A deployed device would
+need per-patient calibration or alarm smoothing (e.g. only report bursts). SVDB was used as a development set for
+*other* candidates in rounds 5 and 8.
+
 ### Round 8: dev sets that disagree with DS2 (negative)
 
 A variant chosen by a pre-stated rule (best mean of DS1 leave-one-patient-out and external SVDB accuracy;

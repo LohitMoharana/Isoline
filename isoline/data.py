@@ -29,7 +29,10 @@ def load_mitdb_record(data_dir: str | Path, rec: str, lead: str = "MLII"):
 
     path = str(Path(data_dir) / str(rec))
     r = wfdb.rdrecord(path, physical=True)
-    if lead == "FIRST":                  # first channel, whatever it is called (EDB, mixed lead names)
+    if lead == "ML":                     # first limb-type lead (MLI/MLII/MLIII), else channel 0
+        ml = [i for i, nm in enumerate(r.sig_name) if nm.startswith("ML")]
+        k = ml[0] if ml else 0
+    elif lead == "FIRST":                  # first channel, whatever it is called (EDB, mixed lead names)
         k = 0
     elif lead == "SECOND":                 # the channel that is not MLII (V1/V2/V4/V5)
         others = [i for i, n in enumerate(r.sig_name) if n != "MLII"]

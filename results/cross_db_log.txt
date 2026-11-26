@@ -1,0 +1,28 @@
+== svdb (78 records, 184384 beats, lead ECG1)
+  accuracy  90.34%   macro-F1 0.465
+  N: Se 0.959  +P 0.965  F1 0.962  (n=162225)
+  S: Se 0.149  +P 0.660  F1 0.244  (n=12195)
+  V: Se 0.917  +P 0.507  F1 0.653  (n=9941)
+  F: Se 0.000  +P 0.000  F1 0.000  (n=23)
+  non-N predictions on N beats: 6601 (4.07% of N, ~155/hour)  idle sparsity 86.6%
+== edb (90 records, 790414 beats, lead ML)
+  accuracy  94.79%   macro-F1 0.385
+  N: Se 0.950  +P 0.999  F1 0.974  (n=784498)
+  S: Se 0.274  +P 0.586  F1 0.373  (n=1095)
+  V: Se 0.851  +P 0.098  F1 0.175  (n=4467)
+  F: Se 0.130  +P 0.010  F1 0.018  (n=354)
+  non-N predictions on N beats: 39389 (5.02% of N, ~215/hour)  idle sparsity 92.4%
+== ltdb (7 records, 668724 beats, lead ECG1)
+  accuracy  92.62%   macro-F1 0.536
+  N: Se 0.934  +P 0.986  F1 0.960  (n=600223)
+  S: Se 0.549  +P 0.303  F1 0.390  (n=1500)
+  V: Se 0.898  +P 0.606  F1 0.723  (n=64094)
+  F: Se 0.063  +P 0.076  F1 0.069  (n=2907)
+  non-N predictions on N beats: 39369 (6.56% of N, ~254/hour)  idle sparsity 88.3%
+== nsrdb (18 records, 1729611 beats, lead ECG1)
+  accuracy  99.37%   macro-F1 0.257
+  N: Se 0.994  +P 1.000  F1 0.997  (n=1729484)
+  S: Se 0.484  +P 0.013  F1 0.026  (n=93)
+  V: Se 0.846  +P 0.003  F1 0.007  (n=26)
+  F: Se 0.000  +P 0.000  F1 0.000  (n=8)
+  non-N predictions on N beats: 10919 (0.63% of N, ~27/hour)  idle sparsity 90.3%

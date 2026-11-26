@@ -58,6 +58,11 @@ features + HPF 0.05 + next-RR, chosen on DS1 LOPO + SVDB -> DS2 92.65 % (worse).
 **Stop iterating against DS2.** Next real step: a held-out test set nobody has looked at (e.g. a different database, or
 recordings from the PCB), and report every DS2 number with the number of evaluations behind it.
 
+### Reliability study (2026-11-26)
+Noise stress and cross-database results for the frozen 5.2 KB model are in the README. Main weakness: false alarms
+(V precision) under electrode-motion noise and on other databases. Next ideas: alarm smoothing / burst logic, AF flag
+(MIT-BIH AFDB), bit-exact C export + cycle count, LTspice AFE power.
+
 ## Rules we agreed to follow (do not break these)
 
 1. **DS2 is the test set. Never tune on it.** All choices (dV, features, loss, early stopping,
