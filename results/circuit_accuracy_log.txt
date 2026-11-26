@@ -1,0 +1,5 @@
+full python_afe       acc 95.51 +/- 0.13  macroF1 0.616  S 0.317  V 0.951  F 0.220
+full ngspice_circuit  acc 95.50 +/- 0.11  macroF1 0.610  S 0.313  V 0.948  F 0.202
+tiny python_afe       acc 94.76 +/- 0.11  macroF1 0.597  S 0.316  V 0.945  F 0.155
+tiny ngspice_circuit  acc 94.74 +/- 0.06  macroF1 0.593  S 0.306  V 0.944  F 0.151
+idle sparsity: {'python_afe': 0.8961324475524476, 'ngspice_circuit': 0.8959547552447552}  circuit clipping fraction: 0.0
