@@ -1,0 +1,4 @@
+# Non-premature S dev study (DS2 not used). Rule: accept only if non-premature S Se improves on >=2 sources with no accuracy loss on any.
+E1 DS1+INCART  | DS1 acc 95.03 S F1 0.455 nonprem-S Se 0.015 | SVDB acc 90.16 S F1 0.139 nonprem-S Se 0.002 | LTDB acc 91.47 S F1 0.200 nonprem-S Se 0.000
+E2 +SVDB       | DS1 acc 94.88 S F1 0.450 nonprem-S Se 0.011 | SVDB acc 93.93 S F1 0.639 nonprem-S Se 0.148 | LTDB acc 90.87 S F1 0.038 nonprem-S Se 0.016
+# -> rejected: gains only on SVDB itself (same-database patients); DS1 and LTDB get worse.

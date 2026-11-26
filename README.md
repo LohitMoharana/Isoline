@@ -205,6 +205,16 @@ equipment, 4–7 % of normal beats are flagged. On healthy subjects the false-al
 need per-patient calibration or alarm smoothing (e.g. only report bursts). SVDB was used as a development set for
 *other* candidates in rounds 5 and 8.
 
+### Non-premature S beats: the documented blind spot
+
+We searched the development databases for S beats whose RR interval is ≥ 0.9 × the dominant RR, i.e. not premature
+([`scripts/find_nonpremature_s.py`](scripts/find_nonpremature_s.py)): DS1 268, SVDB 2,064 (1,761 from one patient), LTDB 191,
+INCART 21. On held-out patients, the model detects **0–1.5 %** of them. Adding SVDB to training raises this only on
+other SVDB patients (to 15 %), while DS1 and LTDB get worse, so the change was rejected without a DS2 run
+([`results/exp_nonprem_log.txt`](results/exp_nonprem_log.txt)). Isoline finds S beats almost entirely by their timing.
+Detecting non-premature S beats would need P-wave morphology that the 0.1 mV comparator discards (and a finer band
+did not recover it). This blind spot accounts for most of the remaining gap to the best reported results.
+
 ### Round 11: robust RR + 95-byte AF detector (negative on DS2)
 
 Three dev-only studies ([`results/`](results)): (1) the AF detector shrinks to **95 bytes** (5 trees) with the same DS1 benefit
