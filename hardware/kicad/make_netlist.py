@@ -23,12 +23,14 @@ set_default_tool(KICAD8)
 FP_R = "Resistor_SMD:R_0805_2012Metric"
 FP_C = "Capacitor_SMD:C_0805_2012Metric"
 BOM = []
+GROUP = ['power']  # functional block of the parts being created (used by make_schematic.py)
 
 
 def mk(name, ref, fp, pins, value=None, desc=""):
     p = Part(tool=SKIDL, name=name, ref_prefix=ref, footprint=fp,
              pins=[Pin(num=n, name=nm) for n, nm in pins])
     p.value = value or name
+    p.isoline_group = GROUP[0]
     BOM.append((name, value or name, fp, desc))
     return p
 
@@ -59,6 +61,7 @@ afe_out, th_up, th_dn = Net("AFE_OUT"), Net("TH_UP"), Net("TH_DN")
 ev_up, ev_dn, fr_ctl, vdiv, afe_mon = Net("EV_UP"), Net("EV_DN"), Net("FAST_RESTORE"), Net("VREF_DIV"), Net("AFE_MON")
 hil_sig, hil_ac, hil_r = Net("HIL_SIG"), Net("HIL_AC"), Net("HIL_ATT")
 
+GROUP[0] = 'power'
 # ---------------------------------------------------------------- power
 bt = mk("Battery_2xAAA", "BT", "Battery:BatteryHolder_Keystone_2468_2xAAA", [(1, "+"), (2, "-")], "2xAAA",
         "2 x AAA holder (Keystone 2468)")
@@ -72,6 +75,7 @@ C("10u", vcc, gnd, "bulk"); C("100n", vcc, gnd, "bulk HF")
 R(DZ.VREF_DIV_R, vcc, vdiv, "VREF divider top"); R(DZ.VREF_DIV_R, vdiv, gnd, "VREF divider bottom")
 C(DZ.VREF_C, vdiv, gnd, "VREF divider filter"); C("1u", vref, gnd, "VREF output")
 
+GROUP[0] = 'input'
 # ---------------------------------------------------------------- electrodes + HIL input
 j1 = mk("Conn_Electrodes", "J", "Connector_PinHeader_2.54mm:PinHeader_1x03_P2.54mm_Vertical",
         [(1, "E_NEG"), (2, "E_POS"), (3, "E_REF")], "ELECTRODES", "1: RA (-), 2: LL (+), 3: RL (reference)")
@@ -91,6 +95,7 @@ jp3 = mk("Jumper_2", "JP", "Connector_PinHeader_2.54mm:PinHeader_1x02_P2.54mm_Ve
          "HIL_NEG_REF", "fit only in HIL mode: E_NEG to reference")
 jp3[1] += e_neg; jp3[2] += e_ref
 
+GROUP[0] = 'inamp'
 # ---------------------------------------------------------------- in-amp + servo + gain + LPF
 u1 = mk("INA333", "U", "Package_SO:VSSOP-8_3x3mm_P0.65mm",
         [(1, "RG"), (2, "VIN-"), (3, "VIN+"), (4, "V-"), (5, "REF"), (6, "VOUT"), (7, "V+"), (8, "RG_")],
@@ -110,9 +115,11 @@ u6 = mk("SN74LVC1G66", "U", "Package_TO_SOT_SMD:SOT-353_SC-70-5",
 u6["A"] += fr; u6["B"] += s_in; u6["GND"] += gnd; u6["VCC"] += vcc; u6["C"] += fr_ctl
 R("100k", fr_ctl, gnd, "fast-restore pull-down (switch off by default)")
 C("100n", vcc, gnd, "U6 decoupling")
+GROUP[0] = 'gain'
 u2["+INB"] += ina_out; u2["-INB"] += g_inv; u2["OUTB"] += g_out
 R(DZ.G2_RG, g_inv, vref, "gain stage RG"); R(DZ.G2_RF, g_inv, g_out, "gain stage RF (x30)")
 
+GROUP[0] = 'gain'
 u3 = opamp_dual("Sallen-Key LPF (A) + VREF buffer (B)")
 u3["V-"] += gnd; u3["V+"] += vcc; C("100n", vcc, gnd, "U3 decoupling")
 R(DZ.SK_R1, g_out, sk1, "SK R1"); R(DZ.SK_R2, sk1, sk2, "SK R2")
@@ -120,6 +127,7 @@ C(DZ.SK_C1, sk1, afe_out, "SK C1 (feedback)"); C(DZ.SK_C2, sk2, vref, "SK C2")
 u3["+INA"] += sk2; u3["-INA"] += afe_out; u3["OUTA"] += afe_out
 u3["+INB"] += vdiv; u3["-INB"] += vref; u3["OUTB"] += vref
 
+GROUP[0] = 'comp'
 # ---------------------------------------------------------------- comparators (thresholds from MCU DAC)
 for name, plus, minus, out, desc in (("UP", afe_out, th_up, ev_up, "up event: AFE above upper threshold"),
                                      ("DN", th_dn, afe_out, ev_dn, "down event: AFE below lower threshold")):
@@ -130,6 +138,7 @@ for name, plus, minus, out, desc in (("UP", afe_out, th_up, ev_up, "up event: AF
 C("10n", th_up, gnd, "DAC1 hold"); C("10n", th_dn, gnd, "DAC2 hold")
 R("1k", afe_out, afe_mon, "AFE monitor to ADC (debug)")
 
+GROUP[0] = 'nucleo'
 # ---------------------------------------------------------------- Nucleo-L432KC headers (UM1956 Nano layout)
 cn3 = mk("Nucleo32_CN3", "J", "Connector_PinSocket_2.54mm:PinSocket_1x15_P2.54mm_Vertical",
          [(i + 1, n) for i, n in enumerate(["D1", "D0", "RESET", "GND", "D2", "D3", "D4", "D5", "D6", "D7",
@@ -146,6 +155,7 @@ cn4["A3"] += th_up        # PA4 = DAC1_OUT1
 cn4["A4"] += th_dn        # PA5 = DAC1_OUT2 (open SB16/SB18 on the Nucleo, see hardware/README.md)
 cn4["A0"] += afe_mon      # PA0 = ADC (debug monitor only)
 
+GROUP[0] = 'tp'
 # test points
 for net in (vref, ina_out, srv, afe_out, th_up, th_dn, ev_up, ev_dn):
     tp = mk("TestPoint", "TP", "TestPoint:TestPoint_Pad_D1.5mm", [(1, "1")], net.name, "test point")
