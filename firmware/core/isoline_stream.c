@@ -56,7 +56,10 @@ static void beat_out(iso_stream *s, int64_t r, iso_beat *b) {
     int64_t st = r - ISO_PRE;
     if (st >= 0) {                             /* copy the window [st, st+256] out of the ring and shift indices */
         int64_t cu[ISO_WIN + 1], cd[ISO_WIN + 1]; int16_t acc[ISO_WIN];
-        for (int i = 0; i <= ISO_WIN; i++) { cu[i] = s->cu[(st + i) & M]; cd[i] = s->cd[(st + i) & M]; }
+        for (int i = 0; i <= ISO_WIN; i++) {      /* rebase to the window start: exact modular differences */
+            cu[i] = (int64_t)(uint32_t)(s->cu[(st + i) & M] - s->cu[st & M]);
+            cd[i] = (int64_t)(uint32_t)(s->cd[(st + i) & M] - s->cd[st & M]);
+        }
         for (int i = 0; i < ISO_WIN; i++) acc[i] = s->acc[(st + i) & M];
         b->have_feat = iso_beat_features(&s->fs, cu, cd, acc, ISO_WIN, s->last_r - st, r - st, b->feat);
     } else {
@@ -70,16 +73,16 @@ static void beat_out(iso_stream *s, int64_t r, iso_beat *b) {
 int iso_stream_push(iso_stream *s, int up, int dn, iso_beat *out, int max_out) {
     int64_t t = s->T;
     /* prefix sums are "events before slot t": store cu for index t before adding this slot */
-    s->cu[t & M] = s->run_cu; s->cd[t & M] = s->run_cd;
+    s->cu[t & M] = (uint32_t)s->run_cu; s->cd[t & M] = (uint32_t)s->run_cd;
     s->up[t & M] = (int16_t)up; s->dn[t & M] = (int16_t)dn;
     s->acc[t & M] = (int16_t)iso_leaky_step(&s->fs, up - dn);
     s->run_cu += up; s->run_cd += dn;
     s->run_E += up + dn; if (t >= Q_WIN) s->run_E -= s->up[(t - Q_WIN) & M] + s->dn[(t - Q_WIN) & M];
     s->run_S += up + dn; if (t >= Q_STEEP_WIN) s->run_S -= s->up[(t - Q_STEEP_WIN) & M] + s->dn[(t - Q_STEEP_WIN) & M];
     s->run_q += up - dn;
-    s->E[t & M] = (int32_t)s->run_E; s->S[t & M] = (int32_t)s->run_S; s->q[t & M] = (int32_t)s->run_q;
+    s->E[t & M] = (int16_t)s->run_E; s->S[t & M] = (int16_t)s->run_S; s->q[t & M] = (int32_t)s->run_q;
     s->T = t + 1;
-    s->cu[s->T & M] = s->run_cu; s->cd[s->T & M] = s->run_cd;      /* end-exclusive prefix for the newest slot */
+    s->cu[s->T & M] = (uint32_t)s->run_cu; s->cd[s->T & M] = (uint32_t)s->run_cd;      /* end-exclusive prefix for the newest slot */
     while (s->t_det + Q_SEARCH <= s->T) detect_step(s);
     int n_out = 0;
     while (s->n_pending && s->pending[0] + POST <= s->T && n_out < max_out) {

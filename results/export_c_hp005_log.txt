@@ -1,0 +1,4 @@
+float32 leaves: C vs Python agreement on 226746 beats = 100.0000% (0 differ)
+int8 leaves: C vs Python agreement on 226746 beats = 99.9338% (150 differ)
+beat model: 1800 nodes (840 splits, 960 leaves); AF detector: 1740 nodes (840 splits, 900 leaves)
+as exported (uint8 feat, 32-bit thr, 2x uint16 child, int8 leaf): beat 8520 B, AF 8460 B; with 16-bit thresholds and implicit left child the beat model is 5160 B

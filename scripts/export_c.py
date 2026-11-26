@@ -144,7 +144,7 @@ int main(int argc, char **argv) {
 def main():
     D, INC, AF, C = sys.argv[1:5]
     out = ROOT / "export"; out.mkdir(exist_ok=True)
-    cfg = replace(AFEConfig(), delta_mv=0.1)
+    cfg = replace(AFEConfig(), delta_mv=0.1, hp_hz=0.05)   # the circuit's 0.05 Hz high-pass
     ds1, _ = data.get_splits(D)
     d1 = build_dataset(ds1, D, cfg, cache_dir=C, verbose=False)
     e = build_dataset(sorted(p.stem for p in Path(INC).glob("*.hea")), INC, cfg, cache_dir=C, verbose=False, lead="II")

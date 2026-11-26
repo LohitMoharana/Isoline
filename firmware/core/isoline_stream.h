@@ -5,7 +5,7 @@
 #define ISOLINE_STREAM_H
 #include "isoline_core.h"
 
-#define ISO_RB 1024                 /* ring buffer (slots), power of two */
+#define ISO_RB 512                  /* ring buffer (slots), power of two; >= 257 + detector look-back */
 #define ISO_PENDING 16
 
 typedef struct {
@@ -19,8 +19,9 @@ typedef struct {
 typedef struct {
     int64_t T;                      /* slots received */
     int16_t up[ISO_RB], dn[ISO_RB], acc[ISO_RB];
-    int32_t q[ISO_RB], E[ISO_RB], S[ISO_RB];
-    int64_t cu[ISO_RB], cd[ISO_RB];  /* prefix sums: cu[(t) & mask] = events before slot t */
+    int16_t E[ISO_RB], S[ISO_RB];    /* event counts in the 33 ms / 11 ms windows */
+    int32_t q[ISO_RB];               /* up/down staircase */
+    uint32_t cu[ISO_RB], cd[ISO_RB]; /* prefix sums (mod 2^32; window differences are exact) */
     int64_t run_E, run_S, run_q, run_cu, run_cd;
     iso_qrs_state qs; int64_t t_det; int n_det;
     int64_t pending[ISO_PENDING]; int n_pending;
