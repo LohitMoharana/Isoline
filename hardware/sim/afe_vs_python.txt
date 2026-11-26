@@ -1,0 +1,4 @@
+record 101, 20-32 s, electrode DC offset 100 mV
+ngspice output swing 0.301 .. 1.988 V (rails 0..3 V)
+waveform match after 2 s settling: correlation 0.9931, RMS difference 25.2 uV input-referred
+level-crossing events (dV = 0.1 mV input = 30 mV at comparators): ngspice 433, Python model 435 (-0.5 %)
