@@ -52,6 +52,12 @@ matches it on DS1 after two fixes: a mean-baseline for widths and an HPF of 0.05
 rule picked round 4 (already evaluated, 94.76 %), so no new DS2 look. Open question for later: the 0.05 Hz event
 port was never evaluated on DS2. Any future look must be justified on DS1 first and disclosed.
 
+### Rounds 7-8 (2026-11-26)
+Round 7: 5.2 KB tiny GBT (round-4 features + INCART) -> DS2 93.27 %, V F1 0.947, S F1 0.31. Round 8: MIT-only + port
+features + HPF 0.05 + next-RR, chosen on DS1 LOPO + SVDB -> DS2 92.65 % (worse). DS2 has now been used 9 times.
+**Stop iterating against DS2.** Next real step: a held-out test set nobody has looked at (e.g. a different database, or
+recordings from the PCB), and report every DS2 number with the number of evaluations behind it.
+
 ## Rules we agreed to follow (do not break these)
 
 1. **DS2 is the test set. Never tune on it.** All choices (dV, features, loss, early stopping,

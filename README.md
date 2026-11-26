@@ -162,6 +162,15 @@ not for the original FPGA plan). Still about 1.2–1.4 points below the ~96 % li
 *Disclosure:* this is the third time DS2 has been evaluated in this project (round 1, round 2, round 4), each on a
 configuration frozen beforehand on DS1 only. Nothing was tuned after seeing a DS2 number.
 
+### Round 8: dev sets that disagree with DS2 (negative)
+
+A variant chosen by a pre-stated rule (best mean of DS1 leave-one-patient-out and external SVDB accuracy;
+[`results/exp_tiny_variants_log.txt`](results/exp_tiny_variants_log.txt)) used MIT-only training, HPF 0.05 Hz, the
+ported RR/QRS-width features and next-RR. It scored **92.65 %** on DS2, below round 7's 93.27 %
+([`results/final_tiny2.json`](results/final_tiny2.json)). Across rounds 4–8, neither DS1 CV nor SVDB ranked candidates
+the way DS2 did. This was the ninth DS2 evaluation in the project. Further DS2-driven iteration would amount to
+fitting the test set, so we stopped here. Real progress needs a development set that tracks DS2, or a fresh test set.
+
 ### Round 7: a 5.2 KB tree model
 
 Size-capped boosted trees (30 rounds, 8 leaves, 5,160 B) on the round-4 features + INCART were chosen as the best
