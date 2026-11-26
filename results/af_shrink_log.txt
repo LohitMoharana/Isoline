@@ -1,0 +1,8 @@
+# AF detector size vs DS1 dev benefit (round-4 DS1 LOPO predictions; detector OOF over DS1 records). DS2 not used.
+iters 60 leaves 15   5100 B  DS1 LOPO acc 95.64  S F1 0.497
+iters 30 leaves  8   1290 B  DS1 LOPO acc 95.64  S F1 0.502
+iters 20 leaves  8    860 B  DS1 LOPO acc 95.63  S F1 0.498
+iters 20 leaves  4    380 B  DS1 LOPO acc 95.62  S F1 0.499
+iters 10 leaves  4    190 B  DS1 LOPO acc 95.63  S F1 0.502
+iters  5 leaves  4     95 B  DS1 LOPO acc 95.62  S F1 0.492
+# Rule: smallest within 0.02 pt of 60x15 -> 5 trees x 4 leaves, 95 bytes.
