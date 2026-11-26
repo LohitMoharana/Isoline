@@ -39,7 +39,11 @@ static void dac_write(void) {
 
 static inline int ev_up_level(void) { return (GPIOA->IDR >> 12) & 1u; }
 static inline int ev_dn_level(void) { return (GPIOB->IDR >> 0) & 1u; }
+#ifdef ISO_HOST_SIM   /* virtual-HIL build (sim/hil_sim.c): the simulator stands in for analog time and the UART */
+static void settle(void) { sim_settle(); }
+#else
 static void settle(void) { for (volatile int i = 0; i < SETTLE_LOOPS; i++) { } }
+#endif
 
 void EXTI15_10_IRQHandler(void) {                /* EV_UP rising edge */
     if (EXTI->PR1 & EXTI_PR1_PIF12) { EXTI->PR1 = EXTI_PR1_PIF12; ev_up++; ref_code += DAC_STEP; dac_write(); }
@@ -71,7 +75,11 @@ static void uart_init(void) {                    /* USART2 on PA2 (AF7), 115200 
 }
 
 static void uart_puts(const char *s) {
+#ifdef ISO_HOST_SIM
+    while (*s) sim_uart_putc(*s++);
+#else
     while (*s) { while (!(USART2->ISR & USART_ISR_TXE)) { } USART2->TDR = (uint8_t)*s++; }
+#endif
 }
 
 static void uart_putu(uint32_t v) {
@@ -112,7 +120,11 @@ static void hw_init(void) {
     NVIC_EnableIRQ(LPTIM1_IRQn);
 }
 
+#ifdef ISO_HOST_SIM
+static void delay_ms(uint32_t ms) { (void)ms; }     /* fast restore is not part of the steady-state AFE model */
+#else
 static void delay_ms(uint32_t ms) { for (volatile uint32_t i = 0; i < ms * 500u; i++) { } }
+#endif
 
 int main(void) {
     hw_init();

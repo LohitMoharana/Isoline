@@ -1,0 +1,29 @@
+100: matched  2271  acc  99.91%  Se  99.91%  +P 100.00%
+103: matched  2081  acc  99.86%  Se  99.86%  +P 100.00%
+105: matched  2564  acc  91.85%  Se  99.88%  +P  91.98%
+111: matched  2123  acc  98.63%  Se  99.95%  +P  99.02%
+113: matched  1793  acc  99.67%  Se  99.89%  +P  99.94%
+117: matched  1533  acc  95.17%  Se  99.87%  +P  99.87%
+121: matched  1859  acc  99.52%  Se  99.79%  +P  99.73%
+123: matched  1514  acc  99.60%  Se  99.74%  +P 100.00%
+200: matched  2594  acc  96.95%  Se  99.73%  +P  98.44%
+202: matched  2126  acc  94.40%  Se  99.53%  +P 100.00%
+210: matched  2637  acc  97.50%  Se  99.51%  +P  98.95%
+212: matched  2747  acc  99.85%  Se  99.96%  +P 100.00%
+213: matched  3248  acc  88.70%  Se  99.91%  +P  99.97%
+214: matched  2249  acc  98.31%  Se  99.47%  +P  99.78%
+219: matched  2151  acc  95.40%  Se  99.86%  +P 100.00%
+221: matched  2390  acc  99.21%  Se  98.48%  +P 100.00%
+222: matched  2474  acc  91.79%  Se  99.64%  +P  99.68%
+228: matched  2044  acc  98.53%  Se  99.56%  +P  95.07%
+231: matched  1569  acc  97.96%  Se  99.87%  +P 100.00%
+232: matched  1779  acc  33.90%  Se  99.94%  +P  99.83%
+233: matched  3068  acc  89.96%  Se  99.64%  +P  99.97%
+234: matched  2748  acc  98.87%  Se  99.82%  +P 100.00%
+== DS2 ['17', '0', '0', '3.2']: matched accuracy 94.13%  end-to-end 93.86%  detection Se 99.71% +P 99.11%
+   N: Se 97.6 +P 96.2  S: Se 22.3 +P 54.0  V: Se 96.1 +P 86.5  F: Se 17.4 +P 14.3
+confusion (rows true N,S,V,F):
+[[43145   329   381   335]
+ [ 1365   408    54     2]
+ [   43    18  3033    63]
+ [  282     0    37    67]]
