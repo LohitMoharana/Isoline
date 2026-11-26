@@ -46,6 +46,12 @@ Two-stage prediction memory + S scale 6, frozen on DS1 CV + external SVDB -> **D
 look. **Best honest result remains round 4: 94.76 ± 0.08 %.** Do not take another DS2 look without a genuinely new
 idea and a dev set shown to track DS2; consider reporting DS2 with a correction for the number of looks.
 
+### Round 6 (2026-11-26 morning)
+Clean-protocol replica of the 96.14 % RF paper scores 95.39 % on DS2 (dense ECG, not event-driven). The event port
+matches it on DS1 after two fixes: a mean-baseline for widths and an HPF of 0.05 Hz instead of 0.5 Hz. The pre-registered DS1-LOPO
+rule picked round 4 (already evaluated, 94.76 %), so no new DS2 look. Open question for later: the 0.05 Hz event
+port was never evaluated on DS2. Any future look must be justified on DS1 first and disclosed.
+
 ## Rules we agreed to follow (do not break these)
 
 1. **DS2 is the test set. Never tune on it.** All choices (dV, features, loss, early stopping,

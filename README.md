@@ -162,6 +162,34 @@ not for the original FPGA plan). Still about 1.2–1.4 points below the ~96 % li
 *Disclosure:* this is the third time DS2 has been evaluated in this project (round 1, round 2, round 4), each on a
 configuration frozen beforehand on DS1 only. Nothing was tuned after seeing a DS2 number.
 
+### Round 6: replicating the best published method under a clean protocol
+
+We re-implemented the random-forest method reported at 96.14 % on this split (Saenz-Cogollo & Agelli, *Algorithms*
+2020): MLII at 150 Hz, RR ratios against a 32-beat average, next-RR, QRS widths at fractions of the peak, Hermite
+coefficients, MI ranking, 40-tree forest. That paper chose its feature count by looking at DS2; we chose it by
+leave-one-patient-out on DS1 ([`scripts/replicate_rf.py`](scripts/replicate_rf.py)). Some feature details are not
+given in the paper and were approximated.
+
+| DS2, 5 seeds | Accuracy | S F1 | V F1 | Signal |
+|---|---|---|---|---|
+| Dense replica, feature count chosen on DS1 | **95.39 ± 0.09 %** | **0.63** | 0.89 | full-rate ECG |
+| (illustration: feature count chosen on DS2, paper-style) | 95.50 % | — | — | full-rate ECG |
+| Same 8 features ported to comparator events (HPF 0.5 Hz) | 94.50 ± 0.13 % | 0.38 | 0.88 | level-crossing events |
+| **Isoline round 4 (best pre-registered)** | 94.76 ± 0.08 % | 0.33 | **0.956** | level-crossing events |
+
+Findings:
+* In our replica, choosing the feature count on DS2 adds only ~0.1 points, so test-set tuning explains little of the
+  paper's 96.14 %; the rest is probably feature details we could not reproduce.
+* We traced the port's DS1 gap, without touching DS2, to two things: the width baseline (use the window mean, which is
+  one accumulator in hardware) and the AFE's **0.5 Hz high-pass**, which distorts the QRS shape the widths are measured on.
+  0.1 mV level-crossing quantisation itself costs nothing, and neither does the 1/32 s RR resolution. With a
+  diagnostic-grade 0.05 Hz high-pass and a true 32-beat RR average, the event port matches the dense replica on DS1
+  (95.02 % vs 95.23 % LOPO) at 89.1 % idle sparsity ([`results/diag_port_gap_log.txt`](results/diag_port_gap_log.txt)).
+* A rule fixed in advance chose among the event-domain candidates by DS1 LOPO accuracy. Round 4 won (95.33 % LOPO), and
+  it already has a DS2 result, so no new DS2 run was made.
+* 5-fold and leave-one-patient-out differ by about 1.3 points on DS1 for the same model, so comparisons only make sense
+  under one protocol.
+
 ### Round 5: two-stage + S boost — a negative result on DS2
 
 A second stage that remembers the first stage's predictions per patient cluster, plus a 6× boost on the S score, was

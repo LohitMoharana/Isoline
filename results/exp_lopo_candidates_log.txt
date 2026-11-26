@@ -1,0 +1,2 @@
+folds lopo HP 0.5 incart   base+long+clu            nk40000 rs0 it150 lf31 lr0.1 acc 95.33  macroF1 0.602  S F1 0.481 (Se 0.42 +P 0.57)  V F1 0.825  F F1 0.125
+folds lopo HP 0.05 incart   base+long+clu            nk40000 rs0 it150 lf31 lr0.1 acc 95.23  macroF1 0.585  S F1 0.478 (Se 0.41 +P 0.58)  V F1 0.822  F F1 0.060
