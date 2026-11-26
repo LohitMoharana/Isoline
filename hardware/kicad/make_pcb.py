@@ -24,6 +24,10 @@ sys.path.insert(0, str(HERE))
 import netparse  # noqa: E402
 
 LIB = "/usr/share/kicad/footprints"
+# Fab "flat offer" profile (<= 100 x 100 mm, 2 layers, 1.6 mm FR-4): trace/space >= 0.25 mm, holes >= 0.5 mm
+TRACK, CLEAR, VIA_PAD, VIA_HOLE = 0.25, 0.25, 0.9, 0.5
+FINE_PITCH = ("U1", "U3", "U5", "U6")     # 0.65 mm pitch: pads trimmed to 0.39 mm wide -> 0.26 mm gaps
+FINE_PAD_W = 0.39
 W, H = 74.0, 52.0
 OX, OY = 100.0, 100.0          # board origin on the KiCad sheet
 mm = pcbnew.FromMM
@@ -126,9 +130,11 @@ def main():
     board = pcbnew.BOARD()
     ds = board.GetDesignSettings()
     ds.SetCopperLayerCount(2)
-    ds.m_TrackMinWidth = mm(0.2); ds.m_MinClearance = mm(0.2); ds.m_ViasMinSize = mm(0.6); ds.m_MinThroughDrill = mm(0.3)
+    ds.m_TrackMinWidth = mm(TRACK); ds.m_MinClearance = mm(CLEAR); ds.m_ViasMinSize = mm(VIA_PAD)
+    ds.m_MinThroughDrill = mm(VIA_HOLE); ds.m_HoleClearance = mm(CLEAR); ds.m_HoleToHoleMin = mm(CLEAR)
+    ds.SetBoardThickness(mm(1.6))
     nc = ds.m_NetSettings.m_DefaultNetClass
-    nc.SetTrackWidth(mm(0.25)); nc.SetClearance(mm(0.2)); nc.SetViaDiameter(mm(0.6)); nc.SetViaDrill(mm(0.3))
+    nc.SetTrackWidth(mm(TRACK)); nc.SetClearance(mm(CLEAR)); nc.SetViaDiameter(mm(VIA_PAD)); nc.SetViaDrill(mm(VIA_HOLE))
     netinfo = {}
     for name in nets:
         ni = pcbnew.NETINFO_ITEM(board, name); board.Add(ni); netinfo[name] = ni
@@ -142,6 +148,13 @@ def main():
     for ref, (value, fpid, _desc) in comps.items():
         f = load_fp(fpid)
         f.SetReference(ref); f.SetValue(value)
+        if ref in FINE_PITCH:
+            for pd in f.Pads():
+                sz = pd.GetSize()
+                if sz.x < sz.y:
+                    pd.SetSize(pcbnew.VECTOR2I(mm(FINE_PAD_W), sz.y))
+                else:
+                    pd.SetSize(pcbnew.VECTOR2I(sz.x, mm(FINE_PAD_W)))
         board.Add(f)                                                   # flip needs a parent board
         x, y, rot, side = PLACE[ref]
         f.SetPosition(pt(x, y)); f.SetOrientationDegrees(rot)

@@ -102,7 +102,7 @@ numbers for your board revision in UM1956.
 
 - **Board:** 74 × 52 mm, 2 layers, 1.6 mm. All SMD parts are 0805 / SOIC / VSSOP / SC-70 on the top side, with hand-soldering SC-70 pads.
 - **Mechanical:** four M3 holes. The Nucleo-32 plugs into two 1×15 sockets with its USB at the top edge.
-- **Rules:** track 0.25 mm, clearance 0.2 mm, via 0.6 / 0.3 mm. Fits the standard JLCPCB / PCBWay 2-layer process.
+- **Rules:** the fab's flat-offer profile: track 0.25 mm, clearance 0.25 mm, vias 0.9 / 0.5 mm, smallest hole 0.5 mm, 1.6 mm FR-4, one rectangular outline. The 0.65 mm-pitch parts (U1 VSSOP-8; U3, U5, U6 SC-70) have their pads trimmed to 0.39 mm wide, so the gaps are 0.26 mm while staying within TI's land pattern for 0.25–0.38 mm leads. An independent geometry check gives a smallest different-net copper gap of 0.260 mm; the drills are 0.50 / 0.75 / 1.00 / 3.20 mm.
 - **Ground:** the bottom layer is a near-solid GND plane (only short cross-unders), with a GND pour on top. Every SMD GND pad has its own stitching via, plus a 5 mm lattice of stitching vias.
 - **Power:** 2×AAA pack off-board on a JST-PH connector (BT1; 1 = +, 2 = −) instead of the earlier Keystone holder. Its through-hole contacts and pegs collided with the analog section and the sockets.
 - **How it was made (reproducible):**
