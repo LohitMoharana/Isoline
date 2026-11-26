@@ -1,0 +1,51 @@
+device: cpu 
+train 18 rec | val ['108', '116', '201', '209'] | DS2 used: False
+scalar columns [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 21, 22, 23, 24, 25, 32, 33, 34, 35, 36, 37] divisors [64, 64, 32, 128, 128, 64, 64, 64, 128, 64, 64, 128, 256, 64, 64, 64, 32, 8, 128, 32, 4, 64, 4, 128]
+--- seed 0  class weights {'N': np.float64(0.724), 'S': np.float64(1.258), 'V': np.float64(0.725), 'F': np.float64(1.293)}
+[s0 student] ep 1/16 loss 0.0346 val acc 0.9378 macroF1 0.4730 (19s)
+[s0 student] ep 2/16 loss 0.0136 val acc 0.9440 macroF1 0.5264 (13s)
+[s0 student] ep 3/16 loss 0.0094 val acc 0.9354 macroF1 0.4640 (16s)
+[s0 student] ep 4/16 loss 0.0070 val acc 0.9439 macroF1 0.5101 (14s)
+[s0 student] ep 5/16 loss 0.0055 val acc 0.9373 macroF1 0.4842 (14s)
+[s0 student] ep 6/16 loss 0.0048 val acc 0.9342 macroF1 0.4745 (13s)
+[s0 student] ep 7/16 loss 0.0035 val acc 0.9471 macroF1 0.5390 (14s)
+[s0 student] ep 8/16 loss 0.0029 val acc 0.9412 macroF1 0.5031 (14s)
+[s0 student] ep 9/16 loss 0.0019 val acc 0.9326 macroF1 0.4914 (14s)
+[s0 student] ep 10/16 loss 0.0014 val acc 0.9324 macroF1 0.4671 (14s)
+[s0 student] ep 11/16 loss 0.0009 val acc 0.9384 macroF1 0.5064 (13s)
+[s0 student] ep 12/16 loss 0.0007 val acc 0.9365 macroF1 0.4998 (14s)
+[s0 student] ep 13/16 loss 0.0005 val acc 0.9356 macroF1 0.4891 (14s)
+[s0 student] ep 14/16 loss 0.0004 val acc 0.9354 macroF1 0.4849 (14s)
+[s0 student] ep 15/16 loss 0.0004 val acc 0.9355 macroF1 0.4861 (13s)
+[s0 student] ep 16/16 loss 0.0004 val acc 0.9363 macroF1 0.4908 (14s)
+[s0 qat] ep 1/4 loss 0.0029 val acc 0.9409 macroF1 0.5110 (16s)
+[s0 qat] ep 2/4 loss 0.0023 val acc 0.9378 macroF1 0.5011 (15s)
+[s0 qat] ep 3/4 loss 0.0019 val acc 0.9381 macroF1 0.5062 (15s)
+[s0 qat] ep 4/4 loss 0.0016 val acc 0.9389 macroF1 0.5004 (15s)
+
+== student_float [val] over seeds [0]
+  accuracy  0.9471 +/- 0.0000
+  macro_f1  0.5390 +/- 0.0000
+  f1_N      0.9758 +/- 0.0000
+  f1_S      0.3853 +/- 0.0000
+  f1_V      0.7951 +/- 0.0000
+  f1_F      0.0000 +/- 0.0000
+  se_S      0.2539 +/- 0.0000
+  se_V      0.8000 +/- 0.0000
+
+== student_int8 [val] over seeds [0]
+  accuracy  0.9409 +/- 0.0000
+  macro_f1  0.5110 +/- 0.0000
+  f1_N      0.9728 +/- 0.0000
+  f1_S      0.3418 +/- 0.0000
+  f1_V      0.7293 +/- 0.0000
+  f1_F      0.0000 +/- 0.0000
+  se_S      0.2229 +/- 0.0000
+  se_V      0.7046 +/- 0.0000
+== int8 student seed 0 [val]
+  accuracy  94.09%   macro-F1 0.511
+  N: Se 0.995  +P 0.951  F1 0.973  (n=8292)
+  S: Se 0.223  +P 0.732  F1 0.342  (n=516)
+  V: Se 0.705  +P 0.756  F1 0.729  (n=325)
+  F: Se 0.000  +P 0.000  F1 0.000  (n=4)
+saved /tmp/stu/train_dev_r4feat.json
