@@ -6,8 +6,8 @@ zones, and runs DRC. Design rules target a standard JLCPCB/PCBWay 2-layer 1.6 mm
 Layout (top view, USB of the Nucleo at the top edge):
   left  : electrode header J1 + HIL input/jumpers on the board edge, input protection/bias network
   middle: INA333 (U1) -> servo + x30 gain (U2) -> Sallen-Key + VREF buffer (U4), fast-restore switch (U3)
-  right : Nucleo-32 sockets J4 (A-side, analog pins) and J3 (D-side); comparators U5/U6 sit under the Nucleo
-          next to the J4/J3 pins they drive; 2xAAA pack off-board on the JST-PH connector BT1
+  right : Nucleo-32 sockets J4 (A-side, analog pins) and J3 (D-side); comparators U5/U6 in a strip just left of J4
+          (nothing under the Nucleo); 2xAAA pack off-board on the JST-PH connector BT1
 Nucleo-32 socket orientation (UM1956, Arduino Nano layout): pin 1 of both CN3 and CN4 at the end away from USB;
 viewed from the top with USB up, CN4 (VIN..A0..D13) is the left column and CN3 (D1..D12) the right one.
 CHECK this against your board before ordering (see hardware/README.md, PCB checklist).
@@ -28,12 +28,12 @@ LIB = "/usr/share/kicad/footprints"
 TRACK, CLEAR, VIA_PAD, VIA_HOLE = 0.25, 0.25, 0.9, 0.5
 FINE_PITCH = ("U1", "U3", "U5", "U6")     # 0.65 mm pitch: pads trimmed to 0.39 mm wide -> 0.26 mm gaps
 FINE_PAD_W = 0.39
-W, H = 74.0, 52.0
+W, H = 84.0, 52.0
 OX, OY = 100.0, 100.0          # board origin on the KiCad sheet
 mm = pcbnew.FromMM
 
 # ref: (x, y, rotation deg, side)   coordinates in mm from the board's top-left corner
-J4X, J3X, PTOP = 50.0, 65.24, 7.0           # socket columns; pin 15 (USB end) at y = PTOP
+J4X, J3X, PTOP = 60.0, 75.24, 7.0           # socket columns; pin 15 (USB end) at y = PTOP
 PIN1 = PTOP + 14 * 2.54
 PLACE = {
     # ---- connectors / jumpers on the left edge
@@ -55,10 +55,10 @@ PLACE = {
     "U4": (39.5, 15.0, 0, "F"), "C10": (39.5, 20.0, 180, "F"),
     "R16": (36.5, 25.0, 0, "F"), "R17": (36.5, 28.4, 0, "F"), "C11": (41.0, 25.0, 0, "F"), "C12": (41.0, 28.4, 0, "F"),
     "R1": (36.5, 31.8, 0, "F"), "R2": (36.5, 35.2, 0, "F"), "C3": (41.0, 31.8, 0, "F"), "C4": (41.0, 35.2, 0, "F"),
-    # ---- comparators under the Nucleo, between the socket columns
-    "U5": (56.0, 26.0, 0, "F"), "C13": (60.5, 26.0, 90, "F"),
-    "U6": (56.0, 32.0, 0, "F"), "C14": (60.5, 32.0, 90, "F"),
-    "C15": (56.0, 21.0, 0, "F"), "C16": (56.0, 37.0, 0, "F"), "R18": (44.5, 40.0, 90, "F"),
+    # ---- comparators in their own strip left of J4 (nothing under the Nucleo: probe-able, no height constraint)
+    "U5": (51.0, 25.5, 0, "F"), "C13": (55.6, 25.5, 90, "F"),
+    "U6": (51.0, 32.5, 0, "F"), "C14": (55.6, 32.5, 90, "F"),
+    "C15": (51.0, 21.0, 0, "F"), "C16": (51.0, 37.0, 0, "F"), "R18": (55.0, 14.6, 0, "F"),
     # ---- Nucleo-32 sockets (rotated 180: pin 1 away from USB)
     "J4": (J4X, PIN1, 180, "F"), "J3": (J3X, PIN1, 180, "F"),
     # ---- power

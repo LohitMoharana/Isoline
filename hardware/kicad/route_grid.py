@@ -24,7 +24,7 @@ import pcbnew
 HERE = Path(__file__).resolve().parent
 PCB = HERE / "isoline_afe.kicad_pcb"
 P = 0.1                    # grid pitch, mm
-OX, OY, W, H = 100.0, 100.0, 74.0, 52.0
+OX, OY, W, H = 100.0, 100.0, 84.0, 52.0
 TRACK_W, CLR, VIA_D, VIA_DRILL = 0.25, 0.25, 0.9, 0.5      # fab flat-offer profile
 MARGIN = 0.012          # exact geometry; only covers mid-step approach between grid nodes
 EDGE = 0.5
