@@ -49,7 +49,7 @@ def main():
             v = [r[c][m] for r in runs]; summ[f"{m}_{c}"] = (float(np.mean(v)), float(np.std(v)))
     for k, v in summ.items():
         print(f"  {k:16s} {v[0]:.4f} +/- {v[1]:.4f}")
-    tag = "tiny" if os.environ.get("TINY") == "1" else "round4"
+    tag = "tiny" if F.TINY else "round4"
     Path(OUT, f"af_{tag}.json").write_text(json.dumps(dict(T=T, ds1_lopo_by_T=accs, summary=summ, runs=runs), indent=2, default=float))
 
 

@@ -192,6 +192,23 @@ equipment, 4–7 % of normal beats are flagged. On healthy subjects the false-al
 need per-patient calibration or alarm smoothing (e.g. only report bursts). SVDB was used as a development set for
 *other* candidates in rounds 5 and 8.
 
+### Round 9: irregular-rhythm flag on the round-4 model — **95.49 % on unseen patients**
+
+The same causal flag (threshold re-chosen on DS1 leave-one-patient-out by beat accuracy: T = 0.08, DS1 95.33 → 95.61 %)
+applied to the round-4 model ([`scripts/af_round4.py`](scripts/af_round4.py), [`results/af_round4.json`](results/af_round4.json)):
+
+| DS2, 5 seeds | Accuracy | Macro-F1 | S Se / +P / F1 | V Se / +P / F1 | Input |
+|---|---|---|---|---|---|
+| **Isoline round 4 + rhythm flag** | **95.49 ± 0.05 %** | 0.579 | 0.13 / 0.74 / 0.22 | 0.978 / 0.935 / **0.956** | level-crossing events |
+| Isoline round 4 | 94.76 ± 0.08 % | 0.605 | 0.28 / 0.41 / 0.33 | 0.978 / 0.935 / 0.956 | level-crossing events |
+| Our clean replica of the 96.14 % RF paper | 95.39 ± 0.09 % | 0.635 | — / — / 0.63 | — / — / 0.89 | full-rate ECG |
+| Reported: weighted kernel ELM / RF paper | 96.15 % / 96.14 % | — | F1 0.69 / — | F1 0.94 / — | full-rate ECG |
+
+From sparse comparator events, Isoline now matches a clean re-run of the best published method on accuracy, and beats it on V.
+It is still about 0.65 points below the published 96.15 %. **The gain is a trade:** fewer false S alarms (S precision
+0.41 → 0.74) but more missed S beats (sensitivity 0.28 → 0.13), so macro-F1 drops. The flag is a deliberate
+"don't call S during AF-like rhythm" policy. This is the tenth DS2 evaluation in the project; the threshold was set on DS1.
+
 ### Irregular-rhythm flag and episode alarms (5.2 KB model)
 
 A causal irregular-rhythm flag (median |ΔRR| / median RR over the previous 16 beats > T) re-labels S predictions as
