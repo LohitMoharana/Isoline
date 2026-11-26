@@ -1,0 +1,45 @@
+MI ranking on DS1: ['R0/avg', 'avg/R0', 'R+1/R0', 'w4_n', 'R-1/R0', 'w2_n', 'w6_n', 'w4', 'w2', 'w6']
+k= 1  DS1 LOPO accuracy 89.63
+k= 2  DS1 LOPO accuracy 89.63
+k= 3  DS1 LOPO accuracy 92.32
+k= 4  DS1 LOPO accuracy 94.22
+k= 5  DS1 LOPO accuracy 95.01
+k= 6  DS1 LOPO accuracy 95.01
+k= 7  DS1 LOPO accuracy 95.10
+k= 8  DS1 LOPO accuracy 95.23
+k= 9  DS1 LOPO accuracy 95.02
+k=10  DS1 LOPO accuracy 95.01
+chosen on DS1: k = 8  (['R0/avg', 'avg/R0', 'R+1/R0', 'w4_n', 'R-1/R0', 'w2_n', 'w6_n', 'w4'])
+== DS2 clean protocol, k=8, seed 0
+  accuracy  95.43%   macro-F1 0.639
+  N: Se 0.980  +P 0.974  F1 0.977  (n=44218)
+  S: Se 0.657  +P 0.613  F1 0.634  (n=1836)
+  V: Se 0.876  +P 0.900  F1 0.888  (n=3219)
+  F: Se 0.031  +P 0.250  F1 0.055  (n=388)
+== DS2 clean protocol, k=8, seed 1
+  accuracy  95.38%   macro-F1 0.632
+  N: Se 0.981  +P 0.971  F1 0.976  (n=44218)
+  S: Se 0.615  +P 0.623  F1 0.619  (n=1836)
+  V: Se 0.879  +P 0.907  F1 0.893  (n=3219)
+  F: Se 0.023  +P 0.196  F1 0.041  (n=388)
+== DS2 clean protocol, k=8, seed 2
+  accuracy  95.49%   macro-F1 0.638
+  N: Se 0.981  +P 0.973  F1 0.977  (n=44218)
+  S: Se 0.658  +P 0.624  F1 0.641  (n=1836)
+  V: Se 0.878  +P 0.915  F1 0.896  (n=3219)
+  F: Se 0.021  +P 0.200  F1 0.037  (n=388)
+== DS2 clean protocol, k=8, seed 3
+  accuracy  95.44%   macro-F1 0.637
+  N: Se 0.980  +P 0.973  F1 0.976  (n=44218)
+  S: Se 0.660  +P 0.622  F1 0.640  (n=1836)
+  V: Se 0.881  +P 0.911  F1 0.896  (n=3219)
+  F: Se 0.021  +P 0.195  F1 0.037  (n=388)
+== DS2 clean protocol, k=8, seed 4
+  accuracy  95.23%   macro-F1 0.631
+  N: Se 0.981  +P 0.971  F1 0.976  (n=44218)
+  S: Se 0.603  +P 0.603  F1 0.603  (n=1836)
+  V: Se 0.875  +P 0.907  F1 0.891  (n=3219)
+  F: Se 0.031  +P 0.214  F1 0.054  (n=388)
+
+DS2 clean protocol: accuracy 95.39 +/- 0.09
+illustration only, paper-style 'k chosen on DS2': {1: 87.27, 2: 87.27, 3: 91.44, 4: 93.79, 5: 94.13, 6: 94.22, 7: 94.31, 8: 95.43, 9: 95.44, 10: 95.5} -> would report 95.50 at k=10
