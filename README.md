@@ -162,6 +162,20 @@ not for the original FPGA plan). Still about 1.2–1.4 points below the ~96 % li
 *Disclosure:* this is the third time DS2 has been evaluated in this project (round 1, round 2, round 4), each on a
 configuration frozen beforehand on DS1 only. Nothing was tuned after seeing a DS2 number.
 
+### Round 7: a 5.2 KB tree model
+
+Size-capped boosted trees (30 rounds, 8 leaves, 5,160 B) on the round-4 features + INCART were chosen as the best
+model of 9 KB or less by DS1 leave-one-patient-out (95.24 %; [`results/exp_tiny_gbt_log.txt`](results/exp_tiny_gbt_log.txt))
+and evaluated once on DS2 ([`results/final_tiny_gbt.json`](results/final_tiny_gbt.json)):
+
+| DS2, 5 seeds | Size | Accuracy | Macro-F1 | S F1 | V F1 |
+|---|---|---|---|---|---|
+| Tiny boosted trees | **5.2 KB** | 93.27 ± 0.05 % | ~0.60 | 0.31 | **0.947** |
+| int8 CNN student (round 1) | 9 KB | 93.7 ± 0.4 % | 0.507 | 0.17 | 0.891 |
+
+Smaller, and better on every rare class, for 0.4 points less accuracy. The 0.4-point drop on DS2 (the DS1 estimate was 95.24 %)
+is another example of DS1 overestimating DS2. The 9 KB CNN student with round-4 features was not better on DS1 validation.
+
 ### Round 6: replicating the best published method under a clean protocol
 
 We re-implemented the random-forest method reported at 96.14 % on this split (Saenz-Cogollo & Agelli, *Algorithms*
