@@ -15,6 +15,18 @@
 
 ---
 
+## Headline results (DS2, unseen patients, inter-patient De Chazal split)
+
+| Model | Size | Accuracy | V F1 | S F1 | Compared with |
+|---|---|---|---|---|---|
+| **Isoline, round 4 + rhythm flag** | ~46–64 KB | **95.49 ± 0.05 %** | **0.956** | 0.22 | clean re-run of the 96.14 % RF paper: 95.39 % (full-rate ECG) |
+| **Isoline tiny + rhythm flag** | **5.2 KB** | **94.57 %** (seed 0) | **0.948** | 0.22 | LUT/logic-gate networks (2026): 93.6–94.4 %, V F1 ≤ 0.91, S F1 0.01–0.47, ~16 KB est. |
+
+Both run on sparse level-crossing events (~90 % idle) instead of a sampled waveform. All choices were made on DS1 or
+other databases. DS2 has been evaluated 10 times over the project, each time on a configuration frozen beforehand.
+That count is disclosed because it makes the comparison slightly optimistic. The best reported full-waveform results on
+this split (≈96.15 %) are still about 0.65 points higher, and S detection remains the weakness.
+
 ## The idea
 
 An ECG is mostly **nothing**. Between the QRS complexes the signal sits on the *isoelectric line* — the flat baseline —
