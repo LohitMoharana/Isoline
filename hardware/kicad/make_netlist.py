@@ -63,8 +63,8 @@ hil_sig, hil_ac, hil_r = Net("HIL_SIG"), Net("HIL_AC"), Net("HIL_ATT")
 
 GROUP[0] = 'power'
 # ---------------------------------------------------------------- power
-bt = mk("Battery_2xAAA", "BT", "Battery:BatteryHolder_Keystone_2468_2xAAA", [(1, "+"), (2, "-")], "2xAAA",
-        "2 x AAA holder (Keystone 2468)")
+bt = mk("Battery_2xAAA", "BT", "Connector_JST:JST_PH_B2B-PH-K_1x02_P2.00mm_Vertical", [(1, "+"), (2, "-")], "2xAAA",
+        "JST-PH 2-pin to an external 2 x AAA pack (1 = +, 2 = -)")
 bt[1] += bat; bt[2] += gnd
 jp1 = mk("Jumper_3", "JP", "Connector_PinHeader_2.54mm:PinHeader_1x03_P2.54mm_Vertical",
          [(1, "1"), (2, "2"), (3, "3")], "PWR_SEL", "1-2: battery powers board, 2-3: Nucleo 3V3 (USB) powers board")
@@ -97,7 +97,7 @@ jp3[1] += e_neg; jp3[2] += e_ref
 
 GROUP[0] = 'inamp'
 # ---------------------------------------------------------------- in-amp + servo + gain + LPF
-u1 = mk("INA333", "U", "Package_SO:VSSOP-8_3x3mm_P0.65mm",
+u1 = mk("INA333", "U", "Package_SO:VSSOP-8_3.0x3.0mm_P0.65mm",
         [(1, "RG"), (2, "VIN-"), (3, "VIN+"), (4, "V-"), (5, "REF"), (6, "VOUT"), (7, "V+"), (8, "RG_")],
         "INA333AIDGK", "in-amp, G = 1 + 100k/RG")
 u1["RG"] += rg_a; u1["RG_"] += rg_b; u1["VIN-"] += in_n; u1["VIN+"] += in_p
@@ -110,7 +110,7 @@ u2["V-"] += gnd; u2["V+"] += vcc; C("100n", vcc, gnd, "U2 decoupling")
 u2["+INA"] += vref; u2["-INA"] += s_in; u2["OUTA"] += srv
 R(DZ.SERVO_R, ina_out, s_in, "servo R (0.05 Hz)"); C(DZ.SERVO_C, s_in, srv, "servo C, film/C0G-X7R low leakage")
 R(DZ.FAST_RESTORE_R, ina_out, fr, "fast-restore R")
-u6 = mk("SN74LVC1G66", "U", "Package_TO_SOT_SMD:SOT-353_SC-70-5",
+u6 = mk("SN74LVC1G66", "U", "Package_TO_SOT_SMD:SOT-353_SC-70-5_Handsoldering",
         [(1, "A"), (2, "B"), (3, "GND"), (4, "C"), (5, "VCC")], "SN74LVC1G66DCK", "fast-restore analog switch")
 u6["A"] += fr; u6["B"] += s_in; u6["GND"] += gnd; u6["VCC"] += vcc; u6["C"] += fr_ctl
 R("100k", fr_ctl, gnd, "fast-restore pull-down (switch off by default)")
@@ -131,7 +131,7 @@ GROUP[0] = 'comp'
 # ---------------------------------------------------------------- comparators (thresholds from MCU DAC)
 for name, plus, minus, out, desc in (("UP", afe_out, th_up, ev_up, "up event: AFE above upper threshold"),
                                      ("DN", th_dn, afe_out, ev_dn, "down event: AFE below lower threshold")):
-    u = mk("TLV3691", "U", "Package_TO_SOT_SMD:SOT-353_SC-70-5",
+    u = mk("TLV3691", "U", "Package_TO_SOT_SMD:SOT-353_SC-70-5_Handsoldering",
            [(1, "IN+"), (2, "GND"), (3, "IN-"), (4, "OUT"), (5, "VCC")], "TLV3691IDCK", desc)
     u["IN+"] += plus; u["IN-"] += minus; u["OUT"] += out; u["GND"] += gnd; u["VCC"] += vcc
     C("100n", vcc, gnd, f"comparator {name} decoupling")

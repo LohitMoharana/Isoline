@@ -63,19 +63,19 @@ on save.
 libraries) and `kicad/bom.csv`. The board is a **carrier for a NUCLEO-L432KC** (Cortex-M4F with an on-board
 ST-LINK), so there is no QFN to hand-solder and no separate programmer to buy.
 
-**Import:** KiCad PCB Editor → *File → Import → Netlist…* → select `isoline_afe.net` → *Update PCB*.
-Run the DRC after placement.
+**Board:** a placed and routed layout is in `kicad/isoline_afe.kicad_pcb` (see *PCB* below). To start over from the
+netlist instead: KiCad PCB Editor → *File → Import → Netlist…* → `isoline_afe.net` → *Update PCB*.
 
 | Block | Parts | Notes |
 |---|---|---|
-| Power | 2×AAA holder (Keystone 2468), JP1 power select | JP1 1-2 = battery, 2-3 = Nucleo 3V3 from USB (development) |
-| Reference | 2×1 MΩ divider + TLV8542 (U3B) buffer | VREF = VCC/2 |
+| Power | JST-PH 2-pin (BT1) to an external 2×AAA pack with switch, JP1 power select | JP1 1-2 = battery, 2-3 = Nucleo 3V3 from USB (development) |
+| Reference | 2×1 MΩ divider + TLV8542 (U4B) buffer | VREF = VCC/2 |
 | Input | J1 electrodes (RA−, LL+, RL), 10 k series, 10 MΩ bias to VREF | RL to VREF through 10 k |
 | HIL input | J2 + 1 µF + 100 k / 100 Ω attenuator (~1/1000), JP2/JP3 | fit JP2 + JP3 **only** when injecting MIT-BIH from a DAC/audio out |
 | In-amp | INA333 (U1), RG = 11.1 k (0.1 %) → G = 10 | pinout checked: RG 1/8, IN− 2, IN+ 3, V− 4, REF 5, OUT 6, V+ 7 |
-| Servo / fast restore | TLV8542 U2A integrator 10 MΩ / 330 nF; SN74LVC1G66 switch + 100 k | MCU D6 (PB1) high for ~1 s at power-up |
-| Gain + LPF | U2B ×30; U3A Sallen-Key 40 Hz (100 k, 100 k, 56 n, 27 n) | total gain 300 |
-| Comparators | 2 × TLV3691 (SC70-5): UP = AFE > TH_UP, DN = AFE < TH_DN | thresholds from DAC PA4 (A3) / PA5 (A4); events to D2 (PA12) / D3 (PB0) |
+| Servo / fast restore | TLV8542 U2A integrator 10 MΩ / 330 nF; SN74LVC1G66 (U3) switch + 100 k | MCU D6 (PB1) high for ~1 s at power-up |
+| Gain + LPF | U2B ×30; U4A Sallen-Key 40 Hz (100 k, 100 k, 56 n, 27 n) | total gain 300 |
+| Comparators | 2 × TLV3691 (U5, U6; SC70-5): UP = AFE > TH_UP, DN = AFE < TH_DN | thresholds from DAC PA4 (A3) / PA5 (A4); events to D2 (PA12) / D3 (PB0) |
 | Debug | AFE_OUT → A0 (PA0) through 1 k; 8 test points | |
 
 **Nucleo jumper note.** On the Nucleo-32, A4/A5 share pins with D4/D5 through solder bridges, so PA5 is input-only by
@@ -84,7 +84,7 @@ numbers for your board revision in UM1956.
 
 ### Layout guidance (for you in KiCad)
 
-1. **Two zones:** analog (J1, input resistors, U1, U2, U3, U6) on one side, Nucleo headers and comparators on the other.
+1. **Two zones:** analog (J1, input resistors, U1, U2, U3, U4) on one side, Nucleo headers and comparators on the other.
    Use one solid ground pour on the bottom layer and do not split it.
 2. **Keep high-impedance nodes tiny:** the servo node (SERVO_IN: 10 MΩ + 330 nF) and the 10 MΩ bias resistors. Use short
    traces, no vias if possible, and keep them away from the comparator outputs and the Nucleo. Consider a guard ring tied to VREF.
@@ -92,11 +92,38 @@ numbers for your board revision in UM1956.
 4. **One 100 nF decoupling capacitor per IC**, placed right at its V+ pin. Put the 10 µF bulk capacitor near JP1.
 5. **Comparators next to the Nucleo header**, so the fast-edged EV_UP / EV_DN traces stay short and far from the analog zone.
 6. The 330 nF servo capacitor should be a low-leakage film or C0G/X7R part (leakage sets the corner frequency).
-7. Header spacing: CN3 to CN4 = 15.24 mm (600 mil), pin 1 of both at the same end (USB end of the Nucleo).
+7. Header spacing: CN3 to CN4 = 15.24 mm (600 mil). Pin 1 of both is at the end **away from** the Nucleo's USB connector; with USB pointing up (top view), CN4 (VIN…A0…D13) is the left column and CN3 (D1…D12) the right one. `make_pcb.py` checks this against KiCad's `Module:Arduino_Nano` footprint.
+
+## PCB (rev A): placed, routed, DRC-clean
+
+| Top | Bottom (mirrored) |
+|---|---|
+| ![top](kicad/pcb_top.png) | ![bottom](kicad/pcb_bottom.png) |
+
+- **Board:** 74 × 52 mm, 2 layers, 1.6 mm. All SMD parts are 0805 / SOIC / VSSOP / SC-70 on the top side, with hand-soldering SC-70 pads.
+- **Mechanical:** four M3 holes. The Nucleo-32 plugs into two 1×15 sockets with its USB at the top edge.
+- **Rules:** track 0.25 mm, clearance 0.2 mm, via 0.6 / 0.3 mm. Fits the standard JLCPCB / PCBWay 2-layer process.
+- **Ground:** the bottom layer is a near-solid GND plane (only short cross-unders), with a GND pour on top. Every SMD GND pad has its own stitching via, plus a 5 mm lattice of stitching vias.
+- **Power:** 2×AAA pack off-board on a JST-PH connector (BT1; 1 = +, 2 = −) instead of the earlier Keystone holder. Its through-hole contacts and pegs collided with the analog section and the sockets.
+- **How it was made (reproducible):**
+  - `kicad/make_pcb.py` places the parts from `isoline_afe.net` and checks the socket orientation.
+  - `kicad/route_grid.py` routes it with a small A* grid router written for this board: exact copper-geometry clearances, F.Cu preferred, GND fan-out first.
+  - `kicad/render_pcb.py` draws the pictures.
+  - KiCad 7's own DRC (`kicad/drc_report.txt`) reports **0 unconnected pads and 0 clearance / hole / silkscreen / courtyard violations**. The 60 remaining "library not configured" warnings only mean the build machine had no footprint library table.
+- **Fabrication files:** `kicad/isoline_afe_gerbers.zip` (Gerbers + Excellon drill, upload as is), `kicad/fab/isoline_afe-pos.csv` (pick-and-place), `kicad/bom.csv`.
+
+**Honest layout review (optional hand clean-up in KiCad before ordering):**
+- **Electrode traces:** E_POS / E_NEG run 30–42 mm because they also reach the HIL jumpers and attenuator at the lower left. Fine at ECG frequencies, but shorter is better against mains pickup.
+- **AFE_OUT** fans out to the comparators, C11, R18 and TP4 over about 70 mm with 10 vias. It is a low-impedance op-amp output, so this is harmless but untidy.
+- **Servo node:** SERVO_IN (10 MΩ / 330 nF) is short (16.5 mm) with no vias. A VREF guard ring around it would further reduce leakage, but it is not drawn.
+- **Decoupling:** capacitors sit 3–5 mm from their ICs rather than at the V+ pin. At these bandwidths (TLV8542 GBW 8 kHz) with a solid ground plane this is acceptable.
 
 ### Before ordering a PCB: checklist
 
 - [ ] Re-check every footprint against the exact ordered part (package suffix: INA333AIDGK, TLV8542ID, TLV3691IDCK, SN74LVC1G66DCK).
-- [ ] Confirm the Nucleo-32 header order and solder bridges in UM1956 for your board revision.
+- [ ] Confirm the Nucleo-32 header order and solder bridges in UM1956 for your board revision. Physically: hold your Nucleo with USB up, components facing you; the column with VIN/A0/D13 must land on J4 (left).
+- [ ] Open the Nucleo solder bridges that tie A4/A5 to D4/D5 (SB16/SB18 per UM1956) so PA5 can drive TH_DN.
+- [ ] Check the polarity of your 2×AAA pack's JST-PH lead (red to pin 1 "+"). JST lead colours are not standardised.
+- [ ] Open `kicad/isoline_afe.kicad_pcb` in your KiCad, run *Inspect → Design Rules Checker* with your library table, and look at the 3D view.
 - [ ] Replace the behavioural op-amp models with TI's SPICE models and re-run `sim/make_afe_sim.py`.
 - [ ] Simulate the fast-restore start-up (switch on 1 s, then off).

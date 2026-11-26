@@ -129,11 +129,14 @@ The algorithm is done. The next step is a real board, designed in **KiCad** and 
 validated with **hardware-in-the-loop** by playing MIT-BIH records into the analog front end through a DAC, so no patient
 is needed.
 
+<p align="center"><img src="hardware/kicad/pcb_top.png" width="640" alt="Isoline AFE carrier board, rev A (top)"></p>
+
 - [x] Bit-exact C export of the classifier ([`export/isoline_model.h`](export/isoline_model.h), 100 % identical to Python)
-- [ ] Parts survey and power budget (front end, nanopower comparators, low-power MCU)
-- [ ] ngspice simulation of the analog chain, from the same netlist as the PCB
-- [ ] Dev-board prototype and hardware-in-the-loop test against the simulation
-- [ ] Custom PCB
+- [x] Parts survey and power budget ([`hardware/POWER_BUDGET.md`](hardware/POWER_BUDGET.md): roughly 110–170 µW for the analog front end)
+- [x] ngspice simulation of the analog chain from the same netlist as the PCB. Accuracy through the simulated circuit: 95.50 % full / 94.74 % tiny on DS2
+- [x] STM32L432 firmware ([`firmware/stm32`](firmware/stm32)) and a virtual hardware-in-the-loop run of the unmodified firmware: 93.49 % end-to-end on DS2
+- [x] KiCad schematic and a placed, routed, DRC-clean PCB rev A, 74 × 52 mm, with Gerbers ready ([`hardware/README.md`](hardware/README.md#pcb-rev-a-placed-routed-drc-clean))
+- [ ] Order, assemble, bring up, and run real hardware-in-the-loop against the simulation
 
 ## 🚀 Quick start
 

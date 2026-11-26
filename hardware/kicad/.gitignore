@@ -1,0 +1,7 @@
+*.erc
+*.log
+*_sklib.py
+*.dsn
+*.ses
+*-backups/
+fp-info-cache
