@@ -1,0 +1,7 @@
+# Rhythm-flag variants on dev data only (round-4 model). DS2 not used.
+(a) no flag                DS1 LOPO acc 95.33 S Se 0.42 +P 0.57 F1 0.481 | SVDB acc 90.16 S Se 0.08 +P 0.69 F1 0.139 | mean 92.75
+(b) irregularity > 0.08    DS1 LOPO acc 95.61 S Se 0.35 +P 0.78 F1 0.485 | SVDB acc 90.17 S Se 0.06 +P 0.82 F1 0.110 | mean 92.89
+(c) AF detector > 0.5      DS1 LOPO acc 95.64 S Se 0.36 +P 0.79 F1 0.497 | SVDB acc 90.21 S Se 0.07 +P 0.77 F1 0.132 | mean 92.92
+chosen: (c) AF detector > 0.5
+# AF detector (RR-only, previous 16 beats; trained AFDB + DS1 rhythm labels, databases equally weighted), grouped CV:
+#   AFDB AF-beat Se 0.859 +P 0.950 ; DS1 Se 0.841 +P 0.501, false AF on non-AF beats 6.7 %
