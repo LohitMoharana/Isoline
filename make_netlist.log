@@ -1,0 +1,127 @@
+WARNING: KICAD_SYMBOL_DIR environment variable is missing, so the default KiCad symbol libraries won't be searched. @ [/home/claude/isoline/<frozen importlib._bootstrap_external>:1027=>/home/claude/isoline/<frozen importlib._bootstrap>:488]
+WARNING: KICAD10_SYMBOL_DIR environment variable is missing, so the default KiCad symbol libraries won't be searched. @ [/home/claude/isoline/<frozen importlib._bootstrap_external>:1027=>/home/claude/isoline/<frozen importlib._bootstrap>:488]
+WARNING: KICAD6_SYMBOL_DIR environment variable is missing, so the default KiCad symbol libraries won't be searched. @ [/home/claude/isoline/<frozen importlib._bootstrap_external>:1027=>/home/claude/isoline/<frozen importlib._bootstrap>:488]
+WARNING: KICAD7_SYMBOL_DIR environment variable is missing, so the default KiCad symbol libraries won't be searched. @ [/home/claude/isoline/<frozen importlib._bootstrap_external>:1027=>/home/claude/isoline/<frozen importlib._bootstrap>:488]
+WARNING: KICAD8_SYMBOL_DIR environment variable is missing, so the default KiCad symbol libraries won't be searched. @ [/home/claude/isoline/<frozen importlib._bootstrap_external>:1027=>/home/claude/isoline/<frozen importlib._bootstrap>:488]
+WARNING: KICAD9_SYMBOL_DIR environment variable is missing, so the default KiCad symbol libraries won't be searched. @ [/home/claude/isoline/<frozen importlib._bootstrap_external>:1027=>/home/claude/isoline/<frozen importlib._bootstrap>:488]
+WARNING: fp-lib-table file was not found. Component footprints are not available.
+WARNING: fp-lib-table file was not found. Component footprints are not available.
+WARNING: fp-lib-table file was not found. Component footprints are not available.
+WARNING: fp-lib-table file was not found. Component footprints are not available.
+WARNING: fp-lib-table file was not found. Component footprints are not available.
+WARNING: Missing tag on Battery_2xAAA instantiated at /home/claude/isoline/hardware/kicad/make_netlist.py:29.
+WARNING: Random tag a9ZsW7O6PU generated for Battery_2xAAA.
+WARNING: Missing tag on Jumper_3 instantiated at /home/claude/isoline/hardware/kicad/make_netlist.py:29.
+WARNING: Random tag 8fRNA3cuck generated for Jumper_3.
+WARNING: Missing tag on C instantiated at /home/claude/isoline/hardware/kicad/make_netlist.py:29.
+WARNING: Random tag 0rTRT2ydaK generated for C.
+WARNING: Missing tag on C instantiated at /home/claude/isoline/hardware/kicad/make_netlist.py:29.
+WARNING: Random tag HSgVNoAPIn generated for C.
+WARNING: Missing tag on R instantiated at /home/claude/isoline/hardware/kicad/make_netlist.py:29.
+WARNING: Random tag DQFU6FoFNa generated for R.
+WARNING: Missing tag on R instantiated at /home/claude/isoline/hardware/kicad/make_netlist.py:29.
+WARNING: Random tag YnmqEcMGjr generated for R.
+WARNING: Missing tag on C instantiated at /home/claude/isoline/hardware/kicad/make_netlist.py:29.
+WARNING: Random tag 9ruMmphlje generated for C.
+WARNING: Missing tag on C instantiated at /home/claude/isoline/hardware/kicad/make_netlist.py:29.
+WARNING: Random tag GTR_AYkPH2 generated for C.
+WARNING: Missing tag on Conn_Electrodes instantiated at /home/claude/isoline/hardware/kicad/make_netlist.py:29.
+WARNING: Random tag gp5sJkGrF4 generated for Conn_Electrodes.
+WARNING: Missing tag on R instantiated at /home/claude/isoline/hardware/kicad/make_netlist.py:29.
+WARNING: Random tag PoiGXNRNW2 generated for R.
+WARNING: Missing tag on R instantiated at /home/claude/isoline/hardware/kicad/make_netlist.py:29.
+WARNING: Random tag UPhdM7g9kc generated for R.
+WARNING: Missing tag on R instantiated at /home/claude/isoline/hardware/kicad/make_netlist.py:29.
+WARNING: Random tag VPlniBZ5Q0 generated for R.
+WARNING: Missing tag on R instantiated at /home/claude/isoline/hardware/kicad/make_netlist.py:29.
+WARNING: Random tag OqxDpf4Yer generated for R.
+WARNING: Missing tag on R instantiated at /home/claude/isoline/hardware/kicad/make_netlist.py:29.
+WARNING: Random tag mt2q6X5fsQ generated for R.
+WARNING: Missing tag on Conn_HIL instantiated at /home/claude/isoline/hardware/kicad/make_netlist.py:29.
+WARNING: Random tag NFLDCy3SdS generated for Conn_HIL.
+WARNING: Missing tag on C instantiated at /home/claude/isoline/hardware/kicad/make_netlist.py:29.
+WARNING: Random tag 5GCuP75K6r generated for C.
+WARNING: Missing tag on R instantiated at /home/claude/isoline/hardware/kicad/make_netlist.py:29.
+WARNING: Random tag 0dRTTcPz4W generated for R.
+WARNING: Missing tag on Jumper_2 instantiated at /home/claude/isoline/hardware/kicad/make_netlist.py:29.
+WARNING: Random tag 4hEVXi2qaO generated for Jumper_2.
+WARNING: Missing tag on R instantiated at /home/claude/isoline/hardware/kicad/make_netlist.py:29.
+WARNING: Random tag rqVWtNNJV7 generated for R.
+WARNING: Missing tag on Jumper_2 instantiated at /home/claude/isoline/hardware/kicad/make_netlist.py:29.
+WARNING: Random tag _eL9Ect_Og generated for Jumper_2.
+WARNING: Missing tag on INA333 instantiated at /home/claude/isoline/hardware/kicad/make_netlist.py:29.
+WARNING: Random tag hoKadm9JRc generated for INA333.
+WARNING: Missing tag on R instantiated at /home/claude/isoline/hardware/kicad/make_netlist.py:29.
+WARNING: Random tag Ju9lMLYtrt generated for R.
+WARNING: Missing tag on C instantiated at /home/claude/isoline/hardware/kicad/make_netlist.py:29.
+WARNING: Random tag t0offrqOl0 generated for C.
+WARNING: Missing tag on TLV8542 instantiated at /home/claude/isoline/hardware/kicad/make_netlist.py:29.
+WARNING: Random tag Fux6uZb4ME generated for TLV8542.
+WARNING: Missing tag on C instantiated at /home/claude/isoline/hardware/kicad/make_netlist.py:29.
+WARNING: Random tag GoeJWBl3nM generated for C.
+WARNING: Missing tag on R instantiated at /home/claude/isoline/hardware/kicad/make_netlist.py:29.
+WARNING: Random tag YOGtrDn2Eu generated for R.
+WARNING: Missing tag on C instantiated at /home/claude/isoline/hardware/kicad/make_netlist.py:29.
+WARNING: Random tag iFa9DBv29Z generated for C.
+WARNING: Missing tag on R instantiated at /home/claude/isoline/hardware/kicad/make_netlist.py:29.
+WARNING: Random tag BQDESECNqf generated for R.
+WARNING: Missing tag on SN74LVC1G66 instantiated at /home/claude/isoline/hardware/kicad/make_netlist.py:29.
+WARNING: Random tag Tgeobi2P8S generated for SN74LVC1G66.
+WARNING: Missing tag on R instantiated at /home/claude/isoline/hardware/kicad/make_netlist.py:29.
+WARNING: Random tag _Mchixg3mu generated for R.
+WARNING: Missing tag on C instantiated at /home/claude/isoline/hardware/kicad/make_netlist.py:29.
+WARNING: Random tag M0MFSUKUHH generated for C.
+WARNING: Missing tag on R instantiated at /home/claude/isoline/hardware/kicad/make_netlist.py:29.
+WARNING: Random tag u3Y04LS_ur generated for R.
+WARNING: Missing tag on R instantiated at /home/claude/isoline/hardware/kicad/make_netlist.py:29.
+WARNING: Random tag F1pknSRFGa generated for R.
+WARNING: Missing tag on TLV8542 instantiated at /home/claude/isoline/hardware/kicad/make_netlist.py:29.
+WARNING: Random tag JF69KHUol9 generated for TLV8542.
+WARNING: Missing tag on C instantiated at /home/claude/isoline/hardware/kicad/make_netlist.py:29.
+WARNING: Random tag eYpf1QeyDf generated for C.
+WARNING: Missing tag on R instantiated at /home/claude/isoline/hardware/kicad/make_netlist.py:29.
+WARNING: Random tag X8szTWC3C1 generated for R.
+WARNING: Missing tag on R instantiated at /home/claude/isoline/hardware/kicad/make_netlist.py:29.
+WARNING: Random tag 9EY9IbiHs2 generated for R.
+WARNING: Missing tag on C instantiated at /home/claude/isoline/hardware/kicad/make_netlist.py:29.
+WARNING: Random tag TAFjl0e3ar generated for C.
+WARNING: Missing tag on C instantiated at /home/claude/isoline/hardware/kicad/make_netlist.py:29.
+WARNING: Random tag Sj0O6MMBIY generated for C.
+WARNING: Missing tag on TLV3691 instantiated at /home/claude/isoline/hardware/kicad/make_netlist.py:29.
+WARNING: Random tag EbgWhM27dx generated for TLV3691.
+WARNING: Missing tag on C instantiated at /home/claude/isoline/hardware/kicad/make_netlist.py:29.
+WARNING: Random tag GwcSmZpVEQ generated for C.
+WARNING: Missing tag on TLV3691 instantiated at /home/claude/isoline/hardware/kicad/make_netlist.py:29.
+WARNING: Random tag TwfAZtJAlV generated for TLV3691.
+WARNING: Missing tag on C instantiated at /home/claude/isoline/hardware/kicad/make_netlist.py:29.
+WARNING: Random tag 4Ym4Td4UZH generated for C.
+WARNING: Missing tag on C instantiated at /home/claude/isoline/hardware/kicad/make_netlist.py:29.
+WARNING: Random tag WBP9DSV0lR generated for C.
+WARNING: Missing tag on C instantiated at /home/claude/isoline/hardware/kicad/make_netlist.py:29.
+WARNING: Random tag fIPTfU5V1r generated for C.
+WARNING: Missing tag on R instantiated at /home/claude/isoline/hardware/kicad/make_netlist.py:29.
+WARNING: Random tag 3lAMe7543e generated for R.
+WARNING: Missing tag on Nucleo32_CN3 instantiated at /home/claude/isoline/hardware/kicad/make_netlist.py:29.
+WARNING: Random tag yWP34kdo1v generated for Nucleo32_CN3.
+WARNING: Missing tag on Nucleo32_CN4 instantiated at /home/claude/isoline/hardware/kicad/make_netlist.py:29.
+WARNING: Random tag JJIi29_sQd generated for Nucleo32_CN4.
+WARNING: Missing tag on TestPoint instantiated at /home/claude/isoline/hardware/kicad/make_netlist.py:29.
+WARNING: Random tag ULGwv8Or24 generated for TestPoint.
+WARNING: Missing tag on TestPoint instantiated at /home/claude/isoline/hardware/kicad/make_netlist.py:29.
+WARNING: Random tag pko8BtArk_ generated for TestPoint.
+WARNING: Missing tag on TestPoint instantiated at /home/claude/isoline/hardware/kicad/make_netlist.py:29.
+WARNING: Random tag 2QT7e0Wcs9 generated for TestPoint.
+WARNING: Missing tag on TestPoint instantiated at /home/claude/isoline/hardware/kicad/make_netlist.py:29.
+WARNING: Random tag t3Zz8gObso generated for TestPoint.
+WARNING: Missing tag on TestPoint instantiated at /home/claude/isoline/hardware/kicad/make_netlist.py:29.
+WARNING: Random tag PYuipdsXZ2 generated for TestPoint.
+WARNING: Missing tag on TestPoint instantiated at /home/claude/isoline/hardware/kicad/make_netlist.py:29.
+WARNING: Random tag b5nJvKgw2A generated for TestPoint.
+WARNING: Missing tag on TestPoint instantiated at /home/claude/isoline/hardware/kicad/make_netlist.py:29.
+WARNING: Random tag pwEm5atvu3 generated for TestPoint.
+WARNING: Missing tag on TestPoint instantiated at /home/claude/isoline/hardware/kicad/make_netlist.py:29.
+WARNING: Random tag lqkhrO85YC generated for TestPoint.
+WARNING: Missing tag on  instantiated at /home/claude/isoline/<frozen importlib._bootstrap>:488.
+INFO: 118 warnings found while generating netlist.
+INFO: 0 errors found while generating netlist.
+

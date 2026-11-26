@@ -1,0 +1,57 @@
+part,value,footprint,note
+Battery_2xAAA,2xAAA,Battery:BatteryHolder_Keystone_2468_2xAAA,2 x AAA holder (Keystone 2468)
+Jumper_3,PWR_SEL,Connector_PinHeader_2.54mm:PinHeader_1x03_P2.54mm_Vertical,"1-2: battery powers board, 2-3: Nucleo 3V3 (USB) powers board"
+C,10u,Capacitor_SMD:C_0805_2012Metric,bulk
+C,100n,Capacitor_SMD:C_0805_2012Metric,bulk HF
+R,1MEG,Resistor_SMD:R_0805_2012Metric,VREF divider top
+R,1MEG,Resistor_SMD:R_0805_2012Metric,VREF divider bottom
+C,1u,Capacitor_SMD:C_0805_2012Metric,VREF divider filter
+C,1u,Capacitor_SMD:C_0805_2012Metric,VREF output
+Conn_Electrodes,ELECTRODES,Connector_PinHeader_2.54mm:PinHeader_1x03_P2.54mm_Vertical,"1: RA (-), 2: LL (+), 3: RL (reference)"
+R,10k,Resistor_SMD:R_0805_2012Metric,input protection +
+R,10k,Resistor_SMD:R_0805_2012Metric,input protection -
+R,10MEG,Resistor_SMD:R_0805_2012Metric,bias +
+R,10MEG,Resistor_SMD:R_0805_2012Metric,bias -
+R,10k,Resistor_SMD:R_0805_2012Metric,reference electrode to VREF
+Conn_HIL,HIL_IN,Connector_PinHeader_2.54mm:PinHeader_1x02_P2.54mm_Vertical,hardware-in-the-loop input (DAC / audio out)
+C,1u,Capacitor_SMD:C_0805_2012Metric,HIL AC coupling
+R,100k,Resistor_SMD:R_0805_2012Metric,HIL attenuator top (~1/1000)
+Jumper_2,HIL_ATT_EN,Connector_PinHeader_2.54mm:PinHeader_1x02_P2.54mm_Vertical,fit only in HIL mode: 100 R across the inputs
+R,100,Resistor_SMD:R_0805_2012Metric,HIL attenuator bottom
+Jumper_2,HIL_NEG_REF,Connector_PinHeader_2.54mm:PinHeader_1x02_P2.54mm_Vertical,fit only in HIL mode: E_NEG to reference
+INA333,INA333AIDGK,Package_SO:VSSOP-8_3x3mm_P0.65mm,"in-amp, G = 1 + 100k/RG"
+R,11.1k,Resistor_SMD:R_0805_2012Metric,"INA gain resistor (G1 = 10), 0.1 %"
+C,100n,Capacitor_SMD:C_0805_2012Metric,U1 decoupling
+TLV8542,TLV8542ID,Package_SO:SOIC-8_3.9x4.9mm_P1.27mm,servo integrator (A) + gain x30 (B)
+C,100n,Capacitor_SMD:C_0805_2012Metric,U2 decoupling
+R,10MEG,Resistor_SMD:R_0805_2012Metric,servo R (0.05 Hz)
+C,330n,Capacitor_SMD:C_0805_2012Metric,"servo C, film/C0G-X7R low leakage"
+R,100k,Resistor_SMD:R_0805_2012Metric,fast-restore R
+SN74LVC1G66,SN74LVC1G66DCK,Package_TO_SOT_SMD:SOT-353_SC-70-5,fast-restore analog switch
+R,100k,Resistor_SMD:R_0805_2012Metric,fast-restore pull-down (switch off by default)
+C,100n,Capacitor_SMD:C_0805_2012Metric,U6 decoupling
+R,10k,Resistor_SMD:R_0805_2012Metric,gain stage RG
+R,290k,Resistor_SMD:R_0805_2012Metric,gain stage RF (x30)
+TLV8542,TLV8542ID,Package_SO:SOIC-8_3.9x4.9mm_P1.27mm,Sallen-Key LPF (A) + VREF buffer (B)
+C,100n,Capacitor_SMD:C_0805_2012Metric,U3 decoupling
+R,100k,Resistor_SMD:R_0805_2012Metric,SK R1
+R,100k,Resistor_SMD:R_0805_2012Metric,SK R2
+C,56n,Capacitor_SMD:C_0805_2012Metric,SK C1 (feedback)
+C,27n,Capacitor_SMD:C_0805_2012Metric,SK C2
+TLV3691,TLV3691IDCK,Package_TO_SOT_SMD:SOT-353_SC-70-5,up event: AFE above upper threshold
+C,100n,Capacitor_SMD:C_0805_2012Metric,comparator UP decoupling
+TLV3691,TLV3691IDCK,Package_TO_SOT_SMD:SOT-353_SC-70-5,down event: AFE below lower threshold
+C,100n,Capacitor_SMD:C_0805_2012Metric,comparator DN decoupling
+C,10n,Capacitor_SMD:C_0805_2012Metric,DAC1 hold
+C,10n,Capacitor_SMD:C_0805_2012Metric,DAC2 hold
+R,1k,Resistor_SMD:R_0805_2012Metric,AFE monitor to ADC (debug)
+Nucleo32_CN3,NUCLEO_CN3,Connector_PinSocket_2.54mm:PinSocket_1x15_P2.54mm_Vertical,Nucleo-32 left header
+Nucleo32_CN4,NUCLEO_CN4,Connector_PinSocket_2.54mm:PinSocket_1x15_P2.54mm_Vertical,"Nucleo-32 right header, 15.24 mm from CN3"
+TestPoint,VREF,TestPoint:TestPoint_Pad_D1.5mm,test point
+TestPoint,INA_OUT,TestPoint:TestPoint_Pad_D1.5mm,test point
+TestPoint,SERVO_OUT,TestPoint:TestPoint_Pad_D1.5mm,test point
+TestPoint,AFE_OUT,TestPoint:TestPoint_Pad_D1.5mm,test point
+TestPoint,TH_UP,TestPoint:TestPoint_Pad_D1.5mm,test point
+TestPoint,TH_DN,TestPoint:TestPoint_Pad_D1.5mm,test point
+TestPoint,EV_UP,TestPoint:TestPoint_Pad_D1.5mm,test point
+TestPoint,EV_DN,TestPoint:TestPoint_Pad_D1.5mm,test point
