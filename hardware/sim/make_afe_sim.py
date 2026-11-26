@@ -74,7 +74,7 @@ XL sk2 out out vcc 0 OPA gbw=8k
 .ic v(srv)={VREF - DZ.INA_G1 * offset_mv * 1e-3:.4f} v(s_in)={VREF}
 .control
 tran 0.5m {dur:.3f} 0 0.5m uic
-wrdata {HERE / 'afe_out.txt'} v(out) v(ina_o) v(srv)
+wrdata afe_out.txt v(out) v(ina_o) v(srv)
 quit
 .endc
 .end
@@ -100,7 +100,7 @@ def main():
     seg = x[s:e] - np.median(x[s:e])
     t = np.arange(len(seg)) / 360
     (HERE / "afe.cir").write_text(netlist(t, seg))
-    r = subprocess.run(["ngspice", "-b", str(HERE / "afe.cir")], capture_output=True, text=True)
+    r = subprocess.run(["ngspice", "-b", "afe.cir"], capture_output=True, text=True, cwd=HERE)
     if r.returncode != 0:
         print(r.stdout[-2000:], r.stderr[-2000:]); raise SystemExit(1)
     out = np.loadtxt(HERE / "afe_out.txt")

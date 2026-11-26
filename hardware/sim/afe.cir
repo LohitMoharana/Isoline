@@ -35,7 +35,7 @@ XL sk2 out out vcc 0 OPA gbw=8k
 .ic v(srv)=0.4991 v(s_in)=1.5
 .control
 tran 0.5m 11.997 0 0.5m uic
-wrdata /home/claude/isoline/hardware/sim/afe_out.txt v(out) v(ina_o) v(srv)
+wrdata afe_out.txt v(out) v(ina_o) v(srv)
 quit
 .endc
 .end
