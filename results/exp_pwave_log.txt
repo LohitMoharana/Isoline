@@ -1,0 +1,3 @@
+fine dV 0.000 (fine-band sparsity on DS1 89.1%) | DS1 5-fold acc 95.03 S F1 0.455 | SVDB acc 90.16 S Se 0.078 +P 0.687 F1 0.139 V F1 0.609
+fine dV 0.050 (fine-band sparsity on DS1 82.2%) | DS1 5-fold acc 94.90 S F1 0.452 | SVDB acc 89.12 S Se 0.087 +P 0.716 F1 0.155 V F1 0.570
+fine dV 0.025 (fine-band sparsity on DS1 71.2%) | DS1 5-fold acc 95.03 S F1 0.473 | SVDB acc 89.41 S Se 0.078 +P 0.713 F1 0.140 V F1 0.581
