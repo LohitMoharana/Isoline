@@ -1,0 +1,3 @@
+(a) trained on annotated positions: DS1 detected-beat accuracy 94.19 %  macroF1 0.556  S F1 0.479  V F1 0.756 (+P 0.629)
+(b) trained on detected positions: DS1 detected-beat accuracy 94.06 %  macroF1 0.573  S F1 0.454  V F1 0.747 (+P 0.614)
+adopt (b): False
