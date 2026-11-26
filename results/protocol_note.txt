@@ -1,0 +1,4 @@
+# 5-fold vs leave-one-patient-out on DS1 (same features): port RF 93.72 % (5-fold) vs 95.02 % (LOPO).
+# Comparisons must use one protocol. Rule fixed before computing: pick the highest DS1 LOPO accuracy among
+#   (a) round-4 stack, HPF 0.5   (b) round-4 stack, HPF 0.05   (c) 8-feature event port, HPF 0.05, RF-40, MIT only
+# then evaluate the winner once on DS2.

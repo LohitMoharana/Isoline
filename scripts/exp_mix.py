@@ -79,7 +79,7 @@ def main():
     for combo in a.combos.split(","):
         names = [] if combo == "none" else combo.split("+")
         pred = np.zeros_like(y)
-        for tr, te in GroupKFold(5).split(X, y, g):
+        for tr, te in GroupKFold(int(os.environ.get("FOLDS", "5")) if os.environ.get("FOLDS") != "lopo" else len(np.unique(g))).split(X, y, g):
             Xtr = np.concatenate([X[tr]] + [ex[k][0] for k in names])
             ytr = np.concatenate([y[tr]] + [ex[k][1] for k in names])
             w = np.sqrt(compute_sample_weight("balanced", ytr))
@@ -87,7 +87,7 @@ def main():
                                                  l2_regularization=1.0, random_state=a.rs).fit(Xtr, ytr, sample_weight=w)
             pred[te] = clf.predict(X[te])
         r = report(y, pred)
-        print(f"HP {cfg.hp_hz} {combo:8s} {a.cols:24s} nk{a.n_keep} rs{a.rs} it{a.iters} lf{a.leaves} lr{a.lr} acc {100 * r['accuracy']:.2f}  macroF1 {r['macro_f1']:.3f}  S F1 {r['S']['f1']:.3f} "
+        print(f"folds {os.environ.get('FOLDS', '5')} HP {cfg.hp_hz} {combo:8s} {a.cols:24s} nk{a.n_keep} rs{a.rs} it{a.iters} lf{a.leaves} lr{a.lr} acc {100 * r['accuracy']:.2f}  macroF1 {r['macro_f1']:.3f}  S F1 {r['S']['f1']:.3f} "
               f"(Se {r['S']['se']:.2f} +P {r['S']['ppv']:.2f})  V F1 {r['V']['f1']:.3f}  F F1 {r['F']['f1']:.3f}", flush=True)
 
 

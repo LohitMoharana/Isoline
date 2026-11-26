@@ -1,0 +1,4 @@
+scalar columns [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 21, 22, 23, 24, 25, 32, 33, 34, 35, 36, 37, 39, 40, 41, 42, 43, 44, 45, 46, 47, 48, 15]
+incart: 62184 beats [40000, 1959, 20006, 219]
+HP 0.05 none     base+long+clu+width+a32  nk40000 rs0 it150 lf31 lr0.1 acc 94.27  macroF1 0.515  S F1 0.229 (Se 0.24 +P 0.21)  V F1 0.855  F F1 0.004
+HP 0.05 incart   base+long+clu+width+a32  nk40000 rs0 it150 lf31 lr0.1 acc 94.69  macroF1 0.578  S F1 0.397 (Se 0.35 +P 0.46)  V F1 0.811  F F1 0.130
