@@ -38,7 +38,14 @@ def X_of(d):
                            d["scal"][:, COLS]], 1).astype(np.float32)
 
 
+import os
+TINY = os.environ.get("TINY") == "1"          # frozen 5.2 KB config, chosen by DS1 LOPO (results/exp_tiny_gbt_log.txt)
+
+
 def make_clf(seed):
+    if TINY:
+        return HistGradientBoostingClassifier(max_iter=30, learning_rate=0.2, max_leaf_nodes=8,
+                                              l2_regularization=1.0, random_state=seed, early_stopping=False)
     return HistGradientBoostingClassifier(max_iter=150, learning_rate=0.1, max_leaf_nodes=31,
                                           l2_regularization=1.0, random_state=seed)
 
@@ -112,7 +119,7 @@ def main():
     for k, v in summ.items():
         print(f"  {k:9s} {v[0]:.4f} +/- {v[1]:.4f}")
     out.update(summary=summ, runs=runs, ds2_idle_sparsity=d2["stats"]["idle_sparsity"])
-    (Path(a.out) / "final_gbt.json").write_text(json.dumps(out, indent=2))
+    (Path(a.out) / ("final_tiny_gbt.json" if TINY else "final_gbt.json")).write_text(json.dumps(out, indent=2))
 
 
 if __name__ == "__main__":

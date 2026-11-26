@@ -1,0 +1,5 @@
+iters  30 leaves  8    5160 B  DS1 LOPO acc 95.24  macroF1 0.635  S 0.455  V 0.837  F 0.272
+iters  50 leaves  8    8600 B  DS1 LOPO acc 95.10  macroF1 0.620  S 0.461  V 0.824  F 0.219
+iters  25 leaves 16    9100 B  DS1 LOPO acc 95.15  macroF1 0.597  S 0.443  V 0.830  F 0.136
+iters  60 leaves  6    7440 B  DS1 LOPO acc 95.12  macroF1 0.621  S 0.471  V 0.827  F 0.211
+iters  40 leaves  8    6880 B  DS1 LOPO acc 95.14  macroF1 0.624  S 0.463  V 0.831  F 0.226
