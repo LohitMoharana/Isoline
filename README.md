@@ -205,6 +205,18 @@ equipment, 4–7 % of normal beats are flagged. On healthy subjects the false-al
 need per-patient calibration or alarm smoothing (e.g. only report bursts). SVDB was used as a development set for
 *other* candidates in rounds 5 and 8.
 
+### C export (round-10 tiny system)
+
+[`scripts/export_c.py`](scripts/export_c.py) writes [`export/isoline_model.h`](export/isoline_model.h): the 5.2 KB beat
+classifier (integer thresholds, since every input is an integer) and the RR-only AF detector (float32), plus
+`isoline_classify()`. Compiled with gcc, it was checked against scikit-learn on 226,746 DS1 + INCART beats (no DS2):
+
+* float32 leaves: **100.0000 % identical** decisions (bit-exact reference)
+* int8 leaves (deployment): 99.95 % identical (109 beats differ)
+* as exported: beat model 8.5 KB, AF detector 8.5 KB (32-bit thresholds, explicit child indices). A tighter layout
+  (16-bit thresholds, implicit left child) gives 5.2 KB for the beat model. The 95-byte AF detector from the shrink
+  study can replace this one.
+
 ### Non-premature S beats: the documented blind spot
 
 We searched the development databases for S beats whose RR interval is ≥ 0.9 × the dominant RR, i.e. not premature

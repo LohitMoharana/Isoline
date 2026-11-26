@@ -66,7 +66,7 @@ def emit(name, trees, base, integer, n_features):
     scale = float(np.abs(leaf).max() / 127) if np.abs(leaf).max() > 0 else 1.0
     q = np.clip(np.round(leaf / scale), -127, 127).astype(np.int8)
     ttype = "int32_t" if integer else "float"
-    fmt = (lambda v: str(v)) if integer else (lambda v: f"{v:.9g}f")
+    fmt = (lambda v: str(v)) if integer else (lambda v: f"{v:.9e}f")
     cls_of_tree = [k % len(base) for k, _ in trees]
     J = lambda xs: ",".join(xs)
     c = f"""
@@ -75,12 +75,12 @@ static const uint8_t  {name}_feat[{len(feat)}] = {{{J(str(v) for v in feat)}}};
 static const {ttype} {name}_thr[{len(feat)}] = {{{J(fmt(v) for v in thr)}}};
 static const uint16_t {name}_left[{len(feat)}] = {{{J(str(v) for v in left)}}};
 static const uint16_t {name}_right[{len(feat)}] = {{{J(str(v) for v in right)}}};
-static const float    {name}_leaf_f32[{len(feat)}] = {{{J(f'{v:.9g}f' for v in leaf)}}};
+static const float    {name}_leaf_f32[{len(feat)}] = {{{J(f'{v:.9e}f' for v in leaf)}}};
 static const int8_t   {name}_leaf_q[{len(feat)}] = {{{J(str(int(v)) for v in q)}}};
-static const float    {name}_leaf_scale = {scale:.9g}f;
+static const float    {name}_leaf_scale = {scale:.9e}f;
 static const uint16_t {name}_start[{len(trees)}] = {{{J(str(v) for v in start)}}};
 static const uint8_t  {name}_cls[{len(trees)}] = {{{J(str(v) for v in cls_of_tree)}}};
-static const float    {name}_base[{len(base)}] = {{{J(f'{v:.9g}f' for v in base)}}};
+static const float    {name}_base[{len(base)}] = {{{J(f'{v:.9e}f' for v in base)}}};
 #define {name.upper()}_NTREES {len(trees)}
 #define {name.upper()}_NCLS {len(base)}
 """
