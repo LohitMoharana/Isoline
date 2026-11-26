@@ -63,6 +63,12 @@ Noise stress and cross-database results for the frozen 5.2 KB model are in the R
 (V precision) under electrode-motion noise and on other databases. Next ideas: alarm smoothing / burst logic, AF flag
 (MIT-BIH AFDB), bit-exact C export + cycle count, LTspice AFE power.
 
+### Rounds 10-11 (2026-11-26)
+Round 10 (best): round-4 + 5.1 KB AF detector 95.64 %, tiny + detector 94.81 % (10.3 KB). Round 11 (robust RR + 95-byte
+detector) 95.25 %, negative on DS2 despite gains on DS1 and SVDB. DS2 used 12 times. Stop DS2 evaluations. Remaining work
+that does not touch DS2: C export + bit-exact test, energy-per-beat estimate, paper draft. If S is revisited, build a dev
+set with non-premature S beats first.
+
 ## Rules we agreed to follow (do not break these)
 
 1. **DS2 is the test set. Never tune on it.** All choices (dV, features, loss, early stopping,

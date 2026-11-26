@@ -205,6 +205,19 @@ equipment, 4–7 % of normal beats are flagged. On healthy subjects the false-al
 need per-patient calibration or alarm smoothing (e.g. only report bursts). SVDB was used as a development set for
 *other* candidates in rounds 5 and 8.
 
+### Round 11: robust RR + 95-byte AF detector (negative on DS2)
+
+Three dev-only studies ([`results/`](results)): (1) the AF detector shrinks to **95 bytes** (5 trees) with the same DS1 benefit
+([`af_shrink_log.txt`](results/af_shrink_log.txt)); (2) a finer P-wave comparator band (0.05 / 0.025 mV) does **not** help
+S on SVDB and costs sparsity ([`exp_pwave_log.txt`](results/exp_pwave_log.txt)); (3) RR features relative to the dominant
+RR help on **both** dev sets (DS1 95.03 → 95.35 %, SVDB 90.16 → 91.55 %, SVDB S F1 0.14 → 0.25;
+[`exp_robust_rr_log.txt`](results/exp_robust_rr_log.txt)). Combined and frozen, they scored **95.25 %** on DS2
+(round-4 size, primary one-beat-delay variant; causal 95.20 %; tiny 94.57 / 94.45 %), below round 10
+([`results/final_round11.json`](results/final_round11.json)). The no-flag accuracy is unchanged (94.78 %); the
+smaller AF detector gives a smaller flag gain on DS2. This was the 12th DS2 evaluation. **Round 10 remains the best result.**
+DS2's remaining S errors sit mostly in one patient whose S beats are not premature, and no development set we have
+reproduces that pattern.
+
 ### Round 10: a learned AF detector instead of an irregularity threshold
 
 The round-9 flag silenced S calls whenever the rhythm was irregular, which also hid real S beats in frequent-ectopy
