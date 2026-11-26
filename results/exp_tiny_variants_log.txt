@@ -1,0 +1,6 @@
+R4 hp0.5 +INC (round 7)             5160 B | DS1 LOPO 95.24 (S 0.45 V 0.84) | SVDB 90.34 (S 0.24 V 0.65) | mean 92.79
+R4 hp0.5 MIT-only                   5160 B | DS1 LOPO 93.93 (S 0.27 V 0.82) | SVDB 91.38 (S 0.53 V 0.73) | mean 92.66
+R4+port hp0.5 MIT-only              5160 B | DS1 LOPO 94.02 (S 0.29 V 0.83) | SVDB 92.32 (S 0.52 V 0.79) | mean 93.17
+R4+port hp0.05 MIT-only             5160 B | DS1 LOPO 93.92 (S 0.29 V 0.84) | SVDB 92.46 (S 0.51 V 0.81) | mean 93.19
+R4+port hp0.05 +INC                 5160 B | DS1 LOPO 94.91 (S 0.46 V 0.83) | SVDB 90.20 (S 0.34 V 0.65) | mean 92.56
+R4+port+nextRR hp0.05 MIT-only      5160 B | DS1 LOPO 94.24 (S 0.33 V 0.85) | SVDB 92.79 (S 0.53 V 0.81) | mean 93.51
