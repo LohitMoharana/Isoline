@@ -17,15 +17,16 @@
 
 ## Headline results (DS2, unseen patients, inter-patient De Chazal split)
 
-| Model | Size | Accuracy | V F1 | S F1 | Compared with |
-|---|---|---|---|---|---|
-| **Isoline, round 4 + rhythm flag** | ~46–64 KB | **95.49 ± 0.05 %** | **0.956** | 0.22 | clean re-run of the 96.14 % RF paper: 95.39 % (full-rate ECG) |
-| **Isoline tiny + rhythm flag** | **5.2 KB** | **94.57 %** (seed 0) | **0.948** | 0.22 | LUT/logic-gate networks (2026): 93.6–94.4 %, V F1 ≤ 0.91, S F1 0.01–0.47, ~16 KB est. |
+| Model | Size | Accuracy | Macro-F1 | V F1 | S F1 | Compared with |
+|---|---|---|---|---|---|---|
+| **Isoline round 4 + AF detector** | ~46–64 KB + 5.1 KB | **95.64 ± 0.04 %** | 0.604 | **0.956** | 0.32 | clean re-run of the 96.14 % RF paper: 95.39 % (full-rate ECG) |
+| **Isoline tiny + AF detector** | 5.2 + 5.1 ≈ **10.3 KB** | **94.81 ± 0.04 %** | 0.604 | **0.947** | 0.32 | LUT/logic-gate networks (2026): 93.6–94.4 %, V F1 ≤ 0.91, ~16 KB est. |
 
-Both run on sparse level-crossing events (~90 % idle) instead of a sampled waveform. All choices were made on DS1 or
-other databases. DS2 has been evaluated 10 times over the project, each time on a configuration frozen beforehand.
-That count is disclosed because it makes the comparison slightly optimistic. The best reported full-waveform results on
-this split (≈96.15 %) are still about 0.65 points higher, and S detection remains the weakness.
+Both run on sparse level-crossing events (~90 % idle) instead of a sampled waveform. The AF detector uses RR intervals
+only and was trained on the MIT-BIH AF Database + DS1 rhythm labels. All choices were made on DS1 or other databases.
+DS2 has been evaluated 11 times over the project, each time on a configuration frozen beforehand. That count is
+disclosed because it makes the comparison slightly optimistic. The best *reported* results on this split (≈96.15 %, full
+waveform) are still ~0.5 points higher, and S detection (sensitivity ≈0.21) remains the main weakness.
 
 ## The idea
 
@@ -203,6 +204,22 @@ V *sensitivity* transfers well (0.85–0.92). Precision does not: on other datab
 equipment, 4–7 % of normal beats are flagged. On healthy subjects the false-alarm rate is 0.63 %. A deployed device would
 need per-patient calibration or alarm smoothing (e.g. only report bursts). SVDB was used as a development set for
 *other* candidates in rounds 5 and 8.
+
+### Round 10: a learned AF detector instead of an irregularity threshold
+
+The round-9 flag silenced S calls whenever the rhythm was irregular, which also hid real S beats in frequent-ectopy
+rhythms. A small RR-only AF/AFL detector (previous 16 beats: irregularity, dominance of the usual RR, short/long
+fractions, compensatory pairs; 60 trees, 5.1 KB) was trained on the MIT-BIH AF Database and DS1 rhythm labels, with
+the two databases weighted equally ([`scripts/af_detector.py`](scripts/af_detector.py)). It was chosen over the threshold flag by
+dev-set accuracy ([`results/af_flag_dev_log.txt`](results/af_flag_dev_log.txt)) and then evaluated once on DS2
+([`results/final_af_detector.json`](results/final_af_detector.json)):
+
+| DS2, 5 seeds | Accuracy | Macro-F1 | S Se / +P / F1 |
+|---|---|---|---|
+| round 4, no flag | 94.76 % | 0.605 | 0.28 / 0.41 / 0.33 |
+| round 4 + irregularity flag (round 9) | 95.49 % | 0.579 | 0.13 / 0.74 / 0.22 |
+| **round 4 + AF detector** | **95.64 %** | **0.604** | 0.21 / 0.71 / **0.32** |
+| tiny 5.2 KB + AF detector | 94.81 % | 0.604 | 0.22 / 0.56 / 0.32 |
 
 ### Round 9: irregular-rhythm flag on the round-4 model — **95.49 % on unseen patients**
 
