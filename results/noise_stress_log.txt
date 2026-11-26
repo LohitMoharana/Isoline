@@ -1,0 +1,16 @@
+clean None dB  acc  93.27  macroF1 0.596  S F1 0.315  V F1 0.948 (Se 0.958 +P 0.937)  sparsity 89.7%  55 spikes/s
+em      24 dB  acc  93.29  macroF1 0.600  S F1 0.318  V F1 0.946 (Se 0.956 +P 0.936)  sparsity 89.6%  56 spikes/s
+em      18 dB  acc  93.04  macroF1 0.595  S F1 0.316  V F1 0.936 (Se 0.952 +P 0.920)  sparsity 89.2%  57 spikes/s
+em      12 dB  acc  93.15  macroF1 0.591  S F1 0.326  V F1 0.918 (Se 0.954 +P 0.884)  sparsity 87.9%  62 spikes/s
+em       6 dB  acc  92.70  macroF1 0.562  S F1 0.293  V F1 0.840 (Se 0.960 +P 0.747)  sparsity 84.7%  74 spikes/s
+em       0 dB  acc  91.21  macroF1 0.486  S F1 0.174  V F1 0.716 (Se 0.962 +P 0.570)  sparsity 77.9%  103 spikes/s
+ma      24 dB  acc  93.24  macroF1 0.597  S F1 0.317  V F1 0.945 (Se 0.954 +P 0.937)  sparsity 89.5%  56 spikes/s
+ma      18 dB  acc  93.34  macroF1 0.596  S F1 0.319  V F1 0.942 (Se 0.954 +P 0.931)  sparsity 88.9%  58 spikes/s
+ma      12 dB  acc  93.89  macroF1 0.602  S F1 0.335  V F1 0.936 (Se 0.946 +P 0.926)  sparsity 86.4%  68 spikes/s
+ma       6 dB  acc  94.23  macroF1 0.579  S F1 0.331  V F1 0.922 (Se 0.925 +P 0.919)  sparsity 80.4%  97 spikes/s
+ma       0 dB  acc  94.34  macroF1 0.546  S F1 0.277  V F1 0.883 (Se 0.884 +P 0.882)  sparsity 70.6%  166 spikes/s
+bw      24 dB  acc  93.32  macroF1 0.598  S F1 0.317  V F1 0.948 (Se 0.957 +P 0.939)  sparsity 89.7%  55 spikes/s
+bw      18 dB  acc  93.28  macroF1 0.601  S F1 0.320  V F1 0.946 (Se 0.957 +P 0.936)  sparsity 89.7%  55 spikes/s
+bw      12 dB  acc  93.28  macroF1 0.596  S F1 0.321  V F1 0.943 (Se 0.953 +P 0.932)  sparsity 89.7%  55 spikes/s
+bw       6 dB  acc  93.21  macroF1 0.595  S F1 0.320  V F1 0.944 (Se 0.951 +P 0.937)  sparsity 89.5%  56 spikes/s
+bw       0 dB  acc  93.15  macroF1 0.598  S F1 0.326  V F1 0.939 (Se 0.948 +P 0.929)  sparsity 89.0%  58 spikes/s
