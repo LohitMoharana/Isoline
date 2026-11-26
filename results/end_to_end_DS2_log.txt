@@ -1,0 +1,15 @@
+== DS2 full, detected beats (seed 0)
+  accuracy  94.94%   macro-F1 0.585
+  N: Se 0.985  +P 0.963  F1 0.974  (n=44182)
+  S: Se 0.217  +P 0.685  F1 0.329  (n=1829)
+  V: Se 0.979  +P 0.847  F1 0.908  (n=3166)
+  F: Se 0.083  +P 0.294  F1 0.130  (n=385)
+full: matched-beat accuracy 94.71 %, end-to-end (missed beats = errors) 94.50 %, S F1 0.329, V F1 0.902
+== DS2 tiny, detected beats (seed 0)
+  accuracy  93.65%   macro-F1 0.583
+  N: Se 0.970  +P 0.962  F1 0.966  (n=44182)
+  S: Se 0.229  +P 0.530  F1 0.320  (n=1829)
+  V: Se 0.964  +P 0.821  F1 0.887  (n=3166)
+  F: Se 0.184  +P 0.141  F1 0.160  (n=385)
+tiny: matched-beat accuracy 93.67 %, end-to-end (missed beats = errors) 93.47 %, S F1 0.321, V F1 0.885
+beat detection on DS2: Se 99.78 %  +P 98.67 %  missed by class {'N': 43, 'S': 8, 'V': 54, 'F': 3, 'Q': 1}
