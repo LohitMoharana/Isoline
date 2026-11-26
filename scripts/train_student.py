@@ -194,6 +194,8 @@ def main() -> None:
     ap.add_argument("--extra-n-keep", type=int, default=0,
                     help="keep at most this many normal beats from each extra database (rebalancing)")
     ap.add_argument("--no-teacher", action="store_true", help="train the student without distillation")
+    ap.add_argument("--scal-cols", default="", help="explicit scalar columns, e.g. 0-12,21-25,32-37 "
+                    "(power-of-two divisors fixed from the training set)")
     ap.add_argument("--delayed", action="store_true", help="use non-causal next-RR columns (off by default)")
     ap.add_argument("--device", default="auto", choices=["auto", "cpu", "cuda"])
     ap.add_argument("--subsample", type=int, default=0, help="debug: random subset of train beats")
@@ -213,8 +215,27 @@ def main() -> None:
     print(f"train {len(train_recs)} rec | val {val_recs} | DS2 used: {a.final}")
     cfg = replace(AFEConfig(), delta_mv=a.delta, hp_hz=a.hp)
 
+    cols = None
+    if a.scal_cols:
+        cols = []
+        for part in a.scal_cols.split(","):
+            lo, _, hi = part.partition("-")
+            cols += list(range(int(lo), int(hi or lo) + 1))
+        a.ncol = len(cols)
+    scal_div = None
+
     def tens(ds):
-        xs, ss = prep_spike(ds["hist"], ds["res"], ds["scal"][:, :a.ncol])
+        nonlocal scal_div
+        if cols is None:
+            xs, ss = prep_spike(ds["hist"], ds["res"], ds["scal"][:, :a.ncol])
+        else:
+            xs, _ = prep_spike(ds["hist"], ds["res"], ds["scal"][:, :1])
+            raw = ds["scal"][:, cols].astype(np.float32)
+            if scal_div is None:                      # first call = training set; pow2 >= 99th pct
+                p99 = np.maximum(np.percentile(np.abs(raw), 99, axis=0), 1.0)
+                scal_div = 2.0 ** np.ceil(np.log2(p99))
+                print("scalar columns", cols, "divisors", scal_div.astype(int).tolist())
+            ss = torch.from_numpy(raw / scal_div)
         y = torch.from_numpy(ds["y"].astype(np.int64))
         return tuple(t.to(DEV) for t in (xs, ss, prep_dense(ds["filt"]), y))
 
