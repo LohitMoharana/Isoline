@@ -43,7 +43,8 @@ SCAL_NAMES = ["pre_rr", "rr_ewma", "delta_rr", "beat_spikes", "spike_ewma",
               # --- online per-patient morphology clusters (columns 32..37, causal) ---
               "clu_dist", "clu_pop", "clu_rank", "clu_rr", "clu_active", "clu_dist_ratio", "clu_id",
               # --- QRS width/amplitude from the up/down counter staircase (columns 39..46, causal) ---
-              "w20", "w40", "w60", "amp", "w20_n", "w40_n", "w60_n", "amp_n"]
+              "w20", "w40", "w60", "amp", "w20_n", "w40_n", "w60_n", "amp_n",
+              "pre_over_avg32", "avg32_over_pre"]
 EXTRA_CAUSAL = [16, 17, 18, 19, 20]
 LONG_CAUSAL = [21, 22, 23, 24, 25]
 NOISE_CAUSAL = [26, 27, 28, 29, 30, 31]
@@ -131,6 +132,7 @@ def extract_record(up, dn, acc, r, symbols, raw=None, filt=None,
     cnt = np.zeros(K, np.int64)                    # 16x EWMA of membership (popularity)
     crr = np.full(K, 8 * 32, np.int64)             # 8x EWMA of RR ratio of members
     dmin_state = 0                                 # 8x EWMA of nearest-cluster distance
+    rr32 = []                                      # 32-entry RR ring buffer (true mean of previous 32 RR)
     wst = None                                     # 32x EWMA of QRS widths (w20, w40, w60) and |amp|
     prem_bits = 0                                  # 8-beat shift register: premature (ratio < 28/32)
     sp_state = 0
@@ -175,7 +177,8 @@ def extract_record(up, dn, acc, r, symbols, raw=None, filt=None,
             # --- QRS width from the comparator staircase (up/down counter = signal / dV) ---
             q = cu[r[i] - 36:r[i] + 37] - cd[r[i] - 36:r[i] + 37] if r[i] >= 36 and r[i] + 37 <= n + 1 else None
             if q is not None and len(q) == 73:
-                base = int(cu[s] - cd[s])
+                b0, b1 = max(int(r[i]) - 134, 0), min(int(r[i]) + 96, n)     # 373 ms before / 267 ms after R
+                base = int(((cu[b0:b1] - cd[b0:b1]).sum()) // max(b1 - b0, 1))  # one accumulator in hardware
                 dq = q - base
                 pk = int(np.argmax(np.abs(dq))); amp = int(dq[pk])
                 sgn = 1 if amp >= 0 else -1
@@ -188,7 +191,9 @@ def extract_record(up, dn, acc, r, symbols, raw=None, filt=None,
             wprev = wst >> 5
             wnorm = [min((int(wv[t]) * 32) // max(int(wprev[t]), 1), 255) for t in range(4)]
             wst = wst - (wst >> 5) + wv
-            width_feats = ws + [min(abs(amp), 255)] + wnorm
+            a32 = (sum(rr32) // len(rr32)) if rr32 else pre
+            width_feats = ws + [min(abs(amp), 255)] + wnorm + [min((pre * RR_Q) // max(a32, 1), 255),
+                                                               min((a32 * RR_Q) // max(pre, 1), 255)]
             quiet = int(hu[:4].sum() + hd[:4].sum() + hu[-6:].sum() + hd[-6:].sum())   # far from the R peak
             nz_prev = nz_state >> 4
             nz_state = nz_state - (nz_state >> 4) + quiet
@@ -258,6 +263,9 @@ def extract_record(up, dn, acc, r, symbols, raw=None, filt=None,
         rrl_state = rrl_state - (rrl_state >> 6) + pre
         irl_state = irl_state - (irl_state >> 6) + abs(pre - prev_pre)
         rrv_state = rrv_state - (rrv_state >> 8) + pre
+        rr32.append(pre)
+        if len(rr32) > 32:
+            rr32.pop(0)
         prem_bits = ((prem_bits << 1) | int(rr_ratio < 28)) & 0xFF
         prev_rrr = rr_ratio
         prev_pre2 = prev_pre

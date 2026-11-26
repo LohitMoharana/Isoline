@@ -1,0 +1,11 @@
+# Why the event-domain port (DS1 LOPO 93.93 %) trails the dense replica (95.23 %). DS1 leave-one-patient-out only.
+replica (150 Hz RR)                      acc 95.23 S F1 0.262 V F1 0.837
+replica, RR quantised to 1/32 s (Q3.5)   acc 95.20 S F1 0.261 V F1 0.847   -> RR resolution is NOT the cause
+replica, RR features only                acc 92.75 S F1 0.158 V F1 0.637
+widths: dV 0   baseline=segment mean     acc 95.23 S F1 0.262 V F1 0.837
+widths: dV 0.1 baseline=segment mean     acc 95.31 S F1 0.269 V F1 0.844   -> 0.1 mV quantisation does NOT hurt
+widths: dV 0   baseline=window start     acc 93.44 S F1 0.215 V F1 0.738   -> the baseline reference IS the cause
+widths: dV 0.1 baseline=window start     acc 93.24 S F1 0.233 V F1 0.721
+# Port with mean-baseline widths: 93.71 %; + true 32-beat RR average: 94.72 %
+# Replica on the AFE-conditioned signal (dV 0.1, mean baseline): default AFE (HPF 0.5 Hz, LPF 40 Hz) 94.92 %
+#   HPF 0.05 Hz 95.27 %   |   LPF 100 Hz 95.05 %   -> the 0.5 Hz high-pass is the main remaining cause

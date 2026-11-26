@@ -28,7 +28,8 @@ from isoline.config import AFEConfig  # noqa: E402
 from isoline.metrics import format_report, report  # noqa: E402
 from isoline.pipeline import build_dataset  # noqa: E402
 
-COLS = [22, 21, 15, 44, 8, 43, 45, 40]
+import os
+COLS = [int(c) for c in os.environ.get("PORT_COLS", "22,21,15,44,8,43,45,40").split(",")]
 
 
 def main():
@@ -38,7 +39,7 @@ def main():
     ap.add_argument("--out", default=str(ROOT / "results"))
     ap.add_argument("--final", action="store_true")
     a = ap.parse_args()
-    cfg = replace(AFEConfig(), delta_mv=0.1)
+    cfg = replace(AFEConfig(), delta_mv=0.1, hp_hz=float(os.environ.get("HP_HZ", "0.5")))
     ds1, ds2 = data.get_splits(a.data_dir)
     d1 = build_dataset(ds1, a.data_dir, cfg, cache_dir=a.cache, verbose=False)
     X1, y1, g1 = d1["scal"][:, COLS].astype(np.float32), d1["y"].astype(int), d1["rec"]
@@ -46,7 +47,8 @@ def main():
     for tr, te in GroupKFold(len(np.unique(g1))).split(X1, y1, g1):
         pred[te] = RandomForestClassifier(40, random_state=0, n_jobs=-1).fit(X1[tr], y1[tr]).predict(X1[te])
     r = report(y1, pred)
-    print(format_report(r, "== DS1 leave-one-patient-out (event-domain port)"), flush=True)
+    print(format_report(r, f"== DS1 leave-one-patient-out (event-domain port, HPF {cfg.hp_hz} Hz, cols {COLS})"), flush=True)
+    print(f"DS1 idle sparsity {d1['stats']['idle_sparsity']:.3f}", flush=True)
     out = dict(cols=COLS, ds1_lopo=r)
     if a.final:
         d2 = build_dataset(ds2, a.data_dir, cfg, cache_dir=a.cache, verbose=False)
